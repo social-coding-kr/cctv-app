@@ -3,7 +3,7 @@
 pushd cctvApp
 echo $1
 
-ps -ef | grep "ionic serve -p $1" | grep -v "grep"
+ps -ef | grep "ionic serve -p" | grep -v "grep"
 not_found=$?
 echo not_found
 
