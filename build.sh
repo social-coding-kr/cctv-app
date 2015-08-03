@@ -1,3 +1,5 @@
+#!/bin/bash
+
 pushd cctvApp
 
 mkdir -p buildlog
