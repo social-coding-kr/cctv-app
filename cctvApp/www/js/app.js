@@ -21,12 +21,29 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   });
   
+  // begin global app
+  $rootScope.app = {};
+
+  // end global app
+  
+  // begin global server
+  $rootScope.server = {};
+  $rootScope.server.main_url = "http://147.46.215.152:8099/";
+  
+  // end global server
+  
   // begin global applog
   $rootScope.console_text = "";
   $rootScope.applog_num = 0;
+  
   $rootScope.applog = function(message) {
     $rootScope.applog_num += 1;
     $rootScope.console_text += "  [" + $rootScope.applog_num + "] " + message;
+  }
+  
+  $rootScope.applog.clear = function() {
+    $rootScope.applog_num = 0;
+    $rootScope.console_text = "";
   }
   // end global applog
 })

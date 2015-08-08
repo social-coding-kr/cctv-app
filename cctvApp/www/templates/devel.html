@@ -2,20 +2,26 @@
   <ion-content>
     <h4>developer page</h4>
     
+
+    <div><button class="button button-stable button-block" ng-click="test_button1_click()">
+      {{test_button1_text}}
+    </button></div>  
+
     <ul>
       <li ng-repeat="x in cctvs">
         ID: {{ x.cctvId  }} , Image: {{ x.cctvImage }}
       </li>
     </ul>
 
-    <div><button class="button button-stable button-block" ng-click="test_button1_click()">
-      {{test_button1_text}}
-    </button></div>  
-  
+    <button class="button button-stable" ng-click="applog.clear()">
+      로그 삭제
+    </button>
 
     <textarea name="develLog" id="devel_log" readonly="readonly">
       {{ console_text }}
     </textarea>
+
+    
 
     <!--
     <div><button class="button button-icon" href="#"
