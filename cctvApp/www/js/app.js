@@ -39,6 +39,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   $rootScope.applog = function(message) {
     $rootScope.applog_num += 1;
     $rootScope.console_text += "  [" + $rootScope.applog_num + "] " + message;
+    console.log(message);
   }
   
   $rootScope.applog.clear = function() {
