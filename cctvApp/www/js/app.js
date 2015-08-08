@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,6 +20,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       StatusBar.styleDefault();
     }
   });
+  
+  // begin global applog
+  $rootScope.console_text = "";
+  $rootScope.applog_num = 0;
+  $rootScope.applog = function(message) {
+    $rootScope.applog_num += 1;
+    $rootScope.console_text += "  [" + $rootScope.applog_num + "] " + message;
+  }
+  // end global applog
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -64,7 +73,18 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     url: '/devel',
     views: {
       'menuContent': {
-        templateUrl: 'templates/devel.html'
+        templateUrl: 'templates/devel.html',
+        controller: 'DevelCtrl'
+      }
+    }
+  })
+
+  .state('app.devel2', {
+    url: '/devel2',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/devel2.html',
+        controller: 'DevelCtrl2'
       }
     }
   })
