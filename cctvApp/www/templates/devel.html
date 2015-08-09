@@ -28,6 +28,14 @@
       앱 업데이트(kyshin)
     </button>
 
+    <button class="button button-stable" ng-click="update_apk('mjong')">
+      앱 업데이트(mjong)
+    </button>
+
+    <button class="button button-stable" ng-click="update_apk('clubsandwich')">
+      앱 업데이트(clubsandwich)
+    </button>
+
     <button class="button button-stable" ng-click="check_installed()">
       {{ app_installed }}
     </button>
@@ -83,13 +91,5 @@
       </button>
     </div>    
 
-    <!--
-    <div><button class="button button-icon" href="#"
-        onclick="update_apk('kyshin/debug.apk', 'debug.apk')">
-      <i class="icon ion-compose"> sky1core app UPDATE</i>
-    </button></div>
-    -->
-    
-    
   </ion-content>
 </ion-view>
