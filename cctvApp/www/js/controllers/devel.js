@@ -40,7 +40,7 @@ angular.module('starter.controllers')
   }
 
   $scope.update_apk = function(devel_name) {
-    var target = "android-debug.apk"
+    var target = "cctvApp.apk"
     var uri = encodeURI("http://147.46.215.152:9000/" + devel_name + "/" + target);
     $scope.applog(cordova);
     $scope.applog(cordova.file.externalDataDirectory);
