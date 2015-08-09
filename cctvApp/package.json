@@ -25,6 +25,10 @@
     {
       "locator": "https://github.com/pwlin/cordova-plugin-file-opener2.git",
       "id": "io.github.pwlin.cordova.plugins.fileopener2"
+    },
+    {
+      "locator": "https://github.com/Initsogar/cordova-webintent.git",
+      "id": "com.borismus.webintent"
     }
   ],
   "cordovaPlatforms": [
