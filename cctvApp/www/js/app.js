@@ -20,12 +20,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       StatusBar.styleDefault();
     }
   });
+
+  
+  $rootScope.config = {};
+  $rootScope.config.isDevelOptionEnabled = true; // 최종배포시 false 로 수정한다 // 
+  $rootScope.config.isDevelModeVisible = $rootScope.config.isDevelOptionEnabled; // 초기값을 Enabled 와 동일하게 세팅
+
+
   
   // begin global app
   $rootScope.app = {};
+  
 
   // end global app
-  
+
   // begin global server
   $rootScope.server = {};
   $rootScope.server.main_url = "http://147.46.215.152:8099/";
@@ -107,7 +115,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
-  
+
+  .state('app.cctvdetail', {
+    url: '/cctvdetail',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/cctvdetail.html',
+        controller: 'CCTVDetailCtrl'
+      }
+    }
+  })
+
+  .state('app.config', {
+    url: '/config',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/config.html'
+      }
+    }
+  })
+
   .state('app.report', {
     url: '/report',
     views: {

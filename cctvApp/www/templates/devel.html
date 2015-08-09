@@ -44,52 +44,5 @@
       앱 제거
     </button>
 
-    <div>
-      <button class="button button-icon" href="#"
-        onclick="
-    var url = encodeURI('http://147.46.215.152:9000/kyshin/android-debug.apk');
-    var target = 'android-debug.apk';
-    var localpath = cordova.file.externalDataDirectory + target;
-
-    //alert('download ' + url + ' -> ' + target);       
-    //alert(cordova.file.dataDirectory)
-    //cordova.file.applicationStorageDirectory
-    //cordova.file.cacheDirectoryds
-    function nothing() { }
-    function webintent_on_error() {
-        alert('Failed to open URL via Android Intent.' + error.code);
-    }
-
-    function appinstall(entry) {
-        window.plugins.webintent.startActivity({
-                action: window.plugins.webintent.ACTION_VIEW,
-                url: entry.toURL(),
-                type: 'application/vnd.android.package-archive'
-            },
-            nothing,
-            function () {
-                alert('Failed to open URL via Android Intent.' + entry.toURL());
-            }
-        )
-    }
-
-    function download_on_error(error) {
-        alert('download 실패 ' + error.code);
-    }
-
-    var filetransfer = new FileTransfer();
-    alert('download ' + url + ' -> ' + localpath);
-    filetransfer.download(url, localpath,
-        appinstall,
-        download_on_error,
-        false, {}
-    );
-
-    ">
-
-          <i class="icon ion-compose">다운로드  FileTransfer</i>
-      </button>
-    </div>    
-
   </ion-content>
 </ion-view>

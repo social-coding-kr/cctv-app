@@ -24,20 +24,26 @@
         <ion-item menu-close ng-click="login()">
           Login
         </ion-item>
-        <ion-item menu-close href="#/app/search">
+        <ion-item menu-close href="#/app/search" ng-if="config.isDevelModeVisible">
           Search
         </ion-item>
-        <ion-item menu-close href="#/app/playlists">
+        <ion-item menu-close href="#/app/playlists" ng-if="config.isDevelModeVisible">
           Playlists
         </ion-item>
-        <ion-item menu-close href="#/app/devel">
+        <ion-item menu-close href="#/app/devel" ng-if="config.isDevelModeVisible">
           개발자용
         </ion-item>
-        <ion-item menu-close href="#/app/devel2">
+        <ion-item menu-close href="#/app/devel2" ng-if="config.isDevelModeVisible">
           개발자용2
+        </ion-item>
+        <ion-item menu-close href="#/app/cctvdetail" ng-if="config.isDevelModeVisible">
+          CCTV 세부정보
         </ion-item>
         <ion-item menu-close href="#/app/report">
           신고용
+        </ion-item>
+        <ion-item menu-close href="#/app/config">
+          설정
         </ion-item>
       </ion-list>
     </ion-content>
