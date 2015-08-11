@@ -8,4 +8,4 @@ ionic plugin add cordova-plugin-file
 ionic plugin add cordova-plugin-file-transfer
 ionic plugin add https://github.com/pwlin/cordova-plugin-file-opener2.git
 ionic plugin add https://github.com/Initsogar/cordova-webintent.git
-ionci plugin add org.apache.cordova.camera
+ionic plugin add org.apache.cordova.camera
