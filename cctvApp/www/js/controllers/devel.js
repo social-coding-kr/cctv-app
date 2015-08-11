@@ -4,7 +4,7 @@ angular.module('starter.controllers')
 // Devloper용 Controller
 // devel.html에서 사용한다
 .controller('DevelCtrl', function($scope, $http, 
-  $cordovaFile, $cordovaFileTransfer, $cordovaFileOpener2) {
+  $cordovaFile, $cordovaFileTransfer, $cordovaFileOpener2, $cordovaInAppBrowser) {
     
   $scope.test_button1_text = 'Rest API 테스트'; // 초기값 
 
@@ -79,4 +79,34 @@ angular.module('starter.controllers')
     $scope.applog("5555");        
   }
 
+  $scope.open_web = function(url) {
+    window.plugins.webintent.startActivity({
+      action: window.plugins.webintent.ACTION_VIEW,
+      url: url
+    },
+    function() {},
+    function() {
+      alert('Failed to open URL via Android Intent.');
+      $scope.applog("Failed to open URL via Android Intent. URL: " + url)
+    }
+  );
+    /*
+      var options = {
+      location: 'yes',
+      clearcache: 'yes',
+      toolbar: 'no'
+    };
+  
+    $cordovaInAppBrowser.open(url, '_blank', options)
+        .then(function(event) {
+          $scope.applog("success");
+        })
+        .catch(function(event) {
+          $scope.applog("success" + event.code);
+        });
+
+
+      $cordovaInAppBrowser.close();
+*/
+  }
 })
