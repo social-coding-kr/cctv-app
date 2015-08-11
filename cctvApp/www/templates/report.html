@@ -1,5 +1,16 @@
-<ion-view view-title="신고용">
-  <ion-content>
-    <h3>신고용 화면</h3>
-  </ion-content>
-</ion-view>
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body ng-app='starter.controllers' ng-controller='cameraCtrl'>
+    <ion-view view-title="신고용">
+      <ion-content>
+        <h3>신고용 화면</h3>
+      </ion-content>
+      <ion-content padding="true">
+        <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
+        <img ng-src="{{lastPhoto}}" style="max-width: 100%">
+    </ion-content>
+    </ion-view>
+  </body>
+</html>
