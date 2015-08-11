@@ -140,7 +140,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     views: {
       'menuContent': {
         templateUrl: 'templates/report.html', 
-        controller: 'reportCtrl'
+        controller: 'cameraCtrl'
       }
     }
   })
