@@ -139,7 +139,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     url: '/report',
     views: {
       'menuContent': {
-        templateUrl: 'templates/report.html'
+        templateUrl: 'templates/report.html', 
+        controller: 'reportCtrl'
       }
     }
   })
