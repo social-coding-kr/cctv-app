@@ -6,7 +6,7 @@ mkdir -p buildlog
 
 ionic build --release android > buildlog/lastbuild.log
 cat buildlog/lastbuild.log
-
+cordova plugin add org.apache.cordova.camera
 
 # [개발용 key]
 # key_store : my-devel-key.keystore
