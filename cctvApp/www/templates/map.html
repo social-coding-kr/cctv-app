@@ -1,11 +1,19 @@
-<ion-view view-title="지도보기">
-  <ion-content>
-    <h3>지도보기 화면</h3></p>
-    <div id="map" data-tap-disabled="true"></div>
-  </ion-content>
-  <ion-nav-buttons side="right">
-    <!--<button onclick = "getLocation()">My location</button>-->
-    <!--<button ng-click = "test_func()"> {{ Mylocation }} </button>-->
-    <button ng-click = "centerOnMe()">My location</button>
-  </ion-nav-buttons>
-</ion-view>
+<!DOCTYPE html>
+<html ng-app="starter.controllers">
+  <head>
+  </head>
+  <body ng-controller="MapCtrl">
+    <ion-view view-title="지도보기">
+      <ion-content>
+        <h3>지도보기 화면</h3></p>
+        <div id="map" data-tap-disabled="true"></div>
+      </ion-content>
+      <ion-nav-buttons side="right">
+        <!--<button onclick = "getLocation()">My location</button>-->
+        <!--<button ng-click = "test_func()"> {{ Mylocation }} </button>-->
+        <button ng-click = "centerOnMe()">My location</button>
+      </ion-nav-buttons>
+    </ion-view>
+  </body>
+</html>
+
