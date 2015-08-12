@@ -1,7 +1,6 @@
 <ion-view title="설정">
     <ion-content padding="true" class="has-header">
         <ion-list>
-            
             <ion-item class="item-thumbnail-left">
                 <img src="https://pixabay.com/static/uploads/photo/2014/04/02/10/25/man-303792_640.png">
                 <h2>Anonymous</h2>
@@ -9,7 +8,7 @@
             </ion-item>
             
             <!-- 개발용 기능 활성화 / 최종 배포시에는 나오지 않아야 한다 -->
-            <ion-toggle toggle-class="toggle-positive" ng-if="config.isDevelOptionEnabled" ng-model="config.isDevelModeVisible">
+            <ion-toggle toggle-class="toggle-positive" ng-if="soco.config.isDevelOptionEnabled" ng-model="soco.config.isDevelModeVisible">
                 개발자 옵션
             </ion-toggle>
             
