@@ -3,26 +3,26 @@ angular.module('starter.controllers')
 
 // Devloper용 Controller
 // devel.html에서 사용한다
-.controller('DevelCtrl', function($scope, soco, $http, 
+.controller('DevelCtrl', function($scope, soc, $http, 
   $cordovaFile, $cordovaFileTransfer, $cordovaFileOpener2, $cordovaInAppBrowser) {
     
     
     // navigator object 확인    
-    //soco.log("navigator.geolocation : " + JSON.stringify(navigator.geolocation));
-    //soco.log("navigator.camera : " + JSON.stringify(navigator.camera));
+    //soc.log("navigator.geolocation : " + JSON.stringify(navigator.geolocation));
+    //soc.log("navigator.camera : " + JSON.stringify(navigator.camera));
     
     
   $scope.test_button1_text = 'Rest API 테스트'; // 초기값 
 
   $scope.test_button1_click = function() {
 
-    $http.get(soco.server.main_url + "cctv/validate?latitude=1&longitude=1")
+    $http.get(soc.server.main_url + "cctv/validate?latitude=1&longitude=1")
       .then(function(response) {
         $scope.cctvs = response.data.cctvs;
-        soco.log(JSON.stringify(response));      
+        soc.log(JSON.stringify(response));      
         $scope.test_button1_text = "Rest API 성공";  // 클릭했을때 변경      
       }, function(response) {
-        soco.log(JSON.stringify(response));      
+        soc.log(JSON.stringify(response));      
         $scope.test_button1_text = "Rest API 실패";  // 클릭했을때 변경      
       });
     } 
@@ -40,28 +40,28 @@ angular.module('starter.controllers')
 
   $scope.uninstall_apk = function() {
     $cordovaFileOpener2.uninstall('com.socialcoding.cctvapp').then(function() {
-      soco.log("uninstall Success");
+      soc.log("uninstall Success");
     }, function(error) {
-      soco.log("uninstall Failed. " + error.code);
+      soc.log("uninstall Failed. " + error.code);
     });
   }
 
   $scope.update_apk = function(devel_name) {
     var target = "cctvApp.apk"
     var uri = encodeURI("http://147.46.215.152:9000/" + devel_name + "/" + target);
-    soco.log(cordova);
-    soco.log(cordova.file.externalDataDirectory);
+    soc.log(cordova);
+    soc.log(cordova.file.externalDataDirectory);
     var localPath = cordova.file.externalDataDirectory + target;
     
-    soco.log("from: " + uri);
-    soco.log("to: " + localPath);
+    soc.log("from: " + uri);
+    soc.log("to: " + localPath);
     
     function webintent_on_success() { 
-      soco.log("Success Android Intent");
+      soc.log("Success Android Intent");
     }
 
     function webintent_on_error(error) {
-      soco.log('Failed to open URL via Android Intent.' + error.code);
+      soc.log('Failed to open URL via Android Intent.' + error.code);
     }
 
     function install_apk(entry) {
@@ -72,10 +72,10 @@ angular.module('starter.controllers')
     }
 
     function download_on_error(error) {
-      soco.log('Failed Download File.' + error.code);
+      soc.log('Failed Download File.' + error.code);
     }
     
-    soco.log("4444");    
+    soc.log("4444");    
     
     $cordovaFileTransfer.download(uri, localPath, {}, false)
       .then(
@@ -83,7 +83,7 @@ angular.module('starter.controllers')
         download_on_error
       );
     
-    soco.log("5555");        
+    soc.log("5555");        
   }
 
   $scope.open_web = function(url) {
@@ -94,7 +94,7 @@ angular.module('starter.controllers')
     function() {},
     function() {
       alert('Failed to open URL via Android Intent.');
-      soco.log("Failed to open URL via Android Intent. URL: " + url)
+      soc.log("Failed to open URL via Android Intent. URL: " + url)
     }
   );
     /*
@@ -106,10 +106,10 @@ angular.module('starter.controllers')
   
     $cordovaInAppBrowser.open(url, '_blank', options)
         .then(function(event) {
-          soco.log("success");
+          soc.log("success");
         })
         .catch(function(event) {
-          soco.log("success" + event.code);
+          soc.log("success" + event.code);
         });
 
 
