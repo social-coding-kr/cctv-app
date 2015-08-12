@@ -5,3 +5,13 @@ textarea#devel_log {
 	border: 1px solid #cccccc;
 	padding: 5px;
 }
+
+.detail_list {
+	vertical-align: bottom;
+	font-size: 80%;
+}
+
+.detail_name {
+	padding-right: 15px;
+	color: #666666;
+}
