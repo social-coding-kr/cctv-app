@@ -1,11 +1,18 @@
 #!/bin/bash
 
 pushd cctvApp
+cordova plugin | awk '{ print $1 }' | xargs ionic plugin rm
+cordova plugin | awk '{ print $1 }' | xargs ionic plugin rm
 
+
+cordova plugin add cordova-plugin-file
+cordova plugin add cordova-plugin-file-transfer
+cordova plugin add cordova-plugin-camera
+cordova plugin add org.apache.cordova.geolocation
+cordova plugin add https://github.com/apache/cordova-plugin-whitelist.git
+cordova plugin add https://github.com/pwlin/cordova-plugin-file-opener2.git
+cordova plugin add https://github.com/Initsogar/cordova-webintent.git
+
+
+ionic platform rm android
 ionic platform add android
-ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git
-ionic plugin add cordova-plugin-file
-ionic plugin add cordova-plugin-file-transfer
-ionic plugin add https://github.com/pwlin/cordova-plugin-file-opener2.git
-ionic plugin add https://github.com/Initsogar/cordova-webintent.git
-ionic plugin add org.apache.cordova.camera
