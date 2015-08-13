@@ -15,7 +15,7 @@ angular.module('starter.controllers')
       mapOptions);
         
    //Marker + infowindow + angularjs compiled ng-click
-   var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+   var contentString = "<div><a ng-click='clickTest()'>Pivot : Seoul station</br>Click?</a></div>";
    var compiled = $compile(contentString)($scope);
 
    var infowindow = new google.maps.InfoWindow({
@@ -25,7 +25,7 @@ angular.module('starter.controllers')
     var marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
-        title: 'Uluru (Ayers Rock)'
+        title: 'Pivot of Seoul'
     });
 
     google.maps.event.addListener(marker, 'click', function() {
