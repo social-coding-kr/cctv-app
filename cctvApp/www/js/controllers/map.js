@@ -1,43 +1,29 @@
 'use strict';
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile, soc) {
   
-   function initialize() {
-   var myLatlng = new google.maps.LatLng(37.555107, 126.970691);
+      //function init() {
+      	 var map = L.map('map');
+      	 
+         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+            maxZoom: 18
+         }).addTo(map);
+         map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
+
+         var Seoul = new L.LatLng(37.555107, 126.970691); // geographical point (longitude and latitude)
+         map.setView(Seoul, 13);
+               
+         //var marker = L.marker([37.555107, 126.970691]).addTo(map);
+         //marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
         
-   var mapOptions = {
-          center: myLatlng,
-          zoom: 16,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-   };
-   var map = new google.maps.Map(document.getElementById("map"),
-      mapOptions);
-        
-   //Marker + infowindow + angularjs compiled ng-click
-   var contentString = "<div><a ng-click='clickTest()'>Pivot : Seoul station</br>Click?</a></div>";
-   var compiled = $compile(contentString)($scope);
+         $scope.map = map;
+      //}
 
-   var infowindow = new google.maps.InfoWindow({
-      content: compiled[0]
-    });
-
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title: 'Pivot of Seoul'
-    });
-
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map,marker);
-    });
-
-    $scope.map = map;
-    }
-      
-    google.maps.event.addDomListener(window, 'load', initialize);
       
     $scope.centerOnMe = function() {
+        //soc.log("hahaha" + JSON.stringify($scope.map));
         if(!$scope.map) {
           return;
         }
@@ -48,7 +34,9 @@ angular.module('starter.controllers')
         });
 
         navigator.geolocation.getCurrentPosition(function(pos) {
-          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        //soc.log(JSON.stringify($scope.map));
+          var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
+          $scope.map.setView(Location, 13);
           $scope.loading.hide();
         }, function(error) {
           alert('Unable to get location: ' + error.message);
