@@ -1,0 +1,15 @@
+<ion-view view-title="cctv 찍는 화면">
+  <ion-content paddig="true">
+    <h3>cctv 찍는 화면</h3>
+    <button ng-click="getPhoto()" class="button button-block button-primary">사진을 찍겠소?</button>
+    <button ng-click="photoLocation()" class="button button-block button-primary">사진의 위치는?</button>
+    <pre>{{testText}}<br>{{lastCctvPhoto}}</pre>
+    <img ng-src="{{lastCctvPhoto}}" style="max-width: 100%" />
+        
+    <div class="bar bar-footer">
+      <button ng-click="hasHangBoard()" ng-show="{{lastCctvPhoto === basicPhoto}}" class="button button-block button-primary">
+        다음
+      </button>
+    </div>
+  </ion-content>
+</ion-view>

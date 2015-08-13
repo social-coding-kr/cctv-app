@@ -14,9 +14,9 @@
     </ul>
 
     <textarea name="develLog" id="devel_log" readonly="readonly">
-      {{ console_text }}
+      {{ soc.log.output }}
     </textarea>
-    <button class="button button-stable" ng-click="applog.clear()">
+    <button class="button button-stable" ng-click="soc.log.clear()">
       로그 삭제
     </button>
     
@@ -34,6 +34,10 @@
 
     <button class="button button-stable" ng-click="update_apk('clubsandwich')">
       앱 업데이트(clubsandwich)
+    </button>
+    
+    <button class="button button-stable" ng-click="update_apk('darkgs')">
+      앱 업데이트(darkgs)
     </button>
 
     <button class="button button-stable" ng-click="check_installed()">

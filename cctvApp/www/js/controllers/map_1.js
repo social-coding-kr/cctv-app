@@ -1,9 +1,9 @@
 'use strict';
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($scope, $ionicLoading, $compile, soc) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
   
-      //function init() {
+      function init() {
       	 var map = L.map('map');
       	 
          L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -15,15 +15,14 @@ angular.module('starter.controllers')
          var Seoul = new L.LatLng(37.555107, 126.970691); // geographical point (longitude and latitude)
          map.setView(Seoul, 13);
                
-         //var marker = L.marker([37.555107, 126.970691]).addTo(map);
-         //marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+         var marker = L.marker([37.555107, 126.970691]).addTo(map);
+         marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
         
          $scope.map = map;
-      //}
+      }
 
       
     $scope.centerOnMe = function() {
-        //soc.log("hahaha" + JSON.stringify($scope.map));
         if(!$scope.map) {
           return;
         }
@@ -34,9 +33,7 @@ angular.module('starter.controllers')
         });
 
         navigator.geolocation.getCurrentPosition(function(pos) {
-        //soc.log(JSON.stringify($scope.map));
-          var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
-          $scope.map.setView(Location, 13);
+          $scope.map.setCenter(new L.LatLng(pos.coords.latitude, pos.coords.longitude));
           $scope.loading.hide();
         }, function(error) {
           alert('Unable to get location: ' + error.message);

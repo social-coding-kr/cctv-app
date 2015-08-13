@@ -14,36 +14,39 @@
 
   <ion-side-menu side="left">
     <ion-header-bar class="bar-stable">
-      <h1 class="title">Left</h1>
+      <h1 class="title">Menu</h1>
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item class="item item-icon-left" href="#/app/map">
+        <ion-item menu-close class="item item-icon-left" href="#/app/map">
           <i class="icon ion-map"></i>
           지도보기
         </ion-item>
         <ion-item menu-close ng-click="login()">
           Login
         </ion-item>
-        <ion-item menu-close href="#/app/search" ng-if="config.isDevelModeVisible">
+        <ion-item menu-close href="#/app/search" ng-show="soc.config.isDevelModeVisible">
           Search
         </ion-item>
-        <ion-item menu-close href="#/app/playlists" ng-if="config.isDevelModeVisible">
+        <ion-item menu-close href="#/app/playlists" ng-show="soc.config.isDevelModeVisible">
           Playlists
         </ion-item>
         <ion-item menu-close href="#/app/devel">
           개발자용
         </ion-item>
-        <ion-item menu-close href="#/app/devel2" ng-show="config.isDevelModeVisible">
+        <ion-item menu-close href="#/app/devel2" ng-show="soc.config.isDevelModeVisible">
           개발자용2
         </ion-item>
-        <ion-item menu-close href="#/app/cctvdetail" ng-if="config.isDevelModeVisible">
+        <ion-item menu-close href="#/app/devlog" ng-show="soc.config.isDevelModeVisible">
+          Log
+        </ion-item>
+        <ion-item menu-close href="#/app/cctvdetail" ng-show="soc.config.isDevelModeVisible">
           CCTV 세부정보
         </ion-item>
-        <ion-item menu-close href="#/app/report">
+        <ion-item menu-close href="#/app/takePicture">
           신고용
         </ion-item>
-        <ion-item class="item item-icon-left" href="#/app/config">
+        <ion-item menu-close class="item item-icon-left" href="#/app/config">
           <i class="icon ion-gear-a"></i>
           설정
         </ion-item>
