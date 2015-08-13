@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
-.run(function($ionicPlatform, $rootScope) {
+.run(function($ionicPlatform, $rootScope, soc) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,42 +19,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    
+    $rootScope.soc = soc;
   });
 
-  
-  $rootScope.config = {};
-  $rootScope.config.isDevelOptionEnabled = true; // 최종배포시 false 로 수정한다 // 
-  $rootScope.config.isDevelModeVisible = $rootScope.config.isDevelOptionEnabled; // 초기값을 Enabled 와 동일하게 세팅
-
-
-  
-  // begin global app
-  $rootScope.app = {};
-  
-
-  // end global app
-
-  // begin global server
-  $rootScope.server = {};
-  $rootScope.server.main_url = "http://147.46.215.152:8099/";
-  
-  // end global server
-  
-  // begin global applog
-  $rootScope.console_text = "";
-  $rootScope.applog_num = 0;
-  
-  $rootScope.applog = function(message) {
-    $rootScope.applog_num += 1;
-    $rootScope.console_text += "  [" + $rootScope.applog_num + "] " + message;
-    console.log(message);
-  }
-  
-  $rootScope.applog.clear = function() {
-    $rootScope.applog_num = 0;
-    $rootScope.console_text = "";
-  }
-  // end global applog
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -116,6 +84,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
 
+  .state('app.devlog', {
+    url: '/devlog',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/devlog.html',
+        controller: 'DevelCtrl'
+      }
+    }
+  })
+
   .state('app.cctvdetail', {
     url: '/cctvdetail',
     views: {
@@ -135,12 +113,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
 
-  .state('app.report', {
-    url: '/report',
+  .state('app.takeCctvPicture', {
+    url: '/takePicture', //controller url
     views: {
       'menuContent': {
-        templateUrl: 'templates/report.html', 
-        controller: 'cameraCtrl'
+        templateUrl: 'templates/takeCctvPicture.html', 
+        controller: 'takePictureCtrl'
+      }
+    }
+  })
+  
+  .state('app.selectPurpose', {
+    url: '/selectPurpose', //controller url
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/selectPurpose.html', 
+        controller: 'selectPurposeCtrl'
       }
     }
   })

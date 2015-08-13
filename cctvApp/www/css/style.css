@@ -1,7 +1,17 @@
 /* Empty. Add your own CSS if you like */
 textarea#devel_log {
 	width: 100%;
-	height: 160px;
+	height: 240px;
 	border: 1px solid #cccccc;
 	padding: 5px;
+}
+
+.detail_list {
+	vertical-align: bottom;
+	font-size: 80%;
+}
+
+.detail_name {
+	padding-right: 15px;
+	color: #666666;
 }
