@@ -14,9 +14,13 @@ angular.module('starter.controllers')
       obj.log.num += 1;
       obj.log.output += 
         "  [ SOC_LOG : " + obj.log.num + " ] " + message;
+      var item = "[ " + obj.log.num + " ] " + message;
+      obj.log.items = [item].concat(obj.log.items);
+      //obj.log.items.push(item)
     }
     
     obj.log.clear = function() {
+      obj.log.items = [];
       obj.log.num = 0;
       obj.log.output = "CLEAR... ";
     }

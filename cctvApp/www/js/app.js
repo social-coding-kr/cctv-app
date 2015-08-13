@@ -84,6 +84,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
 
+  .state('app.devlog', {
+    url: '/devlog',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/devlog.html',
+        controller: 'DevelCtrl'
+      }
+    }
+  })
+
   .state('app.cctvdetail', {
     url: '/cctvdetail',
     views: {
