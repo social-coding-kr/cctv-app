@@ -14,9 +14,9 @@
     </ul>
 
     <textarea name="develLog" id="devel_log" readonly="readonly">
-      {{ console_text }}
+      {{ soc.log.output }}
     </textarea>
-    <button class="button button-stable" ng-click="applog.clear()">
+    <button class="button button-stable" ng-click="soc.log.clear()">
       로그 삭제
     </button>
     
