@@ -113,17 +113,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
 
-  .state('app.takeCctvPicture', {
+  .state('app.takePicture', {
     url: '/takePicture', //controller url
     views: {
       'menuContent': {
-        templateUrl: 'templates/takeCctvPicture.html', 
+        templateUrl: 'templates/takePicture.html', 
         controller: 'takePictureCtrl'
       }
     }
   })
   
-  .state('app.selectPurpose', {
+  .state('app.slectPurpose', {
     url: '/selectPurpose', //controller url
     views: {
       'menuContent': {

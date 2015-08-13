@@ -5,7 +5,7 @@ angular.module('starter.controllers')
   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 })
 
-.controller('takePictureCtrl', function($scope, Camera, $ionicPopup, $window, $location) {
+.controller('takePictureCtrl', function($scope, Camera, $ionicPopup, $window, $location, soc) {
   $scope.basicPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9220177/5be109da-411b-11e5-948d-34937938703f.PNG';
   $scope.lastCctvPhoto = $scope.basicPhoto;
   $scope.lastHangBoardPhoto = $scope.basicPhoto;
@@ -48,20 +48,18 @@ angular.module('starter.controllers')
                         text: '안 보입니다.',
                         type: 'button-default',
                         onTap: function(e) {
-                          // $location.path();
-                          // $location.path('/app/selectPurpose').replace();
-                          // $scope.$apply();
-                          // window.location.href = ('#/app/selectPurpose');
-                          $window.location = '#/app/selectPurpose';
-                          /*
-                          $timeout(function() {
-                            $location.path('/app/selectPurpose').replace();
-                          }, 2000);
-                          */
+                          $location.path('/app/selectPurpose');
                         }
                       }]
                       });
   };
+})
+
+.controller('selectPurposeCtrl', function($scope) {
+    $scope.testText2 = 'text2';
+    $scope.test = function() {
+        $scope.testText2 = 'testTextChanged';
+    };
 })
 
 .factory('Camera', ['$q', function($q) {
