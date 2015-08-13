@@ -19,6 +19,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    
+    $rootScope.soc = soc;
   });
 
 })

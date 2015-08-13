@@ -11,7 +11,6 @@ angular.module('starter.controllers')
     //soc.log("navigator.geolocation : " + JSON.stringify(navigator.geolocation));
     //soc.log("navigator.camera : " + JSON.stringify(navigator.camera));
     
-    
   $scope.test_button1_text = 'Rest API 테스트'; // 초기값 
 
   $scope.test_button1_click = function() {

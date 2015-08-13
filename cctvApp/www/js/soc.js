@@ -4,53 +4,46 @@ angular.module('starter.controllers')
 .factory('soc', function($rootScope) {
     
     // initialize    
-    $rootScope.soc = {};
-    var socInRoot = $rootScope.soc;
-    socInRoot.console_output = "";
+    //$rootScope.soc = {};
+    //var obj = $rootScope.soc;
     
-    var mock_data = 'data_mock';
-    var sub = {};
-    sub.A = "A";
-
-
-    // log
-    var log = function(message) { 
+    var obj = {};
+    
+    obj.log = function(message) {
       console.log("SOC_LOG : " + message); 
-      log.num += 1;
-      socInRoot.console_output += 
-      "  [ SOC_LOG : " + log.num + " ] " + message;
+      obj.log.num += 1;
+      obj.log.output += 
+        "  [ SOC_LOG : " + obj.log.num + " ] " + message;
     }
     
-    log.clear = function() {
-      log.num = 0;
-      socInRoot.console_output = "CLEAR... ";
+    obj.log.clear = function() {
+      obj.log.num = 0;
+      obj.log.output = "CLEAR... ";
     }
-    
-    log.clear();
+    obj.log.clear();
     // log      
 
     // server
-    socInRoot.server = {};
-    socInRoot.server.main_url = "http://147.46.215.152:8099/";
+    obj.server = {};
+    obj.server.main_url = "http://147.46.215.152:8099/";
 
     // server
 
     // config
-    socInRoot.config = {};
-    socInRoot.config.isDevelOptionEnabled = true;
-    socInRoot.config.isDevelModeVisible = socInRoot.config.isDevelOptionEnabled;    
+    obj.config = {};
+    obj.config.isDevelOptionEnabled = true;
+    obj.config.isDevelModeVisible = obj.config.isDevelOptionEnabled;    
     
     // config
 
-
-
+    return obj;
+/*
     return {
-        getMock : function() { return mock_data; },
-        log : log,
-        server : socInRoot.server,
-        config : socInRoot.config,
+        log : obj.log,
+        server : obj.server,
+        config : obj.config,
         _tail : null
     }
-
+*/
 })
 ;
