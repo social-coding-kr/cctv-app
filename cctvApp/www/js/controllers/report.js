@@ -62,15 +62,24 @@ angular.module('starter.controllers')
   }
 })
 
-.controller('confirmReportCtrl', function($scope, $location, $window) {
+.controller('confirmReportCtrl', function($scope, $location, $timeout, $window, $ionicPopup) {
+  
   $scope.report = function() {
-    $location.path('/app/map');
-    $window.location.reload();
+    var successPopup = $ionicPopup.show({title :'성공적으로 등록되었습니다.'});
+    $timeout(function(){
+      successPopup.close();
+      $location.path('/app/map');
+      $window.location.reload();
+    }, 1000);
   }
   
   $scope.cancel =function() {
-    $location.path('/app/map');
-    $window.location.reload();
+    var cancelPopup = $ionicPopup.show({title :'등록을 취소했습니다.'});
+    $timeout(function(){
+      cancelPopup.close();
+      $location.path('/app/map');
+      $window.location.reload();
+    }, 1000);
   }
 })
 
