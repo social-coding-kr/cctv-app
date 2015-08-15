@@ -5,21 +5,19 @@ angular.module('starter.controllers')
   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 })
 
-.controller('takePictureCtrl', function($scope, Camera, $ionicPopup, $window, $location, soc) {
+.controller('takePictureCtrl', function($scope, Camera, $ionicPopup, $window, $location, $rootScope) {
   $scope.basicPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9220177/5be109da-411b-11e5-948d-34937938703f.PNG';
-  $scope.lastCctvPhoto = $scope.basicPhoto;
-  $scope.lastHangBoardPhoto = $scope.basicPhoto;
-  $scope.testText = 'Before take picture';
+  $rootScope.lastCctvPhoto = $scope.basicPhoto;
+  $rootScope.lastHangBoardPhoto = $scope.basicPhoto;
   
   $scope.getPhoto = function() {
     Camera.getPicture().then(function(imageURI) {
       console.log(imageURI);
-      if($scope.lastCctvPhoto === $scope.basicPhoto) {
-        $scope.lastCctvPhoto = imageURI;
+      if($rootScope.lastCctvPhoto === $scope.basicPhoto) {
+        $rootScope.lastCctvPhoto = imageURI;
       } else {
-        $scope.lastHangBoardPhoto = imageURI;
+        $rootScope.lastHangBoardPhoto = imageURI;
       }
-      $scope.testText = 'After take picture';
     }, function(err) {
       console.err(err);
     }, {
@@ -31,8 +29,8 @@ angular.module('starter.controllers')
   };
   
   $scope.photoLocation = function() {
-    alert($scope.lastCctvPhoto);
-    alert($scope.lastHangBoardPhoto);
+    alert($rootScope.lastCctvPhoto);
+    alert($rootScope.lastHangBoardPhoto);
   };
   
   $scope.hasHangBoard = function() {
@@ -48,18 +46,32 @@ angular.module('starter.controllers')
                         text: '안 보입니다.',
                         type: 'button-default',
                         onTap: function(e) {
-                          $location.path('/app/selectPurpose');
+                          $location.path('/app/confirmReport');
                         }
                       }]
                       });
   };
 })
 
-.controller('selectPurposeCtrl', function($scope) {
-    $scope.testText2 = 'text2';
-    $scope.test = function() {
-        $scope.testText2 = 'testTextChanged';
-    };
+.controller('selectPurposeCtrl', function($rootScope, $scope, $location) {
+  $rootScope.purposeForReport = [{text :'방범용', checked : false}, 
+                                {text :'재난 방지용', checked : false}];
+                    
+  $scope.select = function() {
+    $location.path('/app/confirmReport');
+  }
+})
+
+.controller('confirmReportCtrl', function($scope, $location, $window) {
+  $scope.report = function() {
+    $location.path('/app/map');
+    $window.location.reload();
+  }
+  
+  $scope.cancel =function() {
+    $location.path('/app/map');
+    $window.location.reload();
+  }
 })
 
 .factory('Camera', ['$q', function($q) {

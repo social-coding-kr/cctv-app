@@ -114,7 +114,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   })
 
   .state('app.takePicture', {
-    url: '/takePicture', //controller url
+    url: '/takePicture',
     views: {
       'menuContent': {
         templateUrl: 'templates/takePicture.html', 
@@ -124,11 +124,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   })
   
   .state('app.slectPurpose', {
-    url: '/selectPurpose', //controller url
+    url: '/selectPurpose',
     views: {
       'menuContent': {
         templateUrl: 'templates/selectPurpose.html', 
         controller: 'selectPurposeCtrl'
+      }
+    }
+  })
+  
+  .state('app.confirmReport', {
+    url: '/confirmReport',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/confirmReport.html', 
+        controller: 'confirmReportCtrl'
       }
     }
   })
