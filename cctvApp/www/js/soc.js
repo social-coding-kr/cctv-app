@@ -32,6 +32,29 @@ angular.module('starter.controllers')
     obj.server.main_url = "http://147.46.215.152:8099/";
 
     // server
+    obj.getDefaultLocation = function() {
+      return {
+        lat: 37.555107,
+        lon: 126.970691
+      }
+    }
+    
+    // GPS 정보
+    obj.currentLocation = {
+        lat: 37.555107,
+        lon: 126.970691
+    };
+    
+    obj.getCurrentLocation = function() {
+      return obj.currentLocation;
+    }
+    
+    obj.setCurrentLocation = function(lat, lon) {
+      obj.currentLocation.lat = lat;
+      obj.currentLocation.lon = lon;
+    }
+    
+
 
     // config
     obj.config = {};

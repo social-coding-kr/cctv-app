@@ -3,8 +3,8 @@ angular.module('starter.controllers', [])
 .factory('$exceptionHandler', function() {
   return function(exception, cause) {
     exception.message += ' (caused by "' + cause + '")';
-    console.log("[ " + exception.message + "]");
-    alert("[ " + exception.message + "]");
+    console.log("[ERROR " + exception.message + "]");
+    alert("[ERROR " + exception.message + "]");
   };
 })
 
