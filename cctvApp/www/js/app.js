@@ -27,8 +27,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
 })
 
-    
-
 .config(function($stateProvider, $urlRouterProvider, $provide) {
 
 //** Exception Handling
@@ -111,6 +109,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
   
   $stateProvider
+  
     .state('app', {
     url: '/app',
     abstract: true,
@@ -182,7 +181,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     views: {
       'menuContent': {
         templateUrl: 'templates/cctvdetail.html',
-        controller: 'CCTVDetailCtrl'
+        controller: 'CCTVAPITestCtrl'
+      }
+    }
+  })
+  
+  .state('app.cctvApiTest', {
+    url: '/cctvApiTest',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/cctvApiTest.html',
+        controller: 'CCTVAPITestCtrl'
+      }
+    }
+  })
+  
+  .state('app.bonhunTest', {
+    url: '/bonhunTest',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/bonhunTest.html',
+        controller: 'BonhunTestCtrl'
       }
     }
   })
@@ -235,6 +254,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   });
+  
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/map');
 });
