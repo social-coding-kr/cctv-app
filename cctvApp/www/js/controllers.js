@@ -1,13 +1,5 @@
 angular.module('starter.controllers', [])
 
-.factory('$exceptionHandler', function() {
-  return function(exception, cause) {
-    exception.message += ' (caused by "' + cause + '")';
-    console.log("[ERROR " + exception.message + "]");
-    alert("[ERROR " + exception.message + "]");
-  };
-})
-
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
   // With the new view caching in Ionic, Controllers are only called
