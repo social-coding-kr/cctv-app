@@ -62,7 +62,7 @@ angular.module('starter.controllers')
   }
 })
 
-.controller('confirmReportCtrl', function($scope, $location, $timeout, $window, $cordovaToast, soc) {
+.controller('confirmReportCtrl', function($rootScope, $scope, $location, $timeout, $window, $cordovaToast, soc) {
   
   $scope.report = function() {
     
@@ -74,6 +74,7 @@ angular.module('starter.controllers')
       // error
     });
     
+    $rootScope.reportClicked = false;
     $location.path('/app/map');
     $window.location.reload();
   }
@@ -88,6 +89,7 @@ angular.module('starter.controllers')
       // error
     });
     
+    $rootScope.reportClicked = false;
     $location.path('/app/map');
     $window.location.reload();
   }
