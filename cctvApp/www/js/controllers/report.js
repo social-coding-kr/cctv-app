@@ -5,7 +5,7 @@ angular.module('starter.controllers')
   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 })
 
-.controller('takePictureCtrl', function($scope, Camera, $ionicPopup, $window, $location, $rootScope) {
+.controller('takePictureCtrl', function($scope, Camera, $ionicPopup, $window, $location, $rootScope, soc) {
   $scope.basicPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9220177/5be109da-411b-11e5-948d-34937938703f.PNG';
   $rootScope.lastCctvPhoto = $scope.basicPhoto;
   $rootScope.lastHangBoardPhoto = $scope.basicPhoto;
@@ -19,7 +19,7 @@ angular.module('starter.controllers')
         $rootScope.lastHangBoardPhoto = imageURI;
       }
     }, function(err) {
-      console.err(err);
+      soc.log(err);
     }, {
       quality: 75,
       targetWidth: 320,
@@ -62,24 +62,34 @@ angular.module('starter.controllers')
   }
 })
 
-.controller('confirmReportCtrl', function($scope, $location, $timeout, $window, $ionicPopup) {
+.controller('confirmReportCtrl', function($scope, $location, $timeout, $window, $cordovaToast, soc) {
   
   $scope.report = function() {
-    var successPopup = $ionicPopup.show({title :'성공적으로 등록되었습니다.'});
-    $timeout(function(){
-      successPopup.close();
-      $location.path('/app/map');
-      $window.location.reload();
-    }, 1000);
+    
+    $cordovaToast
+    .show('성공적으로 등록되었습니다', 'long', 'bottom')
+    .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });
+    
+    $location.path('/app/map');
+    $window.location.reload();
   }
   
   $scope.cancel =function() {
-    var cancelPopup = $ionicPopup.show({title :'등록을 취소했습니다.'});
-    $timeout(function(){
-      cancelPopup.close();
-      $location.path('/app/map');
-      $window.location.reload();
-    }, 1000);
+    
+    $cordovaToast
+    .show('등록을 취소했습니다', 'long', 'bottom')
+    .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });
+    
+    $location.path('/app/map');
+    $window.location.reload();
   }
 })
 
