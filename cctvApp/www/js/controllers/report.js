@@ -7,14 +7,17 @@ angular.module('starter.controllers')
 
 .controller('takePictureCtrl', function($scope, Camera, $ionicPopup, $window, $location, $rootScope, soc) {
   $scope.basicPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9220177/5be109da-411b-11e5-948d-34937938703f.PNG';
-  $rootScope.lastCctvPhoto = $scope.basicPhoto;
+  $scope.basicCctvPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9313406/cb8a09a8-455d-11e5-93fc-923d1d054b2e.PNG';
+  $scope.cctvPhotoTaken = false;
+  $rootScope.lastCctvPhoto = $scope.basicCctvPhoto;
   $rootScope.lastHangBoardPhoto = $scope.basicPhoto;
   
   $scope.getPhoto = function() {
     Camera.getPicture().then(function(imageURI) {
       console.log(imageURI);
-      if($rootScope.lastCctvPhoto === $scope.basicPhoto) {
+      if($rootScope.lastCctvPhoto === $scope.basicCctvPhoto) {
         $rootScope.lastCctvPhoto = imageURI;
+        $scope.cctvPhotoTaken = true;
       } else {
         $rootScope.lastHangBoardPhoto = imageURI;
       }
@@ -29,6 +32,7 @@ angular.module('starter.controllers')
   };
   
   $scope.photoLocation = function() {
+    alert($scope.basicCctvPhoto);
     alert($rootScope.lastCctvPhoto);
     alert($rootScope.lastHangBoardPhoto);
   };
@@ -77,7 +81,7 @@ angular.module('starter.controllers')
     $rootScope.reportClicked = false;
     $location.path('/app/map');
     $window.location.reload();
-  }
+  };
   
   $rootScope.reportCancelled =function() {
     
@@ -92,7 +96,7 @@ angular.module('starter.controllers')
     $rootScope.reportClicked = false;
     $location.path('/app/map');
     $window.location.reload();
-  }
+  };
 })
 
 .factory('Camera', ['$q', function($q) {
