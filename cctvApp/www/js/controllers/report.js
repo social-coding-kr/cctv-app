@@ -79,7 +79,7 @@ angular.module('starter.controllers')
     $window.location.reload();
   }
   
-  $scope.cancel =function() {
+  $rootScope.reportCancelled =function() {
     
     $cordovaToast
     .show('등록을 취소했습니다', 'long', 'bottom')

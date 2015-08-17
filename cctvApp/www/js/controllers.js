@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -50,6 +50,26 @@ angular.module('starter.controllers', [])
   $rootScope.nowReportUnclicked = function() {
     $rootScope.reportClicked = false;
     return $rootScope.reportClicked;    
+  };
+  
+  $scope.locationInfoConfirm = function() {
+    $ionicPopup.show({title :'위치정보 제공에 동의하십니까?',
+                      buttons: [{ 
+                        text: '네, 동의합니다',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                          $rootScope.centerOnMe();
+                          $rootScope.reportClicked = true;
+                        }
+                      }, {
+                        text: '아니오',
+                        type: 'button-default',
+                        onTap: function(e) {
+                          $rootScope.reportClicked = false;
+                          $rootScope.reportCancelled();
+                        }
+                      }]
+                      });
   }
 })
 
