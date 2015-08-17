@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($scope, $ionicLoading, $compile, soc) {
+.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $compile, soc) {
   
       //function init() {
       	 var map = L.map('map');
@@ -24,7 +24,7 @@ angular.module('starter.controllers')
       //}
 
       
-    $scope.centerOnMe = function() {
+    $rootScope.centerOnMe = function() {
         //soc.log("hahaha" + JSON.stringify($scope.map));
         if(!$scope.map) {
           return;
