@@ -1,0 +1,27 @@
+<ion-view view-title="CCTV API Test">
+  <ion-content>
+    <style type="text/css">
+    table, td {
+      border:1px solid black;
+    }
+    </style>
+    <div>
+      <h1>CCTV API Test</h1>
+    </div>
+    <div>
+      <button ng-click="req_cctvs()">request cctvs</button>
+    </div>
+    <div>
+      <span>{{res_status}}</span>
+    </div>
+    <table width='100%'>
+      <td>CCTV ID</td><td>Latitude</td><td>Longitude</td><td>Color</td><td>Request Detail</td>
+      <tr ng-repeat="cctv in res_cctvs track by $index">
+        <td>{{cctv.cctvId}}</td><td>{{cctv.latitude}}</td><td>{{cctv.longitude}}</td><td>{{cctv.color}}</td><td align='center'><button ng-click="req_cctv_detail({{$index}})">request</button></td>
+      </tr>
+    </table>
+    <div>
+      <span>{{something}}</span>
+    </div>
+  </ion-content>
+</ion-view>

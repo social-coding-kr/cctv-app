@@ -181,7 +181,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     views: {
       'menuContent': {
         templateUrl: 'templates/cctvdetail.html',
-        controller: 'BonhunTestCtrl'
+        controller: 'CCTVAPITestCtrl'
+      }
+    }
+  })
+  
+  .state('app.cctvApiTest', {
+    url: '/cctvApiTest',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/cctvApiTest.html',
+        controller: 'CCTVAPITestCtrl'
       }
     }
   })
