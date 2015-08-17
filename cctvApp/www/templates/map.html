@@ -12,6 +12,18 @@
         <!--<button ng-click = "test_func()"> {{ Mylocation }} </button>-->
         <button ng-click = "centerOnMe()">My location</button>
       </ion-nav-buttons>
+      <!--등록을 위한 코드임-->
+      <div id="Confirm location of report" ng-show="reportClicked">
+        <div id="Confirm location message" class="bar bar-subfooter">
+          <h4>현재 위치에 cctv를 등록하시겠습니까?</h4>
+        </div>
+        <div id="등록/취소 버튼" class="bar bar-footer" ng-controller="confirmReportCtrl">
+          <div class="button-bar">
+            <a class="button button-positive" href="#/app/takePicture">등록</a>
+            <a class="button button-light" ng-click="cancel()">취소</a>
+          </div>
+        </div>
+      </div>
     </ion-view>
   </body>
 </html>
