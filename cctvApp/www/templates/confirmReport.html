@@ -1,0 +1,33 @@
+<ion-view view-title="CCTV 등록 확인용 화면">
+  <ion-content>
+    <ion-list>   
+    
+      <ion-item class="item-thumbnail-left">
+        <img src="{{lastCctvPhoto}}">
+      </ion-item>
+      
+      <ion-item class="item-divider">세부정보</ion-item>
+      <ion-item>
+        <p>목적</p>
+        <h2 ng-repeat="p in purposeForReport" ng-show="p.checked">{{p.text}}</h2>
+      </ion-item>
+
+      <ion-item>
+        <p>주소</p>
+        <h2>{{}}</h2>
+      </ion-item>
+
+      <ion-item class="item-divider">안내판 내용</ion-item>
+      <ion-item class="item-thumbnail-left">
+        <img src="{{lastHangBoardPhoto}}">
+      </ion-item>
+
+    <ion-list>    
+    
+    <h5>화면과 같이 등록됩니다.</h5>
+    <div class="button-bar">
+      <a class="button button-positive" ng-click="report()">등록</a>
+      <a class="button button-light" ng-click="cancel()">취소</a>
+    </div>
+  </ion-content>
+</ion-view>

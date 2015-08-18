@@ -15,7 +15,7 @@ angular.module('starter.controllers')
 
   $scope.test_button1_click = function() {
 
-    $http.get(soc.server.main_url + "cctv/validate?latitude=1&longitude=1")
+    $http.get(soc.server.mainUrl + "cctv/validate?latitude=1&longitude=1")
       .then(function(response) {
         $scope.cctvs = response.data.cctvs;
         soc.log(JSON.stringify(response));      
