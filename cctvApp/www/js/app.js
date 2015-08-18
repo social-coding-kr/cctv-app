@@ -214,6 +214,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
+  
+  .state('app.developtions', {
+    url: '/developtions',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/developtions.html'
+      }
+    }
+  })
+  
 
   .state('app.takePicture', {
     url: '/takePicture',
