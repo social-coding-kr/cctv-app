@@ -8,11 +8,17 @@
             </ion-item>
             
             <!-- 개발용 기능 활성화 / 최종 배포시에는 나오지 않아야 한다 -->
-            <ion-toggle toggle-class="toggle-positive" 
-                ng-if="soc.config.isDevelOptionEnabled" ng-model="soc.config.isDevelModeVisible">
-                개발자 옵션
-            </ion-toggle>
             
+            <ion-toggle toggle-class="toggle-positive"
+                ng-if="soc.config.isDevelOptionEnabled" ng-model="soc.config.isDevelModeVisible">
+                <!--ng-click="$location.path('/app/developtions');"-->                
+                개발자 옵션 사용
+            </ion-toggle>
+            <ion-item href="#/app/developtions"
+                ng-show="soc.config.isDevelModeVisible">
+                개발자 옵션
+            </ion-item>            
+
             <ion-checkbox>CheckBox</ion-checkbox>
 
             <ion-radio>Radio</ion-radio>

@@ -12,11 +12,8 @@ angular.module('starter.controllers')
     obj.log = function(message) {
       console.log("SOC_LOG : " + message); 
       obj.log.num += 1;
-      obj.log.output += 
-        "  [ SOC_LOG : " + obj.log.num + " ] " + message;
-      var item = "[ " + obj.log.num + " ] " + message;
-      obj.log.items = [item].concat(obj.log.items);
-      //obj.log.items.push(item)
+      var logItem = "[ " + obj.log.num + " ] " + message;
+      obj.log.items = [logItem].concat(obj.log.items);
     }
     
     obj.log.clear = function() {
@@ -29,9 +26,32 @@ angular.module('starter.controllers')
 
     // server
     obj.server = {};
-    obj.server.main_url = "http://147.46.215.152:8099/";
+    obj.server.mainUrl = "http://147.46.215.152:8099/";
 
     // server
+    obj.getDefaultLocation = function() {
+      return {
+        lat: 37.555107,
+        lon: 126.970691
+      }
+    }
+    
+    // GPS 정보
+    obj.currentLocation = {
+        lat: 37.555107,
+        lon: 126.970691
+    };
+    
+    obj.getCurrentLocation = function() {
+      return obj.currentLocation;
+    }
+    
+    obj.setCurrentLocation = function(lat, lon) {
+      obj.currentLocation.lat = lat;
+      obj.currentLocation.lon = lon;
+    }
+    
+
 
     // config
     obj.config = {};
@@ -41,13 +61,5 @@ angular.module('starter.controllers')
     // config
 
     return obj;
-/*
-    return {
-        log : obj.log,
-        server : obj.server,
-        config : obj.config,
-        _tail : null
-    }
-*/
 })
 ;

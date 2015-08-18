@@ -21,13 +21,95 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
     
     $rootScope.soc = soc;
+
+
   });
 
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
+.config(function($stateProvider, $urlRouterProvider, $provide) {
 
+//** Exception Handling
+  var debug = true;
+  var track = function() {}
+
+  $provide.decorator('$exceptionHandler', ['$delegate', function($delegate) {
+    return function(exception, cause) {
+      $delegate(exception, cause);
+
+      var data = {
+        type: 'angular',
+        url: window.location.hash,
+        localtime: Date.now()
+      };
+      if (cause) {
+        data.cause = cause;
+      }
+      if (exception) {
+        if (exception.message) {
+          data.message = exception.message;
+        }
+        if (exception.name) {
+          data.name = exception.name;
+        }
+        if (exception.stack) {
+          data.stack = exception.stack;
+        }
+      }
+
+      if (debug) {
+        console.log('exception', data);
+        window.alert('Error: ' + data.message);
+      }
+      else {
+        track('exception', data);
+      }
+    };
+  }]);
+  // catch exceptions out of angular
+  window.onerror = function(message, url, line, col, error) {
+    var stopPropagation = debug ? false : true;
+    var data = {
+      type: 'javascript',
+      url: window.location.hash,
+      localtime: Date.now()
+    };
+    if (message) {
+      data.message = message;
+    }
+    if (url) {
+      data.fileName = url;
+    }
+    if (line) {
+      data.lineNumber = line;
+    }
+    if (col) {
+      data.columnNumber = col;
+    }
+    if (error) {
+      if (error.name) {
+        data.name = error.name;
+      }
+      if (error.stack) {
+        data.stack = error.stack;
+      }
+    }
+
+    if (debug) {
+      console.log('exception', data);
+      window.alert('Error: ' + data.message);
+    }
+    else {
+      track('exception', data);
+    }
+    return stopPropagation;
+  };
+  
+//** Exception Handling
+
+  
+  $stateProvider
+  
     .state('app', {
     url: '/app',
     abstract: true,
@@ -99,7 +181,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     views: {
       'menuContent': {
         templateUrl: 'templates/cctvdetail.html',
-        controller: 'CCTVDetailCtrl'
+        controller: 'CCTVAPITestCtrl'
+      }
+    }
+  })
+  
+  .state('app.cctvApiTest', {
+    url: '/cctvApiTest',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/cctvApiTest.html',
+        controller: 'CCTVAPITestCtrl'
+      }
+    }
+  })
+  
+  .state('app.bonhunTest', {
+    url: '/bonhunTest',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/bonhunTest.html',
+        controller: 'BonhunTestCtrl'
       }
     }
   })
@@ -112,23 +214,43 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
-
-  .state('app.takeCctvPicture', {
-    url: '/takePicture', //controller url
+  
+  .state('app.developtions', {
+    url: '/developtions',
     views: {
       'menuContent': {
-        templateUrl: 'templates/takeCctvPicture.html', 
+        templateUrl: 'templates/developtions.html'
+      }
+    }
+  })
+  
+
+  .state('app.takePicture', {
+    url: '/takePicture',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/takePicture.html', 
         controller: 'takePictureCtrl'
       }
     }
   })
   
-  .state('app.selectPurpose', {
-    url: '/selectPurpose', //controller url
+  .state('app.slectPurpose', {
+    url: '/selectPurpose',
     views: {
       'menuContent': {
         templateUrl: 'templates/selectPurpose.html', 
         controller: 'selectPurposeCtrl'
+      }
+    }
+  })
+  
+  .state('app.confirmReport', {
+    url: '/confirmReport',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/confirmReport.html', 
+        controller: 'confirmReportCtrl'
       }
     }
   })
@@ -142,6 +264,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   });
+  
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/map');
 });

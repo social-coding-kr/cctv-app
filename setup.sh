@@ -12,6 +12,7 @@ cordova plugin add org.apache.cordova.geolocation
 cordova plugin add https://github.com/apache/cordova-plugin-whitelist.git
 cordova plugin add https://github.com/pwlin/cordova-plugin-file-opener2.git
 cordova plugin add https://github.com/Initsogar/cordova-webintent.git
+cordova plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
 
 
 ionic platform rm android
