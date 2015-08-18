@@ -12,11 +12,8 @@ angular.module('starter.controllers')
     obj.log = function(message) {
       console.log("SOC_LOG : " + message); 
       obj.log.num += 1;
-      obj.log.output += 
-        "  [ SOC_LOG : " + obj.log.num + " ] " + message;
-      var item = "[ " + obj.log.num + " ] " + message;
-      obj.log.items = [item].concat(obj.log.items);
-      //obj.log.items.push(item)
+      var logItem = "[ " + obj.log.num + " ] " + message;
+      obj.log.items = [logItem].concat(obj.log.items);
     }
     
     obj.log.clear = function() {
@@ -64,13 +61,5 @@ angular.module('starter.controllers')
     // config
 
     return obj;
-/*
-    return {
-        log : obj.log,
-        server : obj.server,
-        config : obj.config,
-        _tail : null
-    }
-*/
 })
 ;
