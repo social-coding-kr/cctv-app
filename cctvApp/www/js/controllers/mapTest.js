@@ -4,8 +4,8 @@ angular.module('starter.controllers')
 .controller('MapTestCtrl', 
     function($rootScope, $scope, $ionicLoading, $compile, $http, soc) {
 
-    var map = L.map('map');
-    var curLoc = soc.getDefaultLocation();
+    var map = L.map('map2');
+    var curLoc = soc.sindaebang2Loc;
     var Seoul = new L.LatLng(curLoc.lat, curLoc.lon); // geographical point (longitude and latitude)
     map.setView(Seoul, 15);
 
@@ -14,53 +14,74 @@ angular.module('starter.controllers')
         attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
         maxZoom: 18
     }).addTo(map);
-    map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
-
-
-    //var marker = L.marker([37.555107, 126.970691]).addTo(map);
-    //marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 
     $scope.map = map;
+    var markers = new L.FeatureGroup();
+    markers.clearLayers();
     
-    
+        var locationMarker = function(Location, item) {
+            var marker = L.marker(Location);
+            markers.addLayer(marker);
+            map.addLayer(markers);
+            if(item) {
+                marker.bindPopup(
+                    item.연번 + ", " + item.용도 + ", " + item.주소
+                    );
+            }
+            //soc.log(JSON.stringify(Location));
+        }
+
     var dongjak = [];
     $http.get("data/cctv/dongjak.json")
         .then(function(response) {
             dongjak = response.data;
-            soc.log("SUCCESS DONGJAK");
-            soc.log(JSON.stringify(response));
+            soc.log("SUCCESS LOAD DONGJAK");
+            //soc.log(JSON.stringify(response));
         }, function(response) {
-            soc.log("FAILED DONGJAK");
+            soc.log("FAILED LOAD DONGJAK");
             soc.log(JSON.stringify(response));
         });
 
     $scope.convert_dongjak = function() {
-        
-        //json.forEach(function(obj) { console.log(obj.id); });
-        dongjak.forEach(function(item) {
-           soc.log(item.주소);
-        });
-    }
 
-    $rootScope.centerOnMe = function() {
-        //soc.log("hahaha" + JSON.stringify($scope.map));
-        if (!$scope.map) {
-            return;
+        var addPoint = function(item, isLast) {
+
+            var showCctv = function(item) {
+                var Location = new L.LatLng(item.lat, item.lon);
+                locationMarker(Location, item);
+            }
+            
+            if(!item.lat || !item.lon) {
+                var onSuccess = function(point, opts) {
+                    soc.log(JSON.stringify(point));
+                    item.lat = point.y;
+                    item.lon = point.x;
+                    //soc.log(JSON.stringify(item));
+
+                    if (opts) {
+                        soc.log(JSON.stringify(dongjak));
+                    }
+                    showCctv(item);
+                }
+
+                //soc.log(item.연번 + " " + item.주소);
+                soc.getPointFromAddress(item.주소, onSuccess, null, isLast);
+                
+            } else {
+                showCctv(item);
+            }
+            
+        }        
+
+        //for(var i=dongjak.length-2; i<dongjak.length; i++) {
+        for(var i=0; i<dongjak.length; i++) {
+            var isLast = false;
+            if(i == dongjak.length-1) isLast = true;
+            
+            addPoint(dongjak[i], isLast);
         }
-
-        $scope.loading = $ionicLoading.show({
-            content: 'Getting current location...',
-            showBackdrop: false
-        });
-
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            //soc.log(JSON.stringify($scope.map));
-            var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
-            $scope.map.setView(Location, 13);
-            $scope.loading.hide();
-        }, function(error) {
-            alert('Unable to get location: ' + error.message);
-        });
-    };
+    }
+    
+    $scope.convert_dongjak();
 
 })
