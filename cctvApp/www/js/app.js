@@ -255,6 +255,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
 
+
+  .state('app.mapTest', {
+    url: '/mapTest',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/mapTest.html',
+        controller: 'MapTestCtrl'
+      }
+    }
+  })
+
   .state('app.single', {
     url: '/playlists/:playlistId',
     views: {
@@ -264,7 +275,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   });
-  
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/map');
 });
