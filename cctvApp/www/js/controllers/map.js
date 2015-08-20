@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $compile, soc) {
+.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $compile, soc, $ionicViewService) {
 
     var map = L.map('map');
     var curLoc = soc.getDefaultLocation();
@@ -47,4 +47,23 @@ angular.module('starter.controllers')
             alert('Unable to get location: ' + error.message);
         });
     };
+    
+    $ionicViewService.nextViewOptions({
+        disableBack: true
+    });
+    
+    $rootScope.loadingFromReport = function() {
+        if($rootScope.confirmVal === true) {
+            // alert($rootScope.confirm);
+            $ionicViewService.nextViewOptions({
+                disableBack: true
+            });
+            $rootScope.centerOnMe();
+            $rootScope.confirmVal = false;
+        } else {
+            // do nothing
+        }
+    };
+        
+    $rootScope.loadingFromReport();
 })
