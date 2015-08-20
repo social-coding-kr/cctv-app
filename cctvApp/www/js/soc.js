@@ -25,6 +25,8 @@ angular.module('starter.controllers')
     // log      
     obj.log("isWebView: " + ionic.Platform.isWebView());
     obj.log("isAndroid: " + ionic.Platform.isAndroid());
+    obj.log("platform: " + ionic.Platform.platform());
+    obj.log("version: " + ionic.Platform.version());    
 
     
 
