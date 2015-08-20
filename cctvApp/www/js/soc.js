@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers') 
 
-.factory('soc', function($rootScope, $http) {
+.factory('soc', function($rootScope, $http, $localStorage) {
     
     // initialize    
     //$rootScope.soc = {};
@@ -94,8 +94,19 @@ angular.module('starter.controllers')
     // config
     obj.config = {};
     obj.config.isDevelOptionEnabled = true;
-    obj.config.isDevelModeVisible = obj.config.isDevelOptionEnabled;    
     
+    // 스트링을 다시 비교해야 하는게 마음에 안든다
+    obj.config.isDevelModeVisible = $localStorage.get('develModeVisible', 'true') == 'true';
+    obj.log("load develModeVisible: "  + obj.config.isDevelModeVisible
+      + ", " + typeof(obj.config.isDevelModeVisible));    
+
+    obj.config.onChangeDevelModeVisible = function() {
+      obj.log("change develModeVisible: " + obj.config.isDevelModeVisible
+        + ", " + typeof(obj.config.isDevelModeVisible));
+      $localStorage.set('develModeVisible', obj.config.isDevelModeVisible);
+    }
+    
+
     // config
 
     return obj;
