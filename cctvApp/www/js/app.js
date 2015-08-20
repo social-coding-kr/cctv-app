@@ -22,10 +22,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     
     $rootScope.soc = soc;
 
-
   });
 
 })
+
+.factory('$localStorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}])
 
 .config(function($stateProvider, $urlRouterProvider, $provide) {
 
@@ -192,6 +208,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       'menuContent': {
         templateUrl: 'templates/cctvApiTest.html',
         controller: 'CCTVAPITestCtrl'
+      }
+    }
+  })
+  
+  .state('app.oauthApiTest', {
+    url: '/oauthApiTest',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/oauthApiTest.html',
+        controller: 'OauthAPITestCtrl'
       }
     }
   })

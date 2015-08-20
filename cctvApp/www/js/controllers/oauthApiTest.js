@@ -3,7 +3,7 @@ angular.module('starter.controllers')
 
 // 작성자 : 구본헌
 // 2015. 08. 21 : 페이스북 로그인 기능 추가
-.controller('BonhunTestCtrl', function($scope, $cordovaOauth, $localStorage, $http) {
+.controller('OauthAPITestCtrl', function($scope, $cordovaOauth, $localStorage, $http) {
     
     $scope.back_log = '';
     
