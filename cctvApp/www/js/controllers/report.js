@@ -73,6 +73,9 @@ angular.module('starter.controllers')
     $rootScope.cctvPhotoTaken = false;
     $rootScope.lastCctvPhoto = $rootScope.basicCctvPhoto;
     $rootScope.lastHangBoardPhoto = $rootScope.basicPhoto;
+    for(var i = 0; i < $rootScope.purposeForReport.length; i++) {
+      $rootScope.purposeForReport[i].checked = false;
+    }
     
     $cordovaToast
     .show('성공적으로 등록되었습니다', 'long', 'bottom')
@@ -92,6 +95,9 @@ angular.module('starter.controllers')
     $rootScope.cctvPhotoTaken = false;
     $rootScope.lastCctvPhoto = $rootScope.basicCctvPhoto;
     $rootScope.lastHangBoardPhoto = $rootScope.basicPhoto;
+    for(var i = 0; i < $rootScope.purposeForReport.length; i++) {
+      $rootScope.purposeForReport[i].checked = false;
+    }
   
     $cordovaToast
     .show('등록을 취소했습니다', 'long', 'bottom')
