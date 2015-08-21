@@ -6,18 +6,18 @@ angular.module('starter.controllers')
 })
 
 .controller('takePictureCtrl', function($scope, Camera, $ionicPopup, $window, $location, $rootScope, soc) {
-  $scope.basicPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9220177/5be109da-411b-11e5-948d-34937938703f.PNG';
-  $scope.basicCctvPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9313406/cb8a09a8-455d-11e5-93fc-923d1d054b2e.PNG';
-  $scope.cctvPhotoTaken = false;
-  $rootScope.lastCctvPhoto = $scope.basicCctvPhoto;
-  $rootScope.lastHangBoardPhoto = $scope.basicPhoto;
+  $rootScope.basicPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9220177/5be109da-411b-11e5-948d-34937938703f.PNG';
+  $rootScope.basicCctvPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9313406/cb8a09a8-455d-11e5-93fc-923d1d054b2e.PNG';
+  $rootScope.cctvPhotoTaken = false;
+  $rootScope.lastCctvPhoto = $rootScope.basicCctvPhoto;
+  $rootScope.lastHangBoardPhoto = $rootScope.basicPhoto;
   
   $scope.getPhoto = function() {
     Camera.getPicture().then(function(imageURI) {
       console.log(imageURI);
       if($rootScope.lastCctvPhoto === $scope.basicCctvPhoto) {
         $rootScope.lastCctvPhoto = imageURI;
-        $scope.cctvPhotoTaken = true;
+        $rootScope.cctvPhotoTaken = true;
       } else {
         $rootScope.lastHangBoardPhoto = imageURI;
       }
@@ -66,9 +66,16 @@ angular.module('starter.controllers')
   }
 })
 
-.controller('confirmReportCtrl', function($rootScope, $scope, $location, $timeout, $window, $cordovaToast, soc) {
+.controller('confirmReportCtrl', function($rootScope, $scope, $location, $timeout, $cordovaToast) {
+  $rootScope.confirmVal = false;
   
   $scope.report = function() {
+    $rootScope.cctvPhotoTaken = false;
+    $rootScope.lastCctvPhoto = $rootScope.basicCctvPhoto;
+    $rootScope.lastHangBoardPhoto = $rootScope.basicPhoto;
+    for(var i = 0; i < $rootScope.purposeForReport.length; i++) {
+      $rootScope.purposeForReport[i].checked = false;
+    }
     
     $cordovaToast
     .show('성공적으로 등록되었습니다', 'long', 'bottom')
@@ -78,13 +85,20 @@ angular.module('starter.controllers')
       // error
     });
     
+    $rootScope.confirmVal = true;
     $rootScope.reportClicked = false;
     $location.path('/app/map');
-    $window.location.reload();
+    $rootScope.loadingFromReport();
   };
   
-  $rootScope.reportCancelled =function() {
-    
+  $rootScope.reportCancelled = function() {
+    $rootScope.cctvPhotoTaken = false;
+    $rootScope.lastCctvPhoto = $rootScope.basicCctvPhoto;
+    $rootScope.lastHangBoardPhoto = $rootScope.basicPhoto;
+    for(var i = 0; i < $rootScope.purposeForReport.length; i++) {
+      $rootScope.purposeForReport[i].checked = false;
+    }
+  
     $cordovaToast
     .show('등록을 취소했습니다', 'long', 'bottom')
     .then(function(success) {
@@ -93,9 +107,10 @@ angular.module('starter.controllers')
       // error
     });
     
+    $rootScope.confirmVal = true;
     $rootScope.reportClicked = false;
     $location.path('/app/map');
-    $window.location.reload();
+    $rootScope.loadingFromReport();
   };
 })
 

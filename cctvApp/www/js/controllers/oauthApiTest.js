@@ -3,7 +3,7 @@ angular.module('starter.controllers')
 
 // 작성자 : 구본헌
 // 2015. 08. 21 : 페이스북 로그인 기능 추가
-.controller('BonhunTestCtrl', function($scope, $cordovaOauth, $localStorage, $http) {
+.controller('OauthAPITestCtrl', function($scope, $cordovaOauth, $localStorage, $http) {
     
     $scope.back_log = '';
     
@@ -28,7 +28,6 @@ angular.module('starter.controllers')
                     $scope.facebook_profile = result.data;
                 }, function(error) {
                     // 토큰이 만료된 것 일 수 있습니다.
-                    // - 여기서 로그인을 부르는 것이 맞는가? 무한히 불릴 가능성은?
                     $scope.facebook_logout();
                     $scope.facebook_login();
                 }

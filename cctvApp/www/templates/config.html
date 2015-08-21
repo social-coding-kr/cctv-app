@@ -10,8 +10,9 @@
             <!-- 개발용 기능 활성화 / 최종 배포시에는 나오지 않아야 한다 -->
             
             <ion-toggle toggle-class="toggle-positive"
-                ng-if="soc.config.isDevelOptionEnabled" ng-model="soc.config.isDevelModeVisible">
-                <!--ng-click="$location.path('/app/developtions');"-->                
+                ng-if="soc.config.isDevelOptionEnabled" 
+                ng-model="soc.config.isDevelModeVisible"
+                ng-change="soc.config.onChangeDevelModeVisible()">
                 개발자 옵션 사용
             </ion-toggle>
             <ion-item href="#/app/developtions"
