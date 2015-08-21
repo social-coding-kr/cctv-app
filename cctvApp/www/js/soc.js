@@ -33,7 +33,12 @@ angular.module('starter.controllers')
     obj.log("window.openDatabase: " + (window.openDatabase !== undefined));
     obj.log("navigator.geolocation: " + (navigator.geolocation !== undefined));
     obj.log("navigator.userAgent: " + JSON.stringify(navigator.userAgent));
-    
+    obj.log("navigator.platform: " + JSON.stringify(navigator.platform));    
+
+    // 아래는 의미없는 정보
+    //obj.log("navigator.appName: " + JSON.stringify(navigator.appName));
+    //obj.log("navigator.appVersion: " + JSON.stringify(navigator.appVersion));
+    //obj.log("navigator.appCodeName: " + JSON.stringify(navigator.appCodeName));
 
     // server
     obj.server = {};
