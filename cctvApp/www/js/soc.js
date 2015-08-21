@@ -23,11 +23,16 @@ angular.module('starter.controllers')
     }
     obj.log.clear();
     // log      
+    
+    // device 정보 출력
     obj.log("isWebView: " + ionic.Platform.isWebView());
     obj.log("isAndroid: " + ionic.Platform.isAndroid());
     obj.log("platform: " + ionic.Platform.platform());
     obj.log("version: " + ionic.Platform.version());    
-
+    obj.log("window.localStorage: " + (window.localStorage !== undefined));
+    obj.log("window.openDatabase: " + (window.openDatabase !== undefined));
+    obj.log("navigator.geolocation: " + (navigator.geolocation !== undefined));
+    obj.log("navigator.userAgent: " + JSON.stringify(navigator.userAgent));
     
 
     // server
