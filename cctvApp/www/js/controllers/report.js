@@ -73,8 +73,10 @@ angular.module('starter.controllers')
     $rootScope.cctvPhotoTaken = false;
     $rootScope.lastCctvPhoto = $rootScope.basicCctvPhoto;
     $rootScope.lastHangBoardPhoto = $rootScope.basicPhoto;
-    for(var i = 0; i < $rootScope.purposeForReport.length; i++) {
-      $rootScope.purposeForReport[i].checked = false;
+    if($rootScope.purposeForReport !== undefined) {
+      for(var i = 0; i < $rootScope.purposeForReport.length; i++) {
+        $rootScope.purposeForReport[i].checked = false;
+      }
     }
     
     $cordovaToast
@@ -95,8 +97,10 @@ angular.module('starter.controllers')
     $rootScope.cctvPhotoTaken = false;
     $rootScope.lastCctvPhoto = $rootScope.basicCctvPhoto;
     $rootScope.lastHangBoardPhoto = $rootScope.basicPhoto;
-    for(var i = 0; i < $rootScope.purposeForReport.length; i++) {
-      $rootScope.purposeForReport[i].checked = false;
+    if($rootScope.purposeForReport !== undefined) {
+      for(var i = 0; i < $rootScope.purposeForReport.length; i++) {
+        $rootScope.purposeForReport[i].checked = false;
+      }
     }
   
     $cordovaToast
