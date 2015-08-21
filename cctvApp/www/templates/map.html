@@ -21,6 +21,12 @@
         <!--<button ng-click = "test_func()"> {{ Mylocation }} </button>-->
         <button ng-click = "centerOnMe()">My location</button>
       </ion-nav-buttons>
+      
+      <!--재조회 버튼-->
+      <ion-nav-buttons side="secondary">
+        <button ng-click = "centerOnMe()">Reload</button>
+      </ion-nav-buttons>
+      
       <!--등록을 위한 코드임-->
       <div id="Confirm location of report" ng-show="reportClicked">
         <div id="Confirm location message" class="bar bar-subfooter">

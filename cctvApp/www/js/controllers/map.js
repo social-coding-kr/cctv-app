@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $compile, soc) {
+.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc, $cordovaGeolocation) {
 
     var map = L.map('map');
     var curLoc = soc.getDefaultLocation();
@@ -17,6 +17,18 @@ angular.module('starter.controllers')
     $scope.map = map;
     var markers = new L.FeatureGroup();
     
+/*    var dongjak = [];
+    $http.get("data/cctv/dongjak.json")
+        .then(function(response) {
+            dongjak = response.data;
+            soc.log("SUCCESS LOAD DONGJAK");
+            //soc.log(JSON.stringify(response));
+        }, function(response) {
+            soc.log("FAILED LOAD DONGJAK");
+            soc.log(JSON.stringify(response));
+        });
+*/
+    
     function MyLocationMarker(Location) {
         var marker = L.marker(Location);
         markers.addLayer(marker);
@@ -26,7 +38,6 @@ angular.module('starter.controllers')
     }
 
     $rootScope.centerOnMe = function() {
-        //soc.log("hahaha" + JSON.stringify($scope.map));
         if(!$scope.map) {
           return;
         }
@@ -35,16 +46,31 @@ angular.module('starter.controllers')
           content: 'Getting current location...',
           showBackdrop: false
         });
-
-        navigator.geolocation.getCurrentPosition(function(pos) {
-        //soc.log(JSON.stringify($scope.map));
-            markers.clearLayers();
+        
+        markers.clearLayers();
+        if(ionic.Platform.isWebView() == true) {
+        // 플러그인 사용
+            var posOptions = {timeout: 10000, enableHighAccuracy: true, maximumAge: 60000};
+            $cordovaGeolocation
+                .getCurrentPosition(posOptions)
+                .then(function (pos) {
+                 var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
+                 MyLocationMarker(Location);
+                 $scope.map.setView(Location, 15);
+                }, function(err) {
+                    alert('Unable to get location: ' + error.message);
+                });
+        } else {
+	        // html5 기존 함수 사용
+	        navigator.geolocation.getCurrentPosition(function(pos) {
             var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
             MyLocationMarker(Location);
             $scope.map.setView(Location, 15);
-            $ionicLoading.hide();
-        }, function(error) {
-            alert('Unable to get location: ' + error.message);
-        });
+            }, function(error) {
+                alert('Unable to get location: ' + error.message);
+            });    
+        }
+
+        $ionicLoading.hide();
     };
 })
