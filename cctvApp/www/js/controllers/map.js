@@ -54,16 +54,16 @@ angular.module('starter.controllers')
         markers.clearLayers();
         if(ionic.Platform.isWebView() == true) {
         // 플러그인 사용
-            var posOptions = {timeout: 10000, enableHighAccuracy: true, maximumAge: 60000};
+            var posOptions = {timeout: 10000, enableHighAccuracy: false};
             $cordovaGeolocation
-                .getCurrentPosition(posOptions)
-                .then(function (pos) {
+            .getCurrentPosition(posOptions)
+            .then(function (pos) {
                  var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
                  MyLocationMarker(Location);
                  $scope.map.setView(Location, 15);
-                }, function(err) {
-                    alert('Unable to get location: ' + error.message);
-                });
+            }, function(err) {
+                alert('Unable to get location: ' + error.message);
+            });
         } else {
 	        // html5 기존 함수 사용
 	        navigator.geolocation.getCurrentPosition(function(pos) {
@@ -74,7 +74,6 @@ angular.module('starter.controllers')
                 alert('Unable to get location: ' + error.message);
             });    
         }
-
         $ionicLoading.hide();
     };
 /*    
