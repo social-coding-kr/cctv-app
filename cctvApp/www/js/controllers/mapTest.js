@@ -19,9 +19,15 @@ angular.module('starter.controllers')
     var markers = new L.FeatureGroup();
     markers.clearLayers();
     
+    var simpleIcon = L.divIcon({
+        className: 'css-simple-marker',
+        iconSize: [20, 20]
+    });
+    
     var locationMarker = function(Location, item) {
-
-        var marker = L.marker(Location);
+        
+        //var marker = L.marker(Location);
+        var marker = L.marker(Location, {icon: simpleIcon});
         markers.addLayer(marker);
         
         if(item) {
