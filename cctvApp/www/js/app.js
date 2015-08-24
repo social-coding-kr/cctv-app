@@ -22,10 +22,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     
     $rootScope.soc = soc;
 
-
   });
 
 })
+
+.factory('$localStorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}])
 
 .config(function($stateProvider, $urlRouterProvider, $provide) {
 
@@ -196,6 +212,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
   
+  .state('app.oauthApiTest', {
+    url: '/oauthApiTest',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/oauthApiTest.html',
+        controller: 'OauthAPITestCtrl'
+      }
+    }
+  })
+  
   .state('app.bonhunTest', {
     url: '/bonhunTest',
     views: {
@@ -255,6 +281,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
 
+
+  .state('app.mapTest', {
+    url: '/mapTest',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/mapTest.html',
+        controller: 'MapTestCtrl'
+      }
+    }
+  })
+
   .state('app.single', {
     url: '/playlists/:playlistId',
     views: {
@@ -264,7 +301,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   });
-  
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/map');
 });
