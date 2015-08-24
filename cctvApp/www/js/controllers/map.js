@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc, $cordovaGeolocation, $ionicViewService, $ionicPopup) {
+.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc, $cordovaGeolocation, $ionicHistory, $ionicPopup) {
 
     var map = L.map('map');
     var curLoc = soc.getDefaultLocation();
@@ -85,14 +85,14 @@ angular.module('starter.controllers')
     };
     
     // 등록 확정화면에서 넘어올 때 현재 위치를 잡아주고 뒤로가기 버튼을 없애주는 함수
-    $ionicViewService.nextViewOptions({
+    $ionicHistory.nextViewOptions({
         disableBack: true
     });
     
     $rootScope.loadingFromReport = function() {
         if($rootScope.confirmVal === true) {
             // alert($rootScope.confirm);
-            $ionicViewService.nextViewOptions({
+            $ionicHistory.nextViewOptions({
                 disableBack: true
             });
             $rootScope.centerOnMe();
