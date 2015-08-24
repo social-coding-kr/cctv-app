@@ -19,17 +19,18 @@ angular.module('starter.controllers')
     var markers = new L.FeatureGroup();
     markers.clearLayers();
     
-        var locationMarker = function(Location, item) {
-            var marker = L.marker(Location);
-            markers.addLayer(marker);
-            map.addLayer(markers);
-            if(item) {
-                marker.bindPopup(
-                    item.연번 + ", " + item.용도 + ", " + item.주소
-                    );
-            }
-            //soc.log(JSON.stringify(Location));
+    var locationMarker = function(Location, item) {
+
+        var marker = L.marker(Location);
+        markers.addLayer(marker);
+        
+        if(item) {
+            marker.bindPopup(
+                item.연번 + ", " + item.용도 + ", " + item.주소
+                );
         }
+        //soc.log(JSON.stringify(Location));
+    }
 
     var dongjak = [];
     $http.get("data/cctv/dongjak.json")
@@ -80,6 +81,9 @@ angular.module('starter.controllers')
             
             addPoint(dongjak[i], isLast);
         }
+        
+        // makers 그룹은 변환 후 한번만 추가해 주는 것이 성능에 도움이 됩니다.
+        map.addLayer(markers);
     }
     
     $scope.convert_dongjak();
