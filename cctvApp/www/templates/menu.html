@@ -1,5 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
   <ion-side-menu-content>
+    <!-- Enable Side menu button and Back button start -->
     <ion-nav-bar class="bar-stable">
       <ion-nav-back-button>
       </ion-nav-back-button>
@@ -9,13 +10,64 @@
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
+    <!-- Enable Side menu button and Back button end -->
+
+    <!-- Main Contents start -->
     <ion-nav-view name="menuContent"></ion-nav-view>
+    <!-- Main Contents end -->
   </ion-side-menu-content>
 
+  <!-- Side Menu Contents start -->
   <ion-side-menu side="left">
     <ion-header-bar class="bar-stable">
       <h1 class="title">Menu</h1>
     </ion-header-bar>
+    <ion-content>
+      <!-- login area -->
+      <div class="row">
+        <div class="col col-100">
+          <div class="big-login-photo-area">
+            <span>여기에 로그인 버튼</span>
+          </div>
+        </div>
+      </div>
+      <!-- misc area -->
+
+      <div class="row">
+        <div class="col">
+          <ion-list>
+            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
+              <i class="icon ion-map"></i>
+              <span>CCTV 관련법</span>
+            </ion-item>
+            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
+              <i class="icon ion-map"></i>
+              <span>CCTV 카운팅</span>
+            </ion-item>
+            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
+              <i class="icon ion-map"></i>
+              <span>CCTV 위치신고</span>
+            </ion-item>
+            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
+              <i class="icon ion-map"></i>
+              <span>CCTV 길 찾기</span>
+            </ion-item>
+            <div class="item item-divider">
+              <span>&nbsp;</span>
+            </div>
+            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
+              <i class="icon ion-map"></i>
+              <span>통계 설정</span>
+            </ion-item>
+            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
+              <i class="icon ion-map"></i>
+              <span>설정</span>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </ion-content>
+    <!--
     <ion-content>
       <ion-list>
         <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
@@ -68,5 +120,7 @@
         </div>
       </ion-list>
     </ion-content>
+    -->
   </ion-side-menu>
+  <!-- Side Menu Contents start -->
 </ion-side-menus>
