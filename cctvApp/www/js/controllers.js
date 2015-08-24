@@ -66,7 +66,6 @@ angular.module('starter.controllers', [])
                         type: 'button-default',
                         onTap: function(e) {
                           $rootScope.reportClicked = false;
-                          $rootScope.reportCancelled();
                         }
                       }]
                       });
