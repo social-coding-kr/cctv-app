@@ -34,7 +34,7 @@ angular.module('starter.controllers')
         var marker = L.marker(Location);
         markers.addLayer(marker);
         map.addLayer(markers);
-        marker.bindPopup('You are here.</p>정확도는 ' + Accuracy + ' 미터입니다. </p>문제는 이 정확도가 반경인지 직경인지 모르겠다는거 >_<')
+        marker.bindPopup('You are here.</p>이 지점을 기준으로 반경 ' + Accuracy + ' 미터 안에 있습니다.')
             .openPopup();
     }
     
