@@ -19,9 +19,19 @@ angular.module('starter.controllers')
     var markers = new L.FeatureGroup();
     markers.clearLayers();
     
+    /* divIcon - CSS 사용
     var simpleIcon = L.divIcon({
         className: 'css-simple-marker',
         iconSize: [20, 20]
+    }*/
+    
+    // icon - Image 사용
+    var simpleIcon = L.icon({
+        iconUrl: 'img/cctv_temp_icon.png',
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        popupAnchor: [0, -10],
+        shadowSize: [0, 0]
     });
     
     var locationMarker = function(Location, item) {
