@@ -30,11 +30,11 @@ angular.module('starter.controllers')
 */
     
     //내 위치에 마크를 설정하여 주는 함수.
-    function MyLocationMarker(Location) {
+    function MyLocationMarker(Location, Accuracy) {
         var marker = L.marker(Location);
         markers.addLayer(marker);
         map.addLayer(markers);
-        marker.bindPopup('You are here.')
+        marker.bindPopup('You are here.</p>정확도는 ' + Accuracy + ' 미터입니다. </p>문제는 이 정확도가 반경인지 직경인지 모르겠다는거 >_<')
             .openPopup();
     }
     
@@ -66,7 +66,8 @@ angular.module('starter.controllers')
             .getCurrentPosition(posOptions)
             .then(function (pos) {
                  var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
-                 MyLocationMarker(Location);
+                 var accuracy = pos.coords.accuracy;
+                 MyLocationMarker(Location, accuracy);
                  $scope.map.setView(Location, 15);
             }, function(error) {
                 TimeExpired();
@@ -75,7 +76,8 @@ angular.module('starter.controllers')
 	        // html5 기존 함수 사용
 	        navigator.geolocation.getCurrentPosition(function(pos) {
             var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
-            MyLocationMarker(Location);
+            var accuracy = pos.coords.accuracy;
+            MyLocationMarker(Location, accuracy);
             $scope.map.setView(Location, 15);
             }, function(error) {
                 TimeExpired();
