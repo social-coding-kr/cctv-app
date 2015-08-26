@@ -1,20 +1,35 @@
 <ion-view view-title="cctv 찍는 화면">
-  <ion-content paddig="true">
-    <div id="instruction and photo example(check photo) for take picture">
-      <h5>아래 사진과 비슷한 크기로 cctv를 찍어주세요</h5>
-      <img ng-src="{{lastCctvPhoto}}" style="max-width: 100%" />
-    </div>
-    <div class="bar button-bar" ng-hide="cctvPhotoTaken">
-      <a ng-click="getPhoto()" class="button button-block button-primary">사진 찍기</a>
-      <!--사진 위치 확인용
-      <a ng-hide="false" ng-click="photoLocation()" class="button button-block button-primary">사진의 위치는?</a>
-      -->
-    </div>
-    <div class="bar button-bar" ng-show="cctvPhotoTaken">
-      <a ng-click="hasHangBoard()" class="button button-block button-primary">
-        다음
-      </a>
-    </div>
-    <br /><br />
-  </ion-content>
+    <ion-content>
+        <div class="row">
+            <div class="col col-100">
+                <div class="row">
+                    <div class="col col-100 cctv-text-center">
+                        <h5><strong>아래 사진과 비슷한 크기로 cctv를 찍어주세요</strong></h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-100 cctv-text-center">
+                        <img ng-src="{{lastCctvPhoto}}" style="max-width: 100%; min-height: 500px;"/>
+                    </div>
+                </div>
+                <div class="bar bar-footer">
+                    <div class="row" ng-hide="cctvPhotoTaken">
+                        <div class="col col-100 cctv-text-center">
+                            <a ng-click="getPhoto()" class="button button-block button-primary">사진 찍기</a>
+                            <!--사진 위치 확인용
+                            <a ng-hide="false" ng-click="photoLocation()" class="button button-block button-primary">사진의 위치는?</a>
+                            -->
+                        </div>
+                    </div>
+                    <div class="row" ng-show="cctvPhotoTaken">
+                        <div class="col col-100 cctv-text-center">
+                            <a ng-click="hasHangBoard()" class="button button-block button-primary">
+                                다음
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>
