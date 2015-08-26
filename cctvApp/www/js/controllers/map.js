@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc, $cordovaGeolocation, $ionicViewService) {
+.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc, $cordovaGeolocation, $ionicHistory, $ionicPopup) {
 
     var map = L.map('map');
     var curLoc = soc.getDefaultLocation();
@@ -29,14 +29,25 @@ angular.module('starter.controllers')
         });
 */
     
-    function MyLocationMarker(Location) {
+    //내 위치에 마크를 설정하여 주는 함수.
+    function MyLocationMarker(Location, Accuracy) {
         var marker = L.marker(Location);
         markers.addLayer(marker);
         map.addLayer(markers);
-        marker.bindPopup('You are here.')
+        marker.bindPopup('You are here.</p>이 지점을 기준으로 반경 ' + Accuracy + ' 미터 안에 있습니다.')
             .openPopup();
     }
+    
+    //일정 시간 동안 gps정보를 이용할 수 없을 시 토스트를 띄워주는 함수.
+    function TimeExpired() {
+        var alertPopup = $ionicPopup.alert({
+            title: 'GPS 정보를 이용할 수 없습니다.',
+            template: '기기의 GPS상태를 확인하거나 유저 폴트의 여부를 확인하세요.'
+        });
+        alertPopup.then();
+    }
 
+    //내 위치를 잡아주는 함수
     $rootScope.centerOnMe = function() {
         if(!$scope.map) {
           return;
@@ -55,33 +66,35 @@ angular.module('starter.controllers')
             .getCurrentPosition(posOptions)
             .then(function (pos) {
                  var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
-                 MyLocationMarker(Location);
+                 var accuracy = pos.coords.accuracy;
+                 MyLocationMarker(Location, accuracy);
                  $scope.map.setView(Location, 15);
-            }, function(err) {
-                alert('Unable to get location: ' + error.message);
+            }, function(error) {
+                TimeExpired();
             });
         } else {
 	        // html5 기존 함수 사용
 	        navigator.geolocation.getCurrentPosition(function(pos) {
             var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
-            MyLocationMarker(Location);
+            var accuracy = pos.coords.accuracy;
+            MyLocationMarker(Location, accuracy);
             $scope.map.setView(Location, 15);
             }, function(error) {
-                alert('Unable to get location: ' + error.message);
-            });    
+                TimeExpired();
+            });
         }
         $ionicLoading.hide();
     };
     
     // 등록 확정화면에서 넘어올 때 현재 위치를 잡아주고 뒤로가기 버튼을 없애주는 함수
-    $ionicViewService.nextViewOptions({
+    $ionicHistory.nextViewOptions({
         disableBack: true
     });
     
     $rootScope.loadingFromReport = function() {
         if($rootScope.confirmVal === true) {
             // alert($rootScope.confirm);
-            $ionicViewService.nextViewOptions({
+            $ionicHistory.nextViewOptions({
                 disableBack: true
             });
             $rootScope.centerOnMe();
