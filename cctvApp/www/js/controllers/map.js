@@ -7,12 +7,12 @@ angular.module('starter.controllers')
     var curLoc = soc.getDefaultLocation();
     var Seoul = new L.LatLng(curLoc.lat, curLoc.lon); // geographical point (longitude and latitude)
     map.setView(Seoul, 15);
-      	 
+
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
         maxZoom: 18
     }).addTo(map);
-    
+
     map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
     $scope.map = map;
     var markers = new L.FeatureGroup();
@@ -44,7 +44,7 @@ angular.module('starter.controllers')
         marker.bindPopup('You are here.</br>이 지점을 기준으로 반경 ' + Accuracy + ' 미터 안에 있습니다.</p>' + AccuText)
             .openPopup();
     }
-    
+
     //일정 시간 동안 gps정보를 이용할 수 없을 시 토스트를 띄워주는 함수.
     function TimeExpired() {
         var alertPopup = $ionicPopup.alert({
@@ -64,7 +64,7 @@ angular.module('starter.controllers')
           content: 'Getting current location...',
           showBackdrop: false
         });
-        
+
         markers.clearLayers();
         if(ionic.Platform.isWebView() == true) {
         // 플러그인 사용
