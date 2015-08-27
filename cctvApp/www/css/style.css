@@ -36,3 +36,18 @@ textarea#devel_log {
 	text-align: center;
 	padding : 10px;
 }
+
+.scroll-content > .scroll {
+	height: 100%;
+}
+.scroll-content > .scroll > iframe {
+	min-height: 100%;
+}
+
+.background-trans {
+	background-color: rgba( 255, 255, 255, 0 );
+}
+
+.cctv-round-button {
+	border-radius: 60px;
+}
