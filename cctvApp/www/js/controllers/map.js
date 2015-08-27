@@ -72,12 +72,14 @@ angular.module('starter.controllers')
             $cordovaGeolocation
             .getCurrentPosition(posOptions)
             .then(function (pos) {
-                 var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
-                 var accuracy = pos.coords.accuracy;
-                 MyLocationMarker(Location, accuracy);
-                 $scope.map.setView(Location, 15);
+                var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
+                var accuracy = pos.coords.accuracy;
+                MyLocationMarker(Location, accuracy);
+                $scope.map.setView(Location, 15);
+                $ionicLoading.hide();
             }, function(error) {
                 TimeExpired();
+                $ionicLoading.hide();
             });
         } else {
 	        // html5 기존 함수 사용
@@ -86,11 +88,12 @@ angular.module('starter.controllers')
             var accuracy = pos.coords.accuracy;
             MyLocationMarker(Location, accuracy);
             $scope.map.setView(Location, 15);
+                $ionicLoading.hide();
             }, function(error) {
                 TimeExpired();
+                $ionicLoading.hide();
             });
         }
-        $ionicLoading.hide();
     };
     
     // 등록 확정화면에서 넘어올 때 현재 위치를 잡아주고 뒤로가기 버튼을 없애주는 함수
