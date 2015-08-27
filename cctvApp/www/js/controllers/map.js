@@ -34,7 +34,14 @@ angular.module('starter.controllers')
         var marker = L.marker(Location);
         markers.addLayer(marker);
         map.addLayer(markers);
-        marker.bindPopup('You are here.</p>이 지점을 기준으로 반경 ' + Accuracy + ' 미터 안에 있습니다.')
+        var AccuText = ('');
+        if (Accuracy > 100)
+        {
+            AccuText = ('헐 이건 너무 심하잖아.');   
+        } else{
+            AccuText = ('적절합니다.');
+        }
+        marker.bindPopup('You are here.</br>이 지점을 기준으로 반경 ' + Accuracy + ' 미터 안에 있습니다.</p>' + AccuText)
             .openPopup();
     }
     
