@@ -84,10 +84,10 @@ angular.module('starter.controllers')
         } else {
 	        // html5 기존 함수 사용
 	        navigator.geolocation.getCurrentPosition(function(pos) {
-            var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
-            var accuracy = pos.coords.accuracy;
-            MyLocationMarker(Location, accuracy);
-            $scope.map.setView(Location, 15);
+                var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
+                var accuracy = pos.coords.accuracy;
+                MyLocationMarker(Location, accuracy);
+                $scope.map.setView(Location, 15);
                 $ionicLoading.hide();
             }, function(error) {
                 TimeExpired();
