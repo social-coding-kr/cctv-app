@@ -51,6 +51,7 @@ angular.module('starter.controllers')
             title: 'GPS 정보를 이용할 수 없습니다.',
             template: '기기의 GPS상태를 확인하거나 유저 폴트의 여부를 확인하세요.'
         });
+        $rootScope.reportClicked = false;
         alertPopup.then();
     }
 

@@ -13,22 +13,27 @@ angular.module('starter.controllers')
   $rootScope.lastHangBoardPhoto = $rootScope.basicPhoto;
   
   $scope.getPhoto = function() {
-    Camera.getPicture().then(function(imageURI) {
-      console.log(imageURI);
-      if($rootScope.lastCctvPhoto === $scope.basicCctvPhoto) {
-        $rootScope.lastCctvPhoto = imageURI;
-        $rootScope.cctvPhotoTaken = true;
-      } else {
-        $rootScope.lastHangBoardPhoto = imageURI;
-      }
-    }, function(err) {
-      soc.log(err);
-    }, {
-      quality: 75,
-      targetWidth: 320,
-      targetHeight: 320, 
-      saveToPhotoAlbum: false
-    });
+    if($window.plugins != undefined) {
+      Camera.getPicture().then(function(imageURI) {
+        console.log(imageURI);
+        if($rootScope.lastCctvPhoto === $scope.basicCctvPhoto) {
+          $rootScope.lastCctvPhoto = imageURI;
+          $rootScope.cctvPhotoTaken = true;
+        } else {
+          $rootScope.lastHangBoardPhoto = imageURI;
+        }
+      }, function(err) {
+        soc.log(err);
+      }, {
+        quality: 75,
+        targetWidth: 320,
+        targetHeight: 320, 
+        saveToPhotoAlbum: false
+      });
+    } else {
+      $rootScope.cctvPhotoTaken = true;
+      alert('카메라 기능을 불러올 수 없는 기기입니다.');
+    }
   };
   
   $scope.photoLocation = function() {
@@ -66,7 +71,7 @@ angular.module('starter.controllers')
   }
 })
 
-.controller('confirmReportCtrl', function($rootScope, $scope, $location, $timeout, $cordovaToast) {
+.controller('confirmReportCtrl', function($rootScope, $scope, $location, $timeout, $cordovaToast, $window) {
   $rootScope.confirmVal = false;
   
   $scope.report = function() {
@@ -79,13 +84,17 @@ angular.module('starter.controllers')
       }
     }
     
-    $cordovaToast
-    .show('성공적으로 등록되었습니다', 'long', 'bottom')
-    .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });
+    if($window.plugins != undefined) {
+      $cordovaToast
+      .show('성공적으로 등록되었습니다', 'long', 'bottom')
+      .then(function(success) {
+        // success
+      }, function (error) {
+        // error
+      });
+    } else {
+      alert('성공적으로 등록되었습니다');
+    }
     
     $rootScope.confirmVal = true;
     $rootScope.reportClicked = false;
@@ -103,13 +112,17 @@ angular.module('starter.controllers')
       }
     }
   
-    $cordovaToast
-    .show('등록을 취소했습니다', 'long', 'bottom')
-    .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });
+    if($window.plugins != undefined) {
+      $cordovaToast
+      .show('등록을 취소했습니다', 'long', 'bottom')
+      .then(function(success) {
+        // success
+      }, function (error) {
+        // error
+      });
+    } else {
+      alert('등록을 취소했습니다');
+    }
     
     $rootScope.confirmVal = true;
     $rootScope.reportClicked = false;
