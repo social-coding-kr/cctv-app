@@ -65,16 +65,15 @@
           </ion-list>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <ion-toggle ng-model="soc.config.isDevelModeVisible" toggle-class="toggle-calm">Debug Menu</ion-toggle>
-        </div>
-      </div>
       <!-- debug menu -->
       <div class="row" ng-if="soc.config.isDevelModeVisible">
         <div class="col">
           <ion-list>
             <ion-list>
+              <div class="item item-divider">
+                <span>개발자용</span>
+              </div>
+              
               <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
                 <i class="icon ion-map"></i>
                 Home
