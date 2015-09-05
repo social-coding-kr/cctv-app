@@ -5,9 +5,9 @@ angular.module('starter.controllers')
     function($rootScope, $scope, $ionicLoading, $compile, $http, soc) {
 
         //var mapProvider = "OSM";
-        var mapProvider = "Naver";
+        //var mapProvider = "Naver";
         //var mapProvider = "Daum";
-        //var mapProvider = "VWorld";
+        var mapProvider = "VWorld";
 
 
         var mapDefualtZoom = 15;
