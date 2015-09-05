@@ -16,6 +16,8 @@ angular.module('starter.controllers')
     }).addTo(map);
     */
 
+    // 지도는 잘 나오는데
+    // vWorld API키 등록도 하지 않았는데 어떻게 나오는 거지 
     L.tileLayer.provider('VWorld.Street').addTo(map);
     
     $scope.map = map;
