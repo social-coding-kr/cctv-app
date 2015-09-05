@@ -9,12 +9,15 @@ angular.module('starter.controllers')
     var Seoul = new L.LatLng(curLoc.lat, curLoc.lon); // geographical point (longitude and latitude)
     map.setView(Seoul, 15);
 
-
+    /*
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
         maxZoom: 18
     }).addTo(map);
+    */
 
+    L.tileLayer.provider('VWorld.Street').addTo(map);
+    
     $scope.map = map;
     var markers = new L.FeatureGroup();
     markers.clearLayers();
