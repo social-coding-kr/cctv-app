@@ -25,9 +25,9 @@
     <ion-list>    
     
     <h5>화면과 같이 등록됩니다.</h5>
-    <div class="button-bar">
-      <a class="button button-positive" ng-click="report()">등록</a>
-      <a class="button button-light" ng-click="reportCancelled()">취소</a>
+    <div class="button-bar" ng-controller="confirmReportCtrl">
+      <a class="button button-positive" ng-click="registerButton2Clicked()">등록</a>
+      <a class="button button-light" ng-click="cancellButton2Clicked()">취소</a>
     </div>
   </ion-content>
 </ion-view>
