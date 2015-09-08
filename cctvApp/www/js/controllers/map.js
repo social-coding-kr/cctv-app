@@ -172,13 +172,10 @@ angular.module('starter.controllers')
     });
 
     $rootScope.loadingFromReport = function() {
-        if ($rootScope.confirmVal === true) {
-            // alert($rootScope.confirm);
+        if ($rootScope.reportClicked === false) {
             $ionicHistory.nextViewOptions({
                 disableBack: true
             });
-            $rootScope.centerOnMe();
-            $rootScope.confirmVal = false;
         }
         else {
             // do nothing
