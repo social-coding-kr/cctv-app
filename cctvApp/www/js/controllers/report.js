@@ -1,4 +1,5 @@
 'use strict';
+
 angular.module('starter.controllers')
 
 .config(function($compileProvider){
@@ -73,6 +74,9 @@ angular.module('starter.controllers')
 
 .controller('confirmReportCtrl', function($rootScope, $scope, $location, $timeout, $cordovaToast, $window) {
   $rootScope.confirmVal = false;
+  
+  var ex_lat = myLat;
+  var ex_lng = myLng;
   
   $scope.report = function() {
     $rootScope.cctvPhotoTaken = false;
