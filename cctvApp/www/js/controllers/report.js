@@ -174,6 +174,9 @@ angular.module('starter.controllers')
 
 // 등록확정화면에 사용하는 컨트롤러
 .controller('confirmReportCtrl', function($rootScope, $scope, $location, $timeout, $cordovaToast, $window) {
+  // 질문 후 사용할 변수들
+  // var ex_lat = myLat;
+  // var ex_lng = myLng;
   // 등록 확정시
   $scope.registerButton2Clicked = function() {
     // 신고선택 변수(reportClicked) 초기화 및 화면전환

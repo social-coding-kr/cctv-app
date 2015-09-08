@@ -1,4 +1,7 @@
 'use strict';
+var myLat;
+var myLng;
+
 angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, soc, $cordovaGeolocation, $ionicHistory, $ionicPopup) {
@@ -18,7 +21,7 @@ angular.module('starter.controllers')
     var markers = new L.FeatureGroup();
 
     var scale = new L.Control.Scale().addTo(map);
-
+    
     // Ionic 기본 아이콘은 아래 링크 참고
     // http://www.shape5.com/demo/images/general/ionicons/cheatsheet.html
     
@@ -87,7 +90,7 @@ angular.module('starter.controllers')
                 + "<strong>lastPos:</strong> [" + infoCurrentPosition.lat + "," + infoCurrentPosition.lng + "]<br>"
                 + "<strong>northEast:</strong> [" + infoCurrentBounds._northEast.lat + "," + infoCurrentBounds._northEast.lng + "]<br>"
                 + "<strong>southWest:</strong> [" + infoCurrentBounds._southWest.lat + "," + infoCurrentBounds._southWest.lng + "]<br>"
-                + "<strong>Accuracy:</strong> [" + "지도에 표시된 지점을 기준으로 반경 " + MyAccuracy + "미터 안에 있습니다.]</p>" + AccuText
+                + "<strong>Accuracy:</strong> [" + "지도에 표시된 지점을 기준으로 반경 " + MyAccuracy + "미터 안에 있습니다.]<br>" + AccuText
             );
         }
     };
@@ -117,7 +120,6 @@ angular.module('starter.controllers')
         alertPopup.then();
     }
 
-
     //내 위치를 잡아주는 함수
     $rootScope.centerOnMe = function() {
         if (!$scope.map) {
@@ -139,7 +141,9 @@ angular.module('starter.controllers')
             $cordovaGeolocation
                 .getCurrentPosition(posOptions)
                 .then(function(pos) {
-                    var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
+                    myLat = pos.coords.latitude;
+                    myLng = pos.coords.longitude;
+                    var Location = new L.LatLng(myLat, myLng);
                     var accuracy = pos.coords.accuracy;
                     MyLocationMarker(Location, accuracy);
                     $scope.map.setView(Location, 15);
@@ -153,7 +157,9 @@ angular.module('starter.controllers')
         else {
             // html5 기존 함수 사용
             navigator.geolocation.getCurrentPosition(function(pos) {
-                var Location = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
+                myLat = pos.coords.latitude;
+                myLng = pos.coords.longitude;
+                var Location = new L.LatLng(myLat, myLng);
                 var accuracy = pos.coords.accuracy;
                 MyLocationMarker(Location, accuracy);
                 $scope.map.setView(Location, 15);
