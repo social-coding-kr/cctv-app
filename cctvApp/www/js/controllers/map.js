@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc, $cordovaGeolocation, $ionicHistory, $ionicPopup) {
+.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, soc, $cordovaGeolocation, $ionicHistory, $ionicPopup) {
 
     var map = L.map('map');
     var curLoc = soc.getDefaultLocation();
@@ -65,19 +65,32 @@ angular.module('starter.controllers')
     simpleButton5.addTo(map);
 
 
+    var MyAccuracy = -1;
+    var AccuText = ('');
     
     var showMapInfo = function() {
         var infoCurrentPosition = $scope.map.getCenter();
-        var infoCurrentBounds = $scope.map.getBounds();        
-        simpleButton5.setInnerHTML(
-              "<strong>지도정보</strong><br>"
-            + "<strong>lastPos:</strong> [" + infoCurrentPosition.lat + "," + infoCurrentPosition.lng + "]<br>"
-            + "<strong>northEast:</strong> [" + infoCurrentBounds._northEast.lat + "," + infoCurrentBounds._northEast.lng + "]<br>"
-            + "<strong>southWest:</strong> [" + infoCurrentBounds._southWest.lat + "," + infoCurrentBounds._southWest.lng + "]<br>"
+        var infoCurrentBounds = $scope.map.getBounds();
+        if (MyAccuracy < 0)
+        {
+            simpleButton5.setInnerHTML(
+                  "<strong>지도정보</strong><br>"
+                + "<strong>lastPos:</strong> [" + infoCurrentPosition.lat + "," + infoCurrentPosition.lng + "]<br>"
+                + "<strong>northEast:</strong> [" + infoCurrentBounds._northEast.lat + "," + infoCurrentBounds._northEast.lng + "]<br>"
+                + "<strong>southWest:</strong> [" + infoCurrentBounds._southWest.lat + "," + infoCurrentBounds._southWest.lng + "]<br>"
             );
-    }
-
-
+        }
+        else
+        {
+            simpleButton5.setInnerHTML(
+                  "<strong>지도정보</strong><br>"
+                + "<strong>lastPos:</strong> [" + infoCurrentPosition.lat + "," + infoCurrentPosition.lng + "]<br>"
+                + "<strong>northEast:</strong> [" + infoCurrentBounds._northEast.lat + "," + infoCurrentBounds._northEast.lng + "]<br>"
+                + "<strong>southWest:</strong> [" + infoCurrentBounds._southWest.lat + "," + infoCurrentBounds._southWest.lng + "]<br>"
+                + "<strong>Accuracy:</strong> [" + "지도에 표시된 지점을 기준으로 반경 " + MyAccuracy + "미터 안에 있습니다.]</p>" + AccuText
+            );
+        }
+    };
     showMapInfo();
 
     //내 위치에 마크를 설정하여 주는 함수.
@@ -85,15 +98,13 @@ angular.module('starter.controllers')
         var marker = L.marker(Location);
         markers.addLayer(marker);
         map.addLayer(markers);
-        var AccuText = ('');
+        MyAccuracy = Accuracy;
         if (Accuracy > 100) {
             AccuText = ('헐 이건 너무 심하잖아.');
         }
         else {
             AccuText = ('적절합니다.');
         }
-        marker.bindPopup('You are here.</br>이 지점을 기준으로 반경 ' + Accuracy + ' 미터 안에 있습니다.</p>' + AccuText)
-            .openPopup();
     }
 
     //일정 시간 동안 gps정보를 이용할 수 없을 시 토스트를 띄워주는 함수.
