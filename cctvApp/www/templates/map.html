@@ -29,10 +29,10 @@
                     <strong>현재 위치에 cctv를 등록하시겠습니까?</strong>
                 </div>
             </div>
-            <div class="row" ng-controller="confirmReportCtrl">
-                <div class="col col-100">
-                    <a class="button button-positive" href="#/app/takePicture">등록</a>
-                    <a class="button button-light" ng-click="reportCancelled()">취소</a>
+            <div class="row" ng-controller="generalReportCtrl">
+                <div class="col col-100" ng-controller="mapToTakePictureViewCtrl">
+                    <a class="button button-positive" ng-click="registerButton1Clicked()">등록</a>
+                    <a class="button button-light" ng-click="cancellButton1Clicked()">취소</a>
                 </div>
             </div>
         </div>
