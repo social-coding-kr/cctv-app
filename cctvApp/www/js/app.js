@@ -281,8 +281,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
-
-
+  
+  .state('app.backButtonTest', {
+    url: '/backButtonTest',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/backButtonTest.html', 
+        controller: 'AppCtrl'
+      }
+    }
+  })
+  
   .state('app.mapTest', {
     url: '/mapTest',
     views: {
