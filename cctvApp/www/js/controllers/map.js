@@ -177,7 +177,7 @@ angular.module('starter.controllers')
         disableBack: true
     });
 
-    $rootScope.loadingFromReport = function() {
+    $rootScope.AnotherPageToMap = function() {
         if ($rootScope.reportClicked === false) {
             $ionicHistory.nextViewOptions({
                 disableBack: true
@@ -188,7 +188,7 @@ angular.module('starter.controllers')
         }
     };
 
-    $rootScope.loadingFromReport();
+    $rootScope.AnotherPageToMap();
 
     var simpleButton2 = new L.Control.customControl({ 
         position:   "topright",
