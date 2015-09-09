@@ -9,8 +9,7 @@ angular.module('starter.controllers')
 .controller('generalReportCtrl', function($rootScope, $window, $cordovaToast, $location) { 
   // 신고화면 도중 신고화면으로 넘어갈 때 바꿔줘야할 변수
   $rootScope.reportClicked = false; // true : 하단 등록확인버튼 보임, false : 하단 등록버튼 안보임
-  // 사진 및 사진 화면 관련 변수들
-  $rootScope.isTakePictureView = false;
+  // 사진 관련 변수들
   $rootScope.basicPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9220177/5be109da-411b-11e5-948d-34937938703f.PNG';
   $rootScope.basicCctvPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9313406/cb8a09a8-455d-11e5-93fc-923d1d054b2e.PNG';
   $rootScope.cctvPhotoTaken = false;
@@ -46,7 +45,7 @@ angular.module('starter.controllers')
     }
     // 화면 전환
     $location.path('/app/map');
-    $rootScope.loadingFromReport();
+    $rootScope.AnotherPageToMap();
   }
   $rootScope.cancellButtonClicked = function() {
     // 변수들 초기화
@@ -60,7 +59,6 @@ angular.module('starter.controllers')
     }
     // 신고 취소됨
     $rootScope.reportClicked = false;
-    $rootScope.isTakePictureView = false;
     // 토스트 메세지
     if($window.plugins != undefined) {
       $cordovaToast
@@ -75,7 +73,7 @@ angular.module('starter.controllers')
     }
     // 화면 전환
     $location.path('/app/map');
-    $rootScope.loadingFromReport();
+    $rootScope.AnotherPageToMap();
   }
 })
 
@@ -84,7 +82,6 @@ angular.module('starter.controllers')
   // 등록버튼1 클릭
   $scope.registerButton1Clicked = function() {
     // 사진 찍는 화면으로 화면 전환
-    $rootScope.isTakePictureView = true;
     $location.path('app/takePicture');
   }
   // 등록버튼2 클릭
@@ -134,16 +131,12 @@ angular.module('starter.controllers')
                         onTap: function(e) {
                           $scope.getPhoto();
                           $location.path('/app/selectPurpose');
-                          // 더 이상 cctv를 찍는 화면이 아님
-                          $rootScope.isTakePictureView = false;
                         }
                       }, {
                         text: '안 보입니다.',
                         type: 'button-default',
                         onTap: function(e) {
                           $location.path('/app/confirmReport');
-                          // 더 이상 cctv를 찍는 화면이 아님
-                          $rootScope.isTakePictureView = false;
                         }
                       }]
                       });
