@@ -120,14 +120,15 @@ angular.module('starter.controllers', [])
     }
     // default controll
     else {
-      if($ionicHistory.backTitle() === null) { // 사이드메뉴에 있는 항목일 경우
+      alert($ionicHistory.backTitle());
+      if($ionicHistory.backTitle() === null || $ionicHistory.backTitle() === 'Home') { // 사이드메뉴에 있는 항목일 경우
         navigator.app.backHistory();
-        $location.path('/app/map');
+        $ionicHistory.clearHistory();
+        // map으로 갈경우 앱상의 back button을 없애줌
+        $rootScope.AnotherPageToMap();
       } else {
         navigator.app.backHistory();
       }
-      // map으로 갈경우 앱상의 back button을 없애줌
-      $rootScope.AnotherPageToMap();
     }
   }, 101);
 })
