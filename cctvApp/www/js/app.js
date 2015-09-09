@@ -286,8 +286,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     url: '/backButtonTest',
     views: {
       'menuContent': {
-        templateUrl: 'templates/backButtonTest.html', 
-        controller: 'AppCtrl'
+        templateUrl: 'templates/backButtonTest.html'
       }
     }
   })
