@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -72,33 +72,65 @@ angular.module('starter.controllers', [])
   }
   
   // 안드로이드 뒤로가기 버튼동작
-    $ionicPlatform.registerBackButtonAction(function() {
-      if($location.url() === '/app/map') {
-        $ionicPopup.show({title :'앱을 종료하시겠습니까?',
-                      buttons: [{ 
-                        text: '네, 종료하겠어요',
-                        type: 'button-positive',
-                        onTap: function(e) {
-                          navigator.app.exitApp();
-                        }
-                      }, {
-                        text: '아니오',
-                        type: 'button-default',
-                        onTap: function(e) {
-                          // do nothing
-                        }
-                      }]
-                      });
-      } else if($rootScope.isTakePictureView === true) {
-        // alert('등록화면값 true 지도화면으로 이동');
-        $rootScope.cancellButtonClicked();
-      } else if($location.url() === '/app/backButtonTest') {
-        alert('back button clicked');
+  $rootScope.secondBackButton = false; // 두 번째 back button 클릭을 알려주는 변수
+  $ionicPlatform.registerBackButtonAction(function() {
+    if($location.url() === '/app/map') { // 홈 화면일 경우
+      // 토스트로 종료를 예고할 경우
+      if($rootScope.secondBackButton === true) { // 두 번째 back button 클릭일 경우
+        navigator.app.exitApp();
+      } else {  
+        // 종료 토스트 알려줌
+        $cordovaToast
+        .show('한번 더 뒤로 가기 누르면 앱 꺼짐 ㅇㅇ', 'long', 'bottom')
+        .then(function(success) {
+          // success
+        }, function (error) {
+        // error
+        });
+        // 다음 touch가 두 번째 back button 클릭이 됨
+        $rootScope.secondBackButton = true;
+        $timeout(function(){$rootScope.secondBackButton = false;}, 2000);
+      }
+      /* 팝업 메세지로 띄워서 종료를 알려줄 경우
+      $ionicPopup.show({title :'앱을 종료하시겠습니까?',
+                    buttons: [{ 
+                      text: '네, 종료하겠어요',
+                      type: 'button-positive',
+                      onTap: function(e) {
+                        navigator.app.exitApp();
+                      }
+                    }, {
+                      text: '아니오',
+                      type: 'button-default',
+                      onTap: function(e) {
+                        // do nothing
+                      }
+                    }]
+                    });
+      */
+    } 
+    // 신고화면에서 back button controll
+    else if($location.url() === '/app/takePicture') { // takePicture.html에서 클릭 시
+      // alert('등록화면값 true 지도화면으로 이동');
+      $rootScope.cancellButtonClicked();
+    } 
+    // backButtonTest에서의 컨트롤
+    else if($location.url() === '/app/backButtonTest') {
+      alert('back button clicked');
+    }
+    // default controll
+    else {
+      // alert($ionicHistory.backTitle()); // 전 페이지를 alert message로 알려줌(디버깅 용도)
+      if($ionicHistory.backTitle() === null || $ionicHistory.backTitle() === 'Home') { // 사이드메뉴에 있는 항목일 경우
+        navigator.app.backHistory();
+        $ionicHistory.clearHistory();
+        // map으로 갈경우 앱상의 back button을 없애줌
+        $rootScope.AnotherPageToMap();
       } else {
-        // alert('전 페이지로 이동');
         navigator.app.backHistory();
       }
-    }, 101);
+    }
+  }, 101);
 })
 
 .controller('PlaylistsCtrl', function($scope) {
