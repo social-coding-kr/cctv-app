@@ -97,7 +97,7 @@ angular.module('starter.controllers')
                 soc.log("FAILED LOAD DONGJAK");
                 soc.log(JSON.stringify(response));
             });
-
+            
         $scope.convert_dongjak = function() {
 
             var addPoint = function(item, isLast) {

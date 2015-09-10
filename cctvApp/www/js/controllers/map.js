@@ -1,10 +1,12 @@
 'use strict';
+
+//나의 위치정보를 담을 전역변수
 var myLat;
 var myLng;
 
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, soc, $cordovaGeolocation, $ionicHistory, $ionicPopup) {
+.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc, $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout) {
 
     var map = L.map('map');
     var curLoc = soc.getDefaultLocation();
@@ -94,7 +96,98 @@ angular.module('starter.controllers')
             );
         }
     };
+    
+    
+    
+    //화면 로딩과 동시에 cctv 정보를 뿌려주기 위한 임시코드
+    //수정일 : 2015. 9. 10.
+
+
+    // icon - Image 사용
+    var simpleIcon = L.icon({
+        iconUrl: 'img/cctv_temp_icon.png',
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        popupAnchor: [0, -10],
+        shadowSize: [0, 0]
+    });
+
+    var locationMarker = function(Location, item) {
+        var marker = L.marker(Location, {
+            icon: simpleIcon
+        });
+        
+        markers.addLayer(marker);
+
+        if (item) {
+            marker.bindPopup(
+                item.연번 + ", " + item.용도 + ", " + item.주소
+            );
+        }
+            //soc.log(JSON.stringify(Location));
+    };
+
+    var dongjak = [];
+    $http.get("data/cctv/dongjak.json")
+        .then(function(response) {
+            dongjak = response.data;
+            var asdf1 = dongjak.length;
+            soc.log("SUCCESS LOAD DONGJAK");
+            //soc.log(JSON.stringify(response));
+        }, function(response) {
+            soc.log("FAILED LOAD DONGJAK");
+            soc.log(JSON.stringify(response));
+        });
+
+    var convert_info = function() {
+
+        var addPoint = function(item, isLast) {
+
+            var showCctv = function(item) {
+                var Location = new L.LatLng(item.lat, item.lon);
+                locationMarker(Location, item);
+            };
+            var asdf2 = dongjak.length;
+
+                if (!item.lat || !item.lon) {
+                    var onSuccess = function(point, opts) {
+                        soc.log(JSON.stringify(point));
+                        item.lat = point.y;
+                        item.lon = point.x;
+                        //soc.log(JSON.stringify(item));
+
+                        if (opts) {
+                            soc.log(JSON.stringify(dongjak));
+                        }
+                        showCctv(item);
+                    };
+
+                    //soc.log(item.연번 + " " + item.주소);
+                    soc.getPointFromAddress(item.주소, onSuccess, null, isLast);
+
+                }
+                else {
+                    showCctv(item);
+                }
+        };
+
+            //for(var i=dongjak.length-2; i<dongjak.length; i++) {
+            for (var i = 0; i < dongjak.length; i++) {
+                var isLast = false;
+                if (i == dongjak.length - 1) isLast = true;
+
+                addPoint(dongjak[i], isLast);
+            }
+
+            // makers 그룹은 변환 후 한번만 추가해 주는 것이 성능에 도움이 됩니다.
+            map.addLayer(markers);
+        };
+    
+    
     showMapInfo();
+    
+    //타임아웃 함수. 이게 없으면 서버에서 데이터 전송 중 함수가 실행되는 비극이 발생해 정보가 나타나지 않습니다.
+    $timeout(convert_info, 10);
 
     //내 위치에 마크를 설정하여 주는 함수.
     function MyLocationMarker(Location, Accuracy) {
