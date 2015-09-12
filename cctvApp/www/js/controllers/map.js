@@ -97,12 +97,13 @@ angular.module('starter.controllers')
         }
     };
     
-    
+    showMapInfo();
     
     //화면 로딩과 동시에 cctv 정보를 뿌려주기 위한 임시코드
-    //수정일 : 2015. 9. 10.
+    //수정일 : 2015. 9. 12.
+    //필요성에 의문이 생겨 주석 처리함.
 
-
+/*
     // icon - Image 사용
     var simpleIcon = L.icon({
         iconUrl: 'img/cctv_temp_icon.png',
@@ -184,10 +185,10 @@ angular.module('starter.controllers')
         };
     
     
-    showMapInfo();
     
     //타임아웃 함수. 이게 없으면 서버에서 데이터 전송 중 함수가 실행되는 비극이 발생해 정보가 나타나지 않습니다.
     $timeout(convert_info, 10);
+*/
 
     //내 위치에 마크를 설정하여 주는 함수.
     function MyLocationMarker(Location, Accuracy) {
