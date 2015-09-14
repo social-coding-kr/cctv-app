@@ -9,8 +9,18 @@
             <span ng-click="zoomIn()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>  
             <span ng-click="zoomOut()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
         </div>
-        <div class="custom_mapinfocontrol radius_border">
-            {{ mapInfoData }}
+        <div class="custom_mapinfocontrol radius_border" ng-if="soc.config.isDevelModeVisible">
+            <b>mapInfo</b><br>
+            <b>zoomLevel:</b> {{ mapInfoZoomLevel }}<br>
+            <b>center:</b> {{ mapInfoCenter }}<br>
+            <b>southWest:</b> {{ mapInfoSW }}<br>
+            <b>northEast:</b> {{ mapInfoNE }}<br>
+            <br>
+            <b>requestInfo</b><br>
+            <b>count: </b> {{ requestInfoCount }}<br>
+            <b>Center:</b> {{ requestInfoCenter }}<br>
+            <b>southWest:</b> {{ requestInfoSW }}<br>
+            <b>northEast:</b> {{ requestInfoNE }}<br>
         </div>
         
         

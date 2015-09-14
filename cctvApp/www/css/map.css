@@ -43,8 +43,11 @@
     position:absolute; 
     bottom:10px; 
     left:10px; 
-    width:220px; 
+    /*width:220px; 
     height:140px; 
+    */
+    width: 90%;
+    height: 30%;
     padding-top: 5px;
     padding-right: 5px;
     padding-bottom: 5px;
@@ -54,8 +57,6 @@
     background:rgba(210,210,240,0.7);    /* RGB + 투명도 */
     pointer-events: none;    /* 컨트롤이 마우스/터치 이벤트를 뺏지 않도록 한다 */
 }
-    
-/*.custom_mapinfocontrol:hover {color:#fff;}*/
 
 
 /* DAUM MAP API END */

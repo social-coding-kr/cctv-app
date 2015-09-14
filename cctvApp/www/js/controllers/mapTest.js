@@ -54,7 +54,81 @@ angular.module('starter.controllers')
     			map.setLevel(map.getLevel() + 1);
 			}
 			
-			$scope.mapInfoData = "map info";
+			$scope.isDraging = false;
+			
+			$scope.refreshMapInfo = function() {
+			    $scope.mapInfoCenter = map.getCenter().toString();
+			    var bounds = map.getBounds();
+			    $scope.mapInfoSW = bounds.getSouthWest().toString();
+			    $scope.mapInfoNE = bounds.getNorthEast().toString();
+			    $scope.mapInfoZoomLevel = map.getLevel();
+			}
+			
+			$scope.requestInfoCount = 0;
+			$scope.requestCctvs = function() {
+			    
+			    // 일단 지금은 실제 요청은 하지않고 테스트
+			    $scope.requestInfoCount += 1;
+			    var bounds = map.getBounds();
+			    $scope.requestInfoSW = bounds.getSouthWest().toString();
+			    $scope.requestInfoNE = bounds.getNorthEast().toString();			    
+
+			    $scope.requestInfoCenter = map.getCenter();
+			}
+			
+            daum.maps.event.addListener(map, 'dragstart', function() {
+                $scope.isDraging = true;
+                soc.log('drag start!');
+            });			
+			
+            daum.maps.event.addListener(map, 'dragend', function() {
+                $scope.isDraging = false;
+                soc.log('drag end!');
+
+                // 직전에 서버에 요청했던 Bounds 값과 비교하여
+                // 일정 수준이상 차이가 나면 재요청 한다
+                // 이부분은 적절 값에 대한 결정 필요
+                
+                var bounds = map.getBounds();
+                if(bounds.contain($scope.requestInfoCenter) == false) {
+                    // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
+                    // 재요청하는 것으로 처리함
+                    $scope.requestCctvs();
+                    $scope.$apply();
+                }
+            });			
+            
+			// 중심좌표 이동 이벤트
+		    daum.maps.event.addListener(map, 'center_changed', function() {
+		        // 중심좌표 이동되는 동안 계속 호출된다
+		        //soc.log("center changed!");
+            });
+
+            // 확대수준 변경 이벤트
+            daum.maps.event.addListener(map, 'zoom_changed', function() {
+                soc.log('zoom changed!');
+                
+                // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
+                // CCTV 목록을 재요청한다
+                $scope.requestCctvs();
+                $scope.$apply();
+            });			
+            
+            // Bounds 변경 이벤트
+            daum.maps.event.addListener(map, 'bounds_changed', function() {
+                // Bounds가 변경되는 동안 계속 호출된다
+                // (중심좌표 이동 및 확대수준 변경)
+                soc.log('bounds changed!');
+
+                // mapInfo는 변경될때마다 호출
+                $scope.refreshMapInfo();
+                $scope.$apply();
+                
+            });
+            
+            
+			$scope.refreshMapInfo();
+			$scope.requestCctvs();
 		});
 
 /*
