@@ -120,7 +120,7 @@ angular.module('starter.controllers', [])
     }
     // default controll
     else {
-      alert($ionicHistory.backTitle());
+      // alert($ionicHistory.backTitle()); // 전 페이지를 alert message로 알려줌(디버깅 용도)
       if($ionicHistory.backTitle() === null || $ionicHistory.backTitle() === 'Home') { // 사이드메뉴에 있는 항목일 경우
         navigator.app.backHistory();
         $ionicHistory.clearHistory();
