@@ -53,6 +53,8 @@ angular.module('starter.controllers')
 			$scope.zoomOut = function() {
     			map.setLevel(map.getLevel() + 1);
 			}
+			
+			$scope.mapInfoData = "map info";
 		});
 
 /*
