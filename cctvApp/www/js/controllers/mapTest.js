@@ -70,10 +70,12 @@ angular.module('starter.controllers')
 			    // 일단 지금은 실제 요청은 하지않고 테스트
 			    $scope.requestInfoCount += 1;
 			    var bounds = map.getBounds();
+			    
+			    // 실제 요청할때는 이 범위보다 2배(?) 큰범위를 요청한다
 			    $scope.requestInfoSW = bounds.getSouthWest().toString();
 			    $scope.requestInfoNE = bounds.getNorthEast().toString();			    
 
-			    $scope.requestInfoCenter = map.getCenter();
+			    $scope.requestInfoCenter = map.getCenter(); 
 			}
 			
             daum.maps.event.addListener(map, 'dragstart', function() {
