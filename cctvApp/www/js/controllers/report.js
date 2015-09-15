@@ -9,18 +9,28 @@ angular.module('starter.controllers')
 })
 
 // 신고시에 사용할 변수들에 대한 정의
-.controller('generalReportCtrl', function($rootScope, $window, $cordovaToast, $location) { 
+.controller('generalReportCtrl', function($rootScope, $window, $cordovaToast, $location) {
+  // 현재위치를 나타내는 변수들
+  var ex_lat = myLat;
+  var ex_lng = myLng;
   // 신고화면 도중 신고화면으로 넘어갈 때 바꿔줘야할 변수
   $rootScope.reportClicked = false; // true : 하단 등록확인버튼 보임, false : 하단 등록버튼 안보임
   // 사진 관련 변수들
-  $rootScope.basicPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9220177/5be109da-411b-11e5-948d-34937938703f.PNG';
-  $rootScope.basicCctvPhoto = 'https://cloud.githubusercontent.com/assets/13172195/9313406/cb8a09a8-455d-11e5-93fc-923d1d054b2e.PNG';
+  $rootScope.basicPhoto = 'img/basicHangBoard.PNG';
+  $rootScope.basicCctvPhoto = 'img/basicCctvPhoto.PNG';
   $rootScope.cctvPhotoTaken = false;
   $rootScope.lastCctvPhoto = $rootScope.basicCctvPhoto;
   $rootScope.lastHangBoardPhoto = $rootScope.basicPhoto;
   // 목적 관련 변수들
   $rootScope.purposeForReport = [{text :'방범용', checked : false}, 
                                 {text :'재난 방지용', checked : false}];
+  // 등록 확정시 post service로 보낼 변수들
+  $rootScope.cctvReportingInfo = {latitude: myLat, 
+                                  longitude: myLng, 
+                                  purpose: '', 
+                                  cctvImage: $rootScope.lastCctvPhoto, 
+                                  noticeImage: $rootScope.lastHangBoardPhoto, 
+                                  userId: 'TestingId_ClubSandwich'};
   // 등록 및 취소 버튼 클릭 함수
   $rootScope.registerButtonClicked = function() {
     // 변수들 초기화
@@ -169,10 +179,17 @@ angular.module('starter.controllers')
 })
 
 // 등록확정화면에 사용하는 컨트롤러
-.controller('confirmReportCtrl', function($rootScope, $scope, $location, $timeout, $cordovaToast, $window) {
+.controller('confirmReportCtrl', function($rootScope, $scope, $http) {
   // 현재위치를 나타내는 변수들
   var ex_lat = myLat;
   var ex_lng = myLng;
+  // 등록 확정시 post service로 보낼 변수들 갱신
+  $rootScope.cctvReportingInfo = {latitude: ex_lat, 
+                                  longitude: ex_lng, 
+                                  purpose: '', 
+                                  cctvImage: $rootScope.lastCctvPhoto, 
+                                  noticeImage: $rootScope.lastHangBoardPhoto, 
+                                  userId: 'TestingId_ClubSandwich'};
   // 등록 확정시
   $scope.registerButton2Clicked = function() {
     // 신고선택 변수(reportClicked) 초기화 및 화면전환
