@@ -25,9 +25,20 @@
     <ion-list>    
     
     <h5>화면과 같이 등록됩니다.</h5>
-    <div class="button-bar" ng-controller="confirmReportCtrl">
-      <a class="button button-positive" ng-click="registerButton2Clicked()">등록</a>
-      <a class="button button-light" ng-click="cancellButton2Clicked()">취소</a>
-    </div>
+    <form action="http://147.46.215.152:8099/cctv" method="post" enctype="multipart/form-data" ng-controller="confirmReportCtrl">
+      <div id="등록 정보들">
+        latitude :<input type="number" name="latitude" value={{cctvReportingInfo.latitude}}><br>
+        longitude :<input type="number" name="longitude" value={{cctvReportingInfo.longitude}}><br>
+        purpose :<input type="string" name="purpose" value={{cctvReportingInfo.purpose}}><br>
+        cctvImage :<input type="file" name="cctvImage" ngchange={{cctvReportingInfo.cctvImage}} style="width:128px;height:128px;"><br>
+        noticeImage :<input type="file" name="noticeImage" ngchange={{cctvReportingInfo.noticeImage}} style="width:128px;height:128px;"><br>
+        userId :<input type="string" name="userId" value={{cctvReportingInfo.userId}}><br>
+        <input type="submit" value="Submit">
+      </div>
+      <div class="button-bar">
+        <a class="button button-positive" ng-click="reportButton2Clicked()">등록</a>
+        <a class="button button-light" ng-click="cancellButton2Clicked()">취소</a>
+      </div>
+    </form>
   </ion-content>
 </ion-view>
