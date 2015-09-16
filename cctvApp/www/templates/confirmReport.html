@@ -29,14 +29,14 @@
       <div id="등록 정보들">
         latitude :<input type="number" name="latitude" value={{cctvReportingInfo.latitude}}><br>
         longitude :<input type="number" name="longitude" value={{cctvReportingInfo.longitude}}><br>
-        purpose :<input type="string" name="purpose" value={{cctvReportingInfo.purpose}}><br>
-        cctvImage :<input type="file" name="cctvImage" placeholder={{cctvReportingInfo.cctvImage}} style="width:128px;height:128px;"><br>
-        noticeImage :<input type="file" name="noticeImage" placeholder={{cctvReportingInfo.noticeImage}} style="width:128px;height:128px;"><br>
+        purpose :<input type="string" name="purpose" ng-repeat="item in purposeForReport" ng-model="item.checked"><br>
+        cctvImage :<input type="string" name="cctvImage" value={{cctvReportingInfo.cctvImage}} style="width:128px;height:128px;"><br>
+        noticeImage :<input type="string" name="noticeImage" value={{cctvReportingInfo.noticeImage}} style="width:128px;height:128px;"><br>
         userId :<input type="string" name="userId" value={{cctvReportingInfo.userId}}><br>
         <input type="submit" value="Submit">
       </div>
       <div class="button-bar">
-        <a class="button button-positive" ng-click="reportButton2Clicked()">등록</a>
+        <a class="button button-positive" ng-click="registerButton2Clicked()">등록</a>
         <a class="button button-light" ng-click="cancellButton2Clicked()">취소</a>
       </div>
     </form>
