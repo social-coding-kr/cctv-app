@@ -105,10 +105,17 @@ angular.module('starter.controllers')
 
 // cctv 및 안내판을 찍을 때 사용하는 컨트롤러
 .controller('takePictureCtrl', function($scope, Camera, $ionicPopup, $window, $location, $rootScope, soc) {
+  // 카메라 옵션
+  var options = {
+                  quality: 50,
+                  allowEdit: false,
+                  targetWidth: 100,
+                  targetHeight: 100,
+                  saveToPhotoAlbum: false
+                };
   // 네이티브 카메라를 불러오는 함수
   $scope.getPhoto = function() {
     if($window.plugins != undefined) {
-
       var COptions = {
         quality: 100,
         targetWidth: 240,
@@ -116,9 +123,9 @@ angular.module('starter.controllers')
         saveToPhotoAlbum: false,
         //allowEdit        : true,
 				destinationType  : navigator.camera.DestinationType.DATA_URL,
-				sourceType       : navigator.camera.PictureSourceType.CAMERA
+				sourceType       : navigator.camera.PictureSourceType.CAMERA, 
+				correctOrientation: true
       };
-      
       Camera.getPicture(COptions).then(function(imageURI) {
         //soc.log(imageURI);
         alert("Length: " + imageURI.length);
@@ -136,6 +143,11 @@ angular.module('starter.controllers')
       alert('카메라 기능을 불러올 수 없는 기기입니다.');
       $rootScope.cctvPhotoTaken = true; // 사진이 찍혔다고 가정하고 다음 step으로 넘어감
     }
+  };
+  // 카메라 이미지의 데이터를 받는 함수
+  $scope.photoData = function() {
+    var CctvPhotoData = $rootScope.lastCctvPhoto;
+    
   };
   // 사진의 위치를 알려주는 함수(비활성화 버튼)
   $scope.photoLocation = function() {
