@@ -5,7 +5,7 @@
 angular.module('starter.controllers')
 
 .config(function($compileProvider){
-  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel|data):/);
 })
 
 // 신고시에 사용할 변수들에 대한 정의
@@ -108,21 +108,29 @@ angular.module('starter.controllers')
   // 네이티브 카메라를 불러오는 함수
   $scope.getPhoto = function() {
     if($window.plugins != undefined) {
-      Camera.getPicture().then(function(imageURI) {
-        console.log(imageURI);
+
+      var COptions = {
+        quality: 100,
+        targetWidth: 240,
+        targetHeight: 240, 
+        saveToPhotoAlbum: false,
+        //allowEdit        : true,
+				destinationType  : navigator.camera.DestinationType.DATA_URL,
+				sourceType       : navigator.camera.PictureSourceType.CAMERA
+      };
+      
+      Camera.getPicture(COptions).then(function(imageURI) {
+        //soc.log(imageURI);
+        alert("Length: " + imageURI.length);
         if($rootScope.lastCctvPhoto === $rootScope.basicCctvPhoto) {
-          $rootScope.lastCctvPhoto = imageURI;
+          $rootScope.lastCctvPhoto = "data:image/png;base64,"+imageURI;
+          soc.log(JSON.stringify($rootScope.lastCctvPhoto));
           $rootScope.cctvPhotoTaken = true;
         } else {
           $rootScope.lastHangBoardPhoto = imageURI;
         }
       }, function(err) {
         soc.log(err);
-      }, {
-        quality: 100,
-        targetWidth: 320,
-        targetHeight: 320, 
-        saveToPhotoAlbum: false
       });
     } else {
       alert('카메라 기능을 불러올 수 없는 기기입니다.');
