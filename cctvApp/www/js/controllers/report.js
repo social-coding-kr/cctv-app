@@ -104,7 +104,7 @@ angular.module('starter.controllers')
 })
 
 // cctv 및 안내판을 찍을 때 사용하는 컨트롤러
-.controller('takePictureCtrl', function($scope, Camera, $ionicPopup, $window, $location, $rootScope, soc) {
+.controller('takePictureCtrl', function($scope, $ionicPopup, $window, $location, $rootScope, soc) {
   // 카메라 옵션
   var options = {
                   quality: 50,
@@ -116,6 +116,7 @@ angular.module('starter.controllers')
   // 네이티브 카메라를 불러오는 함수
   $scope.getPhoto = function() {
     if($window.plugins != undefined) {
+      // 카메라 옵션
       var COptions = {
         quality: 100,
         targetWidth: 240,
@@ -126,28 +127,30 @@ angular.module('starter.controllers')
 				sourceType       : navigator.camera.PictureSourceType.CAMERA, 
 				correctOrientation: true
       };
-      Camera.getPicture(COptions).then(function(imageURI) {
-        //soc.log(imageURI);
-        alert("Length: " + imageURI.length);
-        if($rootScope.lastCctvPhoto === $rootScope.basicCctvPhoto) {
-          $rootScope.lastCctvPhoto = "data:image/png;base64,"+imageURI;
-          soc.log(JSON.stringify($rootScope.lastCctvPhoto));
-          $rootScope.cctvPhotoTaken = true;
-        } else {
-          $rootScope.lastHangBoardPhoto = imageURI;
-        }
-      }, function(err) {
-        soc.log(err);
-      });
+      // 사진을 찍는 함수
+      navigator.camera.getPicture(
+        function(imageURI) {
+          //soc.log(imageURI);
+          //alert("Length: " + imageURI.length);
+          if($rootScope.lastCctvPhoto === $rootScope.basicCctvPhoto) {
+            $rootScope.cctvPhotoTaken = true;
+            $rootScope.lastCctvPhoto = "data:image/png;base64,"+imageURI;
+            //alert($rootScope.lastCctvPhoto);
+            soc.log(JSON.stringify($rootScope.lastCctvPhoto));
+            $scope.$apply();
+          } else {
+            $rootScope.lastHangBoardPhoto = "data:image/png;base64,"+imageURI;
+          }
+        }, function(err) {
+          soc.log(err);
+        }, COptions);
+        
     } else {
+      
       alert('카메라 기능을 불러올 수 없는 기기입니다.');
       $rootScope.cctvPhotoTaken = true; // 사진이 찍혔다고 가정하고 다음 step으로 넘어감
+      
     }
-  };
-  // 카메라 이미지의 데이터를 받는 함수
-  $scope.photoData = function() {
-    var CctvPhotoData = $rootScope.lastCctvPhoto;
-    
   };
   // 사진의 위치를 알려주는 함수(비활성화 버튼)
   $scope.photoLocation = function() {
@@ -175,24 +178,10 @@ angular.module('starter.controllers')
                       });
   };
 })
-// 카메라 팩토리
-.factory('Camera', ['$q', function($q) {
-    return {
-        getPicture: function(options) {
-            var q = $q.defer();
-            navigator.camera.getPicture(function(result) {
-            q.resolve(result);
-            }, function(err) {
-                q.reject(err);
-            }, options);
-            return q.promise;
-        }
-    }
-}])
 
 // 목적선택화면에 사용하는 컨트롤러
 .controller('selectPurposeCtrl', function($rootScope, $scope, $location) {
-  // 등록 확정화면으로 이동하는 함수
+  // 등록 확정화면으로 이동/목적을 설정
   $scope.select = function() {
     $location.path('/app/confirmReport');
   }
@@ -203,10 +192,11 @@ angular.module('starter.controllers')
   // 현재위치를 나타내는 변수들
   var ex_lat = myLat;
   var ex_lng = myLng;
+
   // 등록 확정시 post service로 보낼 변수들 갱신
   $rootScope.cctvReportingInfo = {latitude: ex_lat, 
                                   longitude: ex_lng, 
-                                  purpose: '', 
+                                  purpose: $rootScope.purpose, //undefined
                                   cctvImage: $rootScope.lastCctvPhoto, 
                                   noticeImage: $rootScope.lastHangBoardPhoto, 
                                   userId: 'TestingId_ClubSandwich'};
