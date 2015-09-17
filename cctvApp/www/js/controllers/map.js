@@ -324,7 +324,9 @@ angular.module('starter.controllers')
         if (!$scope.map) {
             return;
         }
-
+        
+        soc.log('bounds changed!');
+        
         $scope.loading = $ionicLoading.show({
             content: 'Getting current location...',
             showBackdrop: false
