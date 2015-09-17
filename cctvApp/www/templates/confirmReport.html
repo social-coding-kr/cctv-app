@@ -1,11 +1,10 @@
 <ion-view view-title="CCTV 등록 확인용 화면">
   <ion-content>
-  cctv image= url :: {{cctvReportingInfo.cctvImage}}
-  <!-- 
     <ion-list>   
     
       <ion-item class="item-thumbnail-left">
         <img src="{{lastCctvPhoto}}">
+		<img src="{{cctvReportingInfo.cctvImage}}">
 		cctv image= url :: {{cctvReportingInfo.cctvImage}}
       </ion-item>
       
@@ -33,8 +32,8 @@
         latitude :<input type="number" name="latitude" value={{cctvReportingInfo.latitude}}><br>
         longitude :<input type="number" name="longitude" value={{cctvReportingInfo.longitude}}><br>
         purpose :<input type="string" name="purpose" ng-repeat="item in purposeForReport" ng-model="item.checked"><br>
-        cctvImage :<input type="image" name="cctvImage" value={{lastCctvPhoto}} style="width:128px;height:128px;"><br>
-        noticeImage :<input type="image" name="noticeImage" value={{lastHangBoardPhoto}} style="width:128px;height:128px;"><br>
+        cctvImage :<input type="file" name="cctvImage" value={{cctvReportingInfo.cctvImage}} style="width:128px;height:128px;"><br>
+        noticeImage :<input type="file" name="noticeImage" value={{cctvReportingInfo.noticeImage}} style="width:128px;height:128px;"><br>
         userId :<input type="string" name="userId" value={{cctvReportingInfo.userId}}><br>
         <input type="submit" value="Submit">
       </div>
@@ -43,6 +42,5 @@
         <a class="button button-light" ng-click="cancellButton2Clicked()">취소</a>
       </div>
     </form>
-	-->
   </ion-content>
 </ion-view>
