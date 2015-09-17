@@ -124,7 +124,7 @@ angular.module('starter.controllers')
         saveToPhotoAlbum: false,
         //allowEdit        : true,
 				//destinationType  : navigator.camera.DestinationType.DATA_URL, lcs
-        destinationType  : navigator.camera.DestinationType.FILE_URI,
+        destinationType  : navigator.camera.DestinationType.DATA_URL,
 				sourceType       : navigator.camera.PictureSourceType.CAMERA, 
 				correctOrientation: true
       };
