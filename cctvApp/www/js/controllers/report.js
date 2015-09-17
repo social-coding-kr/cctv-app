@@ -134,7 +134,8 @@ angular.module('starter.controllers')
           //alert("Length: " + imageURI.length);
           if($rootScope.lastCctvPhoto === $rootScope.basicCctvPhoto) {
             $rootScope.cctvPhotoTaken = true;
-            $rootScope.lastCctvPhoto = "data:image/png;base64,"+imageURI;
+            //$rootScope.lastCctvPhoto = "data:image/png;base64,"+imageURI; lcs
+            $rootScope.lastCctvPhoto = "data:image/png,"+imageURI;
             //alert($rootScope.lastCctvPhoto);
             soc.log(JSON.stringify($rootScope.lastCctvPhoto));
             $scope.$apply();
