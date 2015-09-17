@@ -27,6 +27,7 @@ angular.module('starter.controllers')
 			    $scope.mapInfoZoomLevel = map.getLevel();
 			}
 			
+			var markerList = [];
 			$scope.requestInfoCount = 0;
 			$scope.requestCctvs = function() {
 			    
@@ -39,6 +40,67 @@ angular.module('starter.controllers')
 			    $scope.requestInfoNE = bounds.getNorthEast().toString();			    
 
 			    $scope.requestInfoCenter = map.getCenter(); 
+			    
+			    
+                // 서버측 API가 준비될때까지 ZoomLevel이 크면 요청을 하지 않는다			    
+			    if(map.getLevel() > 6) {
+			        return;
+			    }
+			    
+			    // 실제 요청하는 부분
+			    var params = {
+			        east:   bounds.getNorthEast().getLng().toFixed(5),
+			        north:  bounds.getNorthEast().getLat().toFixed(5),
+			        west:   bounds.getSouthWest().getLng().toFixed(5),			        
+			        south:  bounds.getSouthWest().getLat().toFixed(5)
+			    }
+			  
+			    soc.getCctvs(params)
+			        .then(function(res) {
+                        //soc.log("SUCCESS: " + JSON.stringify(res));
+                        /*for (var cctv in cctvList) {
+                            var cctvId = cctvList[cctv].cctvId;
+                        }*/
+                        
+                        // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+                        soc.log("PREV length: " + markerList.length);
+                        function deleteMarkers() {
+                            for (var i = 0; i < markerList.length; i++) {
+                                markerList[i].setMap(null);
+                                delete markerList[i];
+                            }            
+                            markerList = [];                            
+                        }
+                        deleteMarkers();
+                        
+                        var length = res.data.cctvs.length;
+                        for(var i=0; i<length; i++) {
+                            var cctv = res.data.cctvs[i];
+                            if(markerList[cctv.cctvId] === undefined) {
+                                //soc.log(cctv.cctvId + " ADD");
+                                // 마커가 표시될 위치입니다 
+                                var markerPosition  = new daum.maps.LatLng(cctv.latitude, cctv.longitude); 
+
+                                // 마커를 생성합니다
+                                var marker = new daum.maps.Marker({
+                                    position: markerPosition
+                                });
+                            
+                                // 마커가 지도 위에 표시되도록 설정합니다
+                                marker.setMap(map);
+                                
+                                markerList.push(marker);                            
+                            } else {
+                                //soc.log(cctv.cctvId + " PASS");
+                            }
+                            
+                        }
+                        soc.log("AFT length: " + markerList.length);
+                        
+                    }, function(err) {
+                        soc.log("ERROR: " + JSON.stringify(err));
+                    }
+                );
 			}
 
 			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다

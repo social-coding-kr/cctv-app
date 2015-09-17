@@ -100,6 +100,12 @@ angular.module('starter.controllers')
         }
       );
     }
+    
+    // 추후에 자체 서버 관련 내용은 별도의 JS 파일로 빼는게 좋을듯
+    obj.getCctvs = function(params) {
+      return $http.get(obj.server.mainUrl + "map/cctvs", {params: params});
+    }
+    
 
     // config
     obj.config = {};
