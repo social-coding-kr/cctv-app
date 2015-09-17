@@ -123,7 +123,8 @@ angular.module('starter.controllers')
         targetHeight: 240, 
         saveToPhotoAlbum: false,
         //allowEdit        : true,
-				destinationType  : navigator.camera.DestinationType.DATA_URL,
+				//destinationType  : navigator.camera.DestinationType.DATA_URL, lcs
+        destinationType  : navigator.camera.DestinationType.FILE_URI,
 				sourceType       : navigator.camera.PictureSourceType.CAMERA, 
 				correctOrientation: true
       };
