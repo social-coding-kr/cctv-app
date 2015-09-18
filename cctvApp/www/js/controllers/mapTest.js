@@ -10,29 +10,20 @@ angular.module('starter.controllers')
             var defLoc = soc.getDefaultLocation();
     		var mapOption = { 
         		center: new daum.maps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
-        		//center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
         		level: 3 // 지도의 확대 레벨
 		   	};
 
 			// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 			var map = new daum.maps.Map(mapContainer, mapOption); 
-			
-            var markerImageSrc = 'img/map-pin_17x30.png'; // 마커이미지의 주소입니다    
-            var markerImageSize = new daum.maps.Size(15, 26); // 마커이미지의 크기입니다
-            var markerImageOption = {offset: new daum.maps.Point(7, 26)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다			
-			
-            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-            var markerImage = new daum.maps.MarkerImage(markerImageSrc, markerImageSize, markerImageOption);
-            //var markerPosition = new daum.maps.LatLng(defLoc.lat, defLoc.lon); // 마커가 표시될 위치입니다			
-
-            var testMarkerPosition  = mapOption.center;
 
             // 테스트용 고정 마커
             var testMarker = new daum.maps.Marker({
-                position: testMarkerPosition,
-                image: markerImage
+                position: mapOption.center,
+                image: soc.getMarkerImage()
             });
+            
             testMarker.setMap(map);
+            
             
 
 // Begin 임시 인포윈도우
@@ -72,8 +63,7 @@ angular.module('starter.controllers')
 			    var bounds = map.getBounds();
 
                 // ----------------------
-                
-                
+
                 var northEast   = bounds.getNorthEast();
                 var southWest   = bounds.getSouthWest();
                 var center      = map.getCenter();
@@ -110,7 +100,6 @@ angular.module('starter.controllers')
 
 			    $scope.requestInfoCenter = map.getCenter();     // 이 변수는 다른곳에서 사용한다
 
-
 			    soc.getCctvs(params)
 			        .then(function(res) {
 			            
@@ -136,7 +125,7 @@ angular.module('starter.controllers')
                                 // 마커를 생성합니다
                                 var marker = new daum.maps.Marker({
                                     position: markerPosition,
-                                    image: markerImage
+                                    image: soc.getMarkerImage()
                                 });
                             
                                 // 마커가 지도 위에 표시되도록 설정합니다
@@ -183,12 +172,12 @@ angular.module('starter.controllers')
 			
             daum.maps.event.addListener(map, 'dragstart', function() {
                 $scope.isDraging = true;
-                soc.log('drag start!');
+                //soc.log('drag start!');
             });			
 			
             daum.maps.event.addListener(map, 'dragend', function() {
                 $scope.isDraging = false;
-                soc.log('drag end!');
+                //soc.log('drag end!');
 
                 // 직전에 서버에 요청했던 Bounds 값과 비교하여
                 // 일정 수준이상 차이가 나면 재요청 한다
@@ -199,6 +188,7 @@ angular.module('starter.controllers')
                     // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
                     // 재요청하는 것으로 처리함
                     $scope.requestCctvs();
+                    $scope.refreshMapInfo();
                     $scope.$apply();
                 }
             });			
@@ -206,6 +196,7 @@ angular.module('starter.controllers')
 			// 중심좌표 이동 이벤트
 		    daum.maps.event.addListener(map, 'center_changed', function() {
 		        // 중심좌표 이동되는 동안 계속 호출된다
+		        // 성능에 좋을리 없으니 사용하지 말자
 		        //soc.log("center changed!");
             });
 
@@ -216,18 +207,20 @@ angular.module('starter.controllers')
                 // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
                 // CCTV 목록을 재요청한다
                 $scope.requestCctvs();
+                $scope.refreshMapInfo();
                 $scope.$apply();
             });			
             
             // Bounds 변경 이벤트
             daum.maps.event.addListener(map, 'bounds_changed', function() {
                 // Bounds가 변경되는 동안 계속 호출된다
+                // 성능에 좋을리 없으니 사용하지 말자
                 // (중심좌표 이동 및 확대수준 변경)
-                soc.log('bounds changed!');
+                //soc.log('bounds changed!');
 
                 // mapInfo는 변경될때마다 호출
-                $scope.refreshMapInfo();
-                $scope.$apply();
+                //$scope.refreshMapInfo();
+                //$scope.$apply();
                 
             });
             
