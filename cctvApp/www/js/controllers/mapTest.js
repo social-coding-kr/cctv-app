@@ -45,7 +45,6 @@ angular.module('starter.controllers')
 // End 임시 인포윈도우
 
 
-			$scope.isDraging = false;
 			$scope.refreshMapInfo = function() {
 			    $scope.mapInfoCenter = map.getCenter().toString();
 			    var bounds = map.getBounds();
@@ -169,14 +168,13 @@ angular.module('starter.controllers')
     			map.setLevel(map.getLevel() + 1);
 			}
 			
-			
+            /* 사용 필요성 없음
             daum.maps.event.addListener(map, 'dragstart', function() {
-                $scope.isDraging = true;
                 //soc.log('drag start!');
             });			
+			*/
 			
             daum.maps.event.addListener(map, 'dragend', function() {
-                $scope.isDraging = false;
                 //soc.log('drag end!');
 
                 // 직전에 서버에 요청했던 Bounds 값과 비교하여
@@ -197,12 +195,14 @@ angular.module('starter.controllers')
             });			
             
 			// 중심좌표 이동 이벤트
+            // 중심좌표 이동되는 동안 계속 호출된다
+	        // 성능에 좋을리 없으니 사용하지 말자
+	        /*		
 		    daum.maps.event.addListener(map, 'center_changed', function() {
-		        // 중심좌표 이동되는 동안 계속 호출된다
-		        // 성능에 좋을리 없으니 사용하지 말자
 		        //soc.log("center changed!");
             });
-
+            */
+            
             // 확대수준 변경 이벤트
             daum.maps.event.addListener(map, 'zoom_changed', function() {
                 //soc.log('zoom changed!');
@@ -220,9 +220,10 @@ angular.module('starter.controllers')
             });			
             
             // Bounds 변경 이벤트
+            // Bounds가 변경되는 동안 계속 호출된다
+            // 성능에 좋을리 없으니 사용하지 말자
+            /*
             daum.maps.event.addListener(map, 'bounds_changed', function() {
-                // Bounds가 변경되는 동안 계속 호출된다
-                // 성능에 좋을리 없으니 사용하지 말자
                 // (중심좌표 이동 및 확대수준 변경)
                 //soc.log('bounds changed!');
 
@@ -231,7 +232,7 @@ angular.module('starter.controllers')
                 //$scope.$apply();
                 
             });
-            
+            */
             
 			$scope.refreshMapInfo();
 			$scope.requestCctvs();
