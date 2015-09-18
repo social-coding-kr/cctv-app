@@ -97,8 +97,8 @@ angular.module('starter.controllers')
 			    $scope.requestInfoSW = "(" + params.south + ", " + params.west + ")";
 			    $scope.requestInfoNE = "(" + params.north + ", " + params.east + ")";
 
-
-			    $scope.requestInfoCenter = map.getCenter();     // 이 변수는 다른곳에서 사용한다
+                $scope.requestInfoCenter = map.getCenter().toString();
+			    $scope.lastRequestCenter = map.getCenter();     // 이 변수는 다른곳에서 사용한다
 
 			    soc.getCctvs(params)
 			        .then(function(res) {
@@ -114,8 +114,8 @@ angular.module('starter.controllers')
                         }
                         deleteMarkers();
                         
-                        var length = res.data.cctvs.length;
-                        for(var i=0; i<length; i++) {
+                        var cctvLength = res.data.cctvs.length;
+                        for(var i=0; i<cctvLength; i++) {
                             var cctv = res.data.cctvs[i];
                             if(markerList[cctv.cctvId] === undefined) {
                                 //soc.log(cctv.cctvId + " ADD");
@@ -139,7 +139,7 @@ angular.module('starter.controllers')
                         }
                         soc.log("AFT length: " + markerList.length);
                         
-			            $scope.responseInfoCount = map.getCenter();
+			            $scope.responseInfoCount = cctvLength;
                         
                     }, function(err) {
                         soc.log("ERROR: " + JSON.stringify(err));
@@ -182,13 +182,16 @@ angular.module('starter.controllers')
                 // 직전에 서버에 요청했던 Bounds 값과 비교하여
                 // 일정 수준이상 차이가 나면 재요청 한다
                 // 이부분은 적절 값에 대한 결정 필요
-                
+                if(soc.config.isDevelModeVisible) {
+                    $scope.refreshMapInfo();
+                    $scope.$apply();
+                }
+
                 var bounds = map.getBounds();
-                if(bounds.contain($scope.requestInfoCenter) == false) {
+                if(bounds.contain($scope.lastRequestCenter) == false) {
                     // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
                     // 재요청하는 것으로 처리함
                     $scope.requestCctvs();
-                    $scope.refreshMapInfo();
                     $scope.$apply();
                 }
             });			
@@ -206,8 +209,13 @@ angular.module('starter.controllers')
                 
                 // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
                 // CCTV 목록을 재요청한다
+                
+                if(soc.config.isDevelModeVisible) {
+                    $scope.refreshMapInfo();
+                    $scope.$apply();
+                }
+                
                 $scope.requestCctvs();
-                $scope.refreshMapInfo();
                 $scope.$apply();
             });			
             

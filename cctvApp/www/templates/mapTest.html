@@ -10,17 +10,21 @@
             <span ng-click="zoomOut()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
         </div>
         <div class="custom_mapinfocontrol radius_border" ng-if="soc.config.isDevelModeVisible">
-            <b>mapInfo</b><br>
+            <b>[mapInfo]</b><br>
             <b>zoomLevel:</b> {{ mapInfoZoomLevel }}<br>
             <b>center:</b> {{ mapInfoCenter }}<br>
             <b>southWest:</b> {{ mapInfoSW }}<br>
             <b>northEast:</b> {{ mapInfoNE }}<br>
             <br>
-            <b>requestInfo</b><br>
-            <b>count: </b> {{ requestInfoCount }}<br>
-            <b>Center:</b> {{ requestInfoCenter }}<br>
+            <b>[request/responseInfo]</b><br>
+            <b>requsetCount(누적): </b> {{ requestInfoCount }}<br>
+            <b>center:</b> {{ requestInfoCenter }}<br>
             <b>southWest:</b> {{ requestInfoSW }}<br>
             <b>northEast:</b> {{ requestInfoNE }}<br>
+            <b>responseCctvCount:</b> {{ responseInfoCount }}<br> 
+            <br>
+            <b>(주의)</b> 수신한 CCTV 개수는 화면에 보이는 것보다 많습니다<br>
+            
         </div>
         
         
