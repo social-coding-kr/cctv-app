@@ -11,23 +11,40 @@
                         Cancel
                     </button>
                 </div>
-            </div>
-            <div class="col col-20">
-                <div class="bar bar-header item-input-inset background-trans cctv-text-right">
-                    &nbsp;
-                    <button class="button cctv-round-button" ng-click="centerOnMe()"><i class="icon ion-pinpoint"></i>
-                    </button>
-                </div>
-            </div>
-        </div>-->
+            </div>-->
         
         <div class="scroll-content" id="map" data-tap-disabled="true"></div>
-            <div class="col col-20">
-                <div class="bar bar-header item-input-inset background-trans cctv-text-right">
-                    <button class="button cctv-round-button" ng-click="centerOnMe()"><i class="icon ion-pinpoint"></i>
-                    </button>
-                </div>
+        <div class="col col-20">
+            <div class="bar bar-header item-input-inset background-trans cctv-text-right" ng-controller = "MapCtrl">
+                <button class="button cctv-round-button" ng-click="centerOnMe()"><i class="icon ion-pinpoint"></i>
+                </button>
+                
+                <ion-nav-buttons side = right>
+                    <button ng-click = "centerOnMe()">임시버튼</button>
+                </ion-nav-buttons>
             </div>
+        </div>
+        
+        <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
+        <div class="custom_zoomcontrol radius_border"> 
+            <span ng-click="zoomIn()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>  
+            <span ng-click="zoomOut()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
+        </div>
+        
+        <div class="custom_mapinfocontrol radius_border" ng-if="soc.config.isDevelModeVisible">
+            <b>mapInfo</b><br>
+            <b>zoomLevel:</b> {{ mapInfoZoomLevel }}<br>
+            <b>center:</b> {{ mapInfoCenter }}<br>
+            <b>southWest:</b> {{ mapInfoSW }}<br>
+            <b>northEast:</b> {{ mapInfoNE }}<br>
+            <br>
+            <b>requestInfo</b><br>
+            <b>count: </b> {{ requestInfoCount }}<br>
+            <b>Center:</b> {{ requestInfoCenter }}<br>
+            <b>southWest:</b> {{ requestInfoSW }}<br>
+            <b>northEast:</b> {{ requestInfoNE }}<br>
+        </div>
+        
         <div class="bar bar-footer item-input-inset" ng-show="reportClicked">
             <div class="row">
                 <div class="col col-100">
