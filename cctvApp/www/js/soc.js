@@ -106,6 +106,19 @@ angular.module('starter.controllers')
       return $http.get(obj.server.mainUrl + "map/cctvs", {params: params});
     }
     
+    // Map 공통
+    var markerImageSrc = 'img/map-pin_17x30.png'; // 마커이미지의 주소입니다  
+    var markerImageSize = new daum.maps.Size(15, 26); // 마커이미지의 크기입니다
+    var markerImageOption = {offset: new daum.maps.Point(7, 26)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다			
+      
+    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+    var markerImage = new daum.maps.MarkerImage(markerImageSrc, markerImageSize, markerImageOption);
+    
+    obj.getMarkerImage = function(options) {
+      // 추후 options에 따라 다른 마커 이미지를 반환
+      return markerImage;
+    }
+
 
     // config
     obj.config = {};
