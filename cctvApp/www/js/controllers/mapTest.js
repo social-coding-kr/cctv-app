@@ -2,28 +2,70 @@
 angular.module('starter.controllers')
 
 .controller('MapTestCtrl',
-    function($rootScope, $scope, $ionicLoading, $compile, $http, soc, $ionicPlatform) {
+    function($rootScope, $scope, $state, $ionicLoading, $compile, $http, soc, $ionicPlatform) {
 
-		$ionicPlatform.ready(function() {
+        var map = null;
+        var mapContainer = document.getElementById('map2'); // 지도를 표시할 div         
+        var defLoc = soc.getDefaultLocation();        
+        
+        var thisIsMap = function() {
 
-            var mapContainer = document.getElementById('map2'); // 지도를 표시할 div 
-            var defLoc = soc.getDefaultLocation();
     		var mapOption = { 
-        		center: new daum.maps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
-        		level: 3 // 지도의 확대 레벨
+        		center: new soc.mapProvider.maps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
+        		level: 3, // 지도의 확대 레벨
+                zoom: 18 - 3,        		
 		   	};
 
-			// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-			var map = new daum.maps.Map(mapContainer, mapOption); 
+			map = new soc.mapProvider.maps.Map(mapContainer, mapOption); 
+			$scope.map = map;
+			
+			// 레벨과 줌은 서로 반대다
+			if(soc.mapProvider.maps.Map.prototype.getLevel === undefined) {
+			    soc.log("getLevel undefined");
+			    soc.mapProvider.maps.Map.prototype.getLevel = function() {
+			        return 18 - this.getZoom();
+			    }
+			    soc.mapProvider.maps.Map.prototype.setLevel = function(level) {
+			        soc.mapProvider.maps.Map.prototype.setZoom(18 - level);
+			    }
+			}
+
+
+    		if(soc.mapProvider.maps.LatLngBounds.prototype.contain === undefined) {
+			    soc.log("contain undefined");
+			    soc.mapProvider.maps.LatLngBounds.prototype.contain
+			        = soc.mapProvider.maps.LatLngBounds.prototype.contains;
+			}
+
+    		if(soc.mapProvider.maps.LatLng.prototype.getLat === undefined) {
+			    soc.log("getLat undefined");    		    
+    		    soc.mapProvider.maps.LatLng.prototype.getLat
+    		        = soc.mapProvider.maps.LatLng.prototype.lat;
+    		        
+    		    soc.mapProvider.maps.LatLng.prototype.getLng
+    		        = soc.mapProvider.maps.LatLng.prototype.lng;
+    		        
+    		}
+/*    		
+    		if(soc.mapProvider.maps.LatLng.prototype.lat === undefined) {
+			    soc.log("lat undefined");    		        		    
+    		    soc.mapProvider.maps.LatLng.prototype.lat
+    		        = soc.mapProvider.maps.LatLng.prototype.getLat;
+    		        
+    		    soc.mapProvider.maps.LatLng.prototype.lng
+    		        = soc.mapProvider.maps.LatLng.prototype.getLng;
+    		}
+*/
 
             // 테스트용 고정 마커
-            var testMarker = new daum.maps.Marker({
+            /*
+            var testMarker = new soc.mapProvider.maps.Marker({
                 position: mapOption.center,
                 image: soc.getMarkerImage()
             });
             
             testMarker.setMap(map);
-            
+
             
 
 // Begin 임시 인포윈도우
@@ -32,18 +74,18 @@ angular.module('starter.controllers')
                 iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
             // 인포윈도우를 생성합니다
-            var infowindow = new daum.maps.InfoWindow({
+            var infowindow = new soc.mapProvider.maps.InfoWindow({
                 content : iwContent,
                 removable : iwRemoveable
             });
 
             // 마커에 클릭이벤트를 등록합니다
-            daum.maps.event.addListener(testMarker, 'click', function() {
+            soc.mapProvider.maps.event.addListener(testMarker, 'click', function() {
                   // 마커 위에 인포윈도우를 표시합니다
                 infowindow.open(map, testMarker);  
             });
 // End 임시 인포윈도우
-
+            */
 
 			$scope.refreshMapInfo = function() {
 			    $scope.mapInfoCenter = map.getCenter().toString();
@@ -54,6 +96,15 @@ angular.module('starter.controllers')
 			}
 			
 			var markerList = [];
+			
+                        function deleteMarkers() {
+                            for (var i = 0; i < markerList.length; i++) {
+                                markerList[i].setMap(null);
+                                //marker = null;
+                                soc.log("delete marker");
+                            }            
+                            markerList = [];                            
+                        }			
 			$scope.requestInfoCount = 0;
 			$scope.requestCctvs = function() {
 			    
@@ -103,40 +154,39 @@ angular.module('starter.controllers')
 			        .then(function(res) {
 			            
                         // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
-                        soc.log("PREV length: " + markerList.length);
-                        function deleteMarkers() {
-                            for (var i = 0; i < markerList.length; i++) {
-                                markerList[i].setMap(null);
-                                delete markerList[i];
-                            }            
-                            markerList = [];                            
-                        }
+                        //soc.log("PREV length: " + markerList.length);
+
                         deleteMarkers();
                         
                         var cctvLength = res.data.cctvs.length;
                         for(var i=0; i<cctvLength; i++) {
                             var cctv = res.data.cctvs[i];
-                            if(markerList[cctv.cctvId] === undefined) {
+                            //if(markerList[cctv.cctvId] === undefined) {
                                 //soc.log(cctv.cctvId + " ADD");
                                 // 마커가 표시될 위치입니다 
-                                var markerPosition  = new daum.maps.LatLng(cctv.latitude, cctv.longitude); 
+                                var markerPosition  = new soc.mapProvider.maps.LatLng(cctv.latitude, cctv.longitude); 
 
                                 // 마커를 생성합니다
-                                var marker = new daum.maps.Marker({
+                                var marker = new soc.mapProvider.maps.Marker({
                                     position: markerPosition,
-                                    image: soc.getMarkerImage()
+                                    image: soc.getMarkerImage(),
+                                    icon: soc.getMarkerImage()
                                 });
-                            
+
+                                markerList.push(marker);                                                        
                                 // 마커가 지도 위에 표시되도록 설정합니다
-                                marker.setMap(map);
+
                                 
-                                markerList.push(marker);                            
-                            } else {
+                                
+                            //} else {
                                 //soc.log(cctv.cctvId + " PASS");
-                            }
+                            //}
                             
                         }
-                        soc.log("AFT length: " + markerList.length);
+                        for(var i=0; i<markerList.length; i++) {
+                                markerList[i].setMap(map);
+                        }
+                        //soc.log("AFT length: " + markerList.length);
                         
 			            $scope.responseInfoCount = cctvLength;
                         
@@ -148,15 +198,15 @@ angular.module('starter.controllers')
 			}
 
 			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-			//var mapTypeControl = new daum.maps.MapTypeControl();
+			//var mapTypeControl = new soc.mapProvider.maps.MapTypeControl();
 
 			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-			// daum.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-			//map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
+			// soc.mapProvider.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+			//map.addControl(mapTypeControl, soc.mapProvider.maps.ControlPosition.TOPRIGHT);
 
 			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-			//var zoomControl = new daum.maps.ZoomControl();
-			//map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+			//var zoomControl = new soc.mapProvider.maps.ZoomControl();
+			//map.addControl(zoomControl, soc.mapProvider.maps.ControlPosition.RIGHT);
 			
 			// 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
 			$scope.zoomIn = function() {
@@ -169,12 +219,12 @@ angular.module('starter.controllers')
 			}
 			
             /* 사용 필요성 없음
-            daum.maps.event.addListener(map, 'dragstart', function() {
+            soc.mapProvider.maps.event.addListener(map, 'dragstart', function() {
                 //soc.log('drag start!');
             });			
 			*/
 			
-            daum.maps.event.addListener(map, 'dragend', function() {
+            soc.mapProvider.maps.event.addListener(map, 'dragend', function() {
                 //soc.log('drag end!');
 
                 // 직전에 서버에 요청했던 Bounds 값과 비교하여
@@ -198,13 +248,13 @@ angular.module('starter.controllers')
             // 중심좌표 이동되는 동안 계속 호출된다
 	        // 성능에 좋을리 없으니 사용하지 말자
 	        /*		
-		    daum.maps.event.addListener(map, 'center_changed', function() {
+		    soc.mapProvider.maps.event.addListener(map, 'center_changed', function() {
 		        //soc.log("center changed!");
             });
             */
             
             // 확대수준 변경 이벤트
-            daum.maps.event.addListener(map, 'zoom_changed', function() {
+            soc.mapProvider.maps.event.addListener(map, 'zoom_changed', function() {
                 //soc.log('zoom changed!');
                 
                 // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
@@ -223,7 +273,7 @@ angular.module('starter.controllers')
             // Bounds가 변경되는 동안 계속 호출된다
             // 성능에 좋을리 없으니 사용하지 말자
             /*
-            daum.maps.event.addListener(map, 'bounds_changed', function() {
+            soc.mapProvider.maps.event.addListener(map, 'bounds_changed', function() {
                 // (중심좌표 이동 및 확대수준 변경)
                 //soc.log('bounds changed!');
 
@@ -234,7 +284,30 @@ angular.module('starter.controllers')
             });
             */
             
-			$scope.refreshMapInfo();
-			$scope.requestCctvs();
-		});
+            //var googleMapLoaded = false;
+            if(soc.mapProvider == google) {
+            soc.mapProvider.maps.event.addListenerOnce(map, 'idle', function() {
+                soc.log("Map Loaded!!!"); 
+        		$scope.refreshMapInfo();
+		    	$scope.requestCctvs();
+                
+                // do something only the first time the map is loaded
+                //googleMapLoaded = true;
+            });                        
+            } else {
+        		$scope.refreshMapInfo();
+		    	$scope.requestCctvs();
+            }
+        }
+
+		//$ionicPlatform.ready(thisIsMap());
+		
+        $scope.changeMap = function() {
+            soc.changeMap();
+            //$state.go($state.current, {}, {reload: true});
+            //$state.go('app.mapTest', {});
+            thisIsMap();
+        }
+        
+        thisIsMap();
     })
