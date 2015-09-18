@@ -124,7 +124,7 @@ angular.module('starter.controllers')
         saveToPhotoAlbum: false,
         //allowEdit        : true,
 				//destinationType  : navigator.camera.DestinationType.DATA_URL, lcs
-        destinationType  : navigator.camera.DestinationType.FILE_URI,
+        destinationType  : navigator.camera.DestinationType.DATA_URL,
 				sourceType       : navigator.camera.PictureSourceType.CAMERA, 
 				correctOrientation: true
       };
@@ -142,7 +142,8 @@ angular.module('starter.controllers')
             soc.log(JSON.stringify($rootScope.lastCctvPhoto));
             $scope.$apply();
           } else {
-            $rootScope.lastHangBoardPhoto = "data:image/png;base64,"+imageURI;
+            //$rootScope.lastHangBoardPhoto = "data:image/png;base64,"+imageURI; lcs
+			$rootScope.lastHangBoardPhoto = imageURI;
           }
         }, function(err) {
           soc.log(err);
