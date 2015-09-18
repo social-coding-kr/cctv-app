@@ -6,14 +6,15 @@ var myLng;
 
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc, $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout) {
+.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc, $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $ionicPlatform) {
 
-    var curLoc = soc.getDefaultLocation();
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = { 
-    		center: new daum.maps.LatLng(curLoc.lat, curLoc.lon), // 지도의 중심좌표
-    		level: 3 // 지도의 확대 레벨
-	};
+    $ionicPlatform.ready(function() {
+        var curLoc = soc.getDefaultLocation();
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = { 
+        		center: new daum.maps.LatLng(curLoc.lat, curLoc.lon), // 지도의 중심좌표
+        		level: 3 // 지도의 확대 레벨
+	    };
 
 			// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 			var map = new daum.maps.Map(mapContainer, mapOption); 
@@ -58,8 +59,40 @@ angular.module('starter.controllers')
 			    var bounds = map.getBounds();
 			    
 			    // 실제 요청할때는 이 범위보다 2배(?) 큰범위를 요청한다
-			    $scope.requestInfoSW = bounds.getSouthWest().toString();
-			    $scope.requestInfoNE = bounds.getNorthEast().toString();			    
+			    
+			    var northEast   = bounds.getNorthEast();
+                var southWest   = bounds.getSouthWest();
+                var center      = map.getCenter();
+
+                var centerLng   = center.getLng();                
+                var centerLat   = center.getLat();
+
+                var east    = northEast.getLng();
+		        var north   = northEast.getLat();
+			    var west    = southWest.getLng();
+			    var south   = southWest.getLat();
+			    
+			    var width   = east - west;
+			    var height  = north - south;
+
+                // 서버측 API가 준비될때까지 ZoomLevel이 크면 요청을 하지 않는다			    
+			    if(map.getLevel() > 5) {
+			        return;
+			    }
+			    
+			    // 실제 요청 Parameter
+			    // 화면에 보이는 2배 요청
+			    var params = {
+			        east:   (centerLng + width  + 0.000005).toFixed(6),
+			        west:   (centerLng - width  - 0.000005).toFixed(6),			        
+			        north:  (centerLat + height + 0.000005).toFixed(6),
+			        south:  (centerLat - height - 0.000005).toFixed(6)
+			    };
+
+			    // 실제 요청할때는 이 범위보다 2배(?) 큰범위를 요청한다
+			    $scope.requestInfoSW = "(" + params.south + ", " + params.west + ")";
+			    $scope.requestInfoNE = "(" + params.north + ", " + params.east + ")";
+
 
 			    $scope.requestInfoCenter = map.getCenter(); 
 			};
@@ -82,6 +115,7 @@ angular.module('starter.controllers')
                     // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
                     // 재요청하는 것으로 처리함
                     $scope.requestCctvs();
+                    $scope.refreshMapInfo();
                     $scope.$apply();
                 }
             });			
@@ -94,11 +128,12 @@ angular.module('starter.controllers')
 
             // 확대수준 변경 이벤트
             daum.maps.event.addListener(map, 'zoom_changed', function() {
-                soc.log('zoom changed!');
+                //soc.log('zoom changed!');
                 
                 // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
                 // CCTV 목록을 재요청한다
                 $scope.requestCctvs();
+                $scope.refreshMapInfo();
                 $scope.$apply();
             });			
             
@@ -106,180 +141,19 @@ angular.module('starter.controllers')
             daum.maps.event.addListener(map, 'bounds_changed', function() {
                 // Bounds가 변경되는 동안 계속 호출된다
                 // (중심좌표 이동 및 확대수준 변경)
-                soc.log('bounds changed!');
+                //soc.log('bounds changed!');
 
                 // mapInfo는 변경될때마다 호출
-                $scope.refreshMapInfo();
-                $scope.$apply();
+                //$scope.refreshMapInfo();
+                //$scope.$apply();
                 
             });
             
             
 			$scope.refreshMapInfo();
 			$scope.requestCctvs();
+    });
  
- 
- 
- /*
- 
- 
-        
-    var map = L.map('map');
-    var curLoc = soc.getDefaultLocation();
-    var Seoul = new L.LatLng(curLoc.lat, curLoc.lon); // geographical point (longitude and latitude)
-    map.setView(Seoul, 15);
-
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-        maxZoom: 18
-    }).addTo(map);
-
-    map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
-    $scope.map = map;
-    var markers = new L.FeatureGroup();
-
-    var scale = new L.Control.Scale().addTo(map);
-    
-    // Ionic 기본 아이콘은 아래 링크 참고
-    // http://www.shape5.com/demo/images/general/ionicons/cheatsheet.html
-    
-    // custom LeafletJS Plugin
-    var simpleButton1 = new L.Control.customControl({ 
-        position:   "topleft",
-        innerHTML:  "<i class='ion-android-share'></i>",
-        onClick:    function(control) { alert(control.options.position); }
-    });
-
-
-    var simpleButton3 = new L.Control.customControl({ 
-        position:   "bottomright",
-        innerHTML:  "<i class='ion-android-settings'></i>",
-        onClick:    function(control) { alert(control.options.position); }
-    });
-
-
-    var simpleButton4 = new L.Control.customControl({ 
-        position:   "bottomleft",
-        innerHTML:  "<strong>Ha!</strong>",
-        onClick:    function(control) { alert(control.options.position); },
-        width:      120,
-        height:     40
-    });
-
-    var simpleButton5 = new L.Control.customControl({ 
-        position:   "bottomleft",
-        innerHTML:  "지도정보<br>{{ infoCurrentPosition }}",
-    });
-    
-    simpleButton5.setStyle({
-        width:      '250px',    // 현재 구조적인 문제로 px 외에는 정상작동하지 않음
-        height:     '120px',
-        background: 'rgba(80,80,80,0.3)',
-        lineHeight: '100%',
-        textAlign:  'left'
-    });
-    
-    simpleButton1.addTo(map);
-  
-    simpleButton3.addTo(map);
-    simpleButton4.addTo(map);
-    simpleButton5.addTo(map);
-
-
-    var MyAccuracy = -1;
-    var AccuText = ('');
-    
-    //화면 로딩과 동시에 cctv 정보를 뿌려주기 위한 임시코드
-    //수정일 : 2015. 9. 12.
-    //필요성에 의문이 생겨 주석 처리함.
-
-
-
-
-    // icon - Image 사용
-    var simpleIcon = L.icon({
-        iconUrl: 'img/cctv_temp_icon.png',
-        iconSize: [20, 20],
-        iconAnchor: [10, 10],
-        popupAnchor: [0, -10],
-        shadowSize: [0, 0]
-    });
-
-    var locationMarker = function(Location, item) {
-        var marker = L.marker(Location, {
-            icon: simpleIcon
-        });
-        
-        markers.addLayer(marker);
-
-        if (item) {
-            marker.bindPopup(
-                item.연번 + ", " + item.용도 + ", " + item.주소
-            );
-        }
-            //soc.log(JSON.stringify(Location));
-    };
-
-    var dongjak = [];
-    $http.get("data/cctv/dongjak.json")
-        .then(function(response) {
-            dongjak = response.data;
-            var asdf1 = dongjak.length;
-            soc.log("SUCCESS LOAD DONGJAK");
-            //soc.log(JSON.stringify(response));
-        }, function(response) {
-            soc.log("FAILED LOAD DONGJAK");
-            soc.log(JSON.stringify(response));
-        });
-
-    var convert_info = function() {
-
-        var addPoint = function(item, isLast) {
-
-            var showCctv = function(item) {
-                var Location = new L.LatLng(item.lat, item.lon);
-                locationMarker(Location, item);
-            };
-            var asdf2 = dongjak.length;
-
-                if (!item.lat || !item.lon) {
-                    var onSuccess = function(point, opts) {
-                        soc.log(JSON.stringify(point));
-                        item.lat = point.y;
-                        item.lon = point.x;
-                        //soc.log(JSON.stringify(item));
-
-                        if (opts) {
-                            soc.log(JSON.stringify(dongjak));
-                        }
-                        showCctv(item);
-                    };
-
-                    //soc.log(item.연번 + " " + item.주소);
-                    soc.getPointFromAddress(item.주소, onSuccess, null, isLast);
-
-                }
-                else {
-                    showCctv(item);
-                }
-        };
-
-            //for(var i=dongjak.length-2; i<dongjak.length; i++) {
-            for (var i = 0; i < dongjak.length; i++) {
-                var isLast = false;
-                if (i == dongjak.length - 1) isLast = true;
-
-                addPoint(dongjak[i], isLast);
-            }
-
-            // makers 그룹은 변환 후 한번만 추가해 주는 것이 성능에 도움이 됩니다.
-            map.addLayer(markers);
-        };
-    
-    //타임아웃 함수. 이게 없으면 서버에서 데이터 전송 중 함수가 실행되는 비극이 발생해 정보가 나타나지 않습니다.
-    $timeout(convert_info, 10);
-*/
-
      //내 위치에 마크를 설정하여 주는 함수. - 다음 버전
     function MyLocationMarker(Location, Accuracy) {
         new daum.maps.Marker({
@@ -294,21 +168,6 @@ angular.module('starter.controllers')
         }
     }
 
-/*
-    //내 위치에 마크를 설정하여 주는 함수.
-    function MyLocationMarker(Location, Accuracy) {
-        var marker = L.marker(Location);
-        markers.addLayer(marker);
-        map.addLayer(markers);
-        MyAccuracy = Accuracy;
-        if (Accuracy > 100) {
-            AccuText = ('헐 이건 너무 심하잖아.');
-        }
-        else {
-            AccuText = ('적절합니다.');
-        }
-    }
-*/
     //일정 시간 동안 gps정보를 이용할 수 없을 시 토스트를 띄워주는 함수.
     function TimeExpired() {
         var alertPopup = $ionicPopup.alert({
@@ -325,7 +184,7 @@ angular.module('starter.controllers')
             return;
         }
         
-        soc.log('bounds changed!');
+        soc.log('status2 changed!');
         
         $scope.loading = $ionicLoading.show({
             content: 'Getting current location...',
