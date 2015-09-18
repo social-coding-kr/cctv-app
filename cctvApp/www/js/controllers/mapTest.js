@@ -205,7 +205,7 @@ angular.module('starter.controllers')
 
             // 확대수준 변경 이벤트
             daum.maps.event.addListener(map, 'zoom_changed', function() {
-                soc.log('zoom changed!');
+                //soc.log('zoom changed!');
                 
                 // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
                 // CCTV 목록을 재요청한다
