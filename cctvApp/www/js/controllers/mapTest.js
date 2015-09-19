@@ -4,58 +4,79 @@ angular.module('starter.controllers')
 .controller('MapTestCtrl',
     function($rootScope, $scope, $state, $ionicLoading, $compile, $http, soc, $ionicPlatform) {
 
-        var map = null;
-        var mapContainer = document.getElementById('map2'); // 지도를 표시할 div         
-        var defLoc = soc.getDefaultLocation();        
-        
-        var thisIsMap = function() {
+			// 레벨과 줌은 서로 반대다
+			    google.maps.Map.prototype.getLevel = function() {
+			        return 19 - this.getZoom();
+			    }
+			    google.maps.Map.prototype.setLevel = function(level) {
+			        google.maps.Map.prototype.setZoom(19 - level);
+			    }
 
+
+			    //soc.log("contain undefined");
+			    google.maps.LatLngBounds.prototype.contain
+			        = google.maps.LatLngBounds.prototype.contains;
+
+			    //soc.log("getLat undefined");    		    
+    		    google.maps.LatLng.prototype.getLat
+    		        = google.maps.LatLng.prototype.lat;
+    		        
+    		    google.maps.LatLng.prototype.getLng
+    		        = google.maps.LatLng.prototype.lng;
+
+
+
+        var googleMapLoaded = false;
+
+        var map = null;
+        var mapProvider = null;
+        var defLoc = soc.getDefaultLocation();        
+        var mapContainer = null;
+        
+        var level = 3;
+        
+        var googleMapContainer = document.getElementById('mapTestGoogle');
+		var googleMapOption = { 
+    		center: new google.maps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
+            zoom: 19 - level,        		
+	   	};
+        var googleMap = new google.maps.Map(googleMapContainer, googleMapOption); 
+
+        var daumMapContainer = document.getElementById('mapTestDaum');
+		var daumMapOption = { 
+    		center: new daum.maps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
+            level: level,        		
+	   	};
+        var daumMap = new daum.maps.Map(daumMapContainer, daumMapOption); 
+
+
+
+        var thisIsMap = function() {
+            $scope.lastRequestCenterLat = null;
+            $scope.lastRequestCenterLng = null;
+            soc.log(soc.mapProvider);
+            if(soc.mapProvider == daum) {
+                map = daumMap;
+                mapProvider = daum.maps;
+                //mapContainer = document.getElementById('mapTestDaum'); // 지도를 표시할 div                     
+                //soc.log("daum: " + JSON.stringify(mapContainer));                
+            } else {
+                map = googleMap;
+                mapProvider = google.maps;
+                //mapContainer = document.getElementById('mapTestGoogle'); // 지도를 표시할 div                     
+                //soc.log("google: " + JSON.stringify(mapContainer));
+            }
+
+/*
     		var mapOption = { 
         		center: new soc.mapProvider.maps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
         		level: 3, // 지도의 확대 레벨
-                zoom: 18 - 3,        		
+                zoom: 19 - 3,        		
 		   	};
 
 			map = new soc.mapProvider.maps.Map(mapContainer, mapOption); 
-			$scope.map = map;
-			
-			// 레벨과 줌은 서로 반대다
-			if(soc.mapProvider.maps.Map.prototype.getLevel === undefined) {
-			    soc.log("getLevel undefined");
-			    soc.mapProvider.maps.Map.prototype.getLevel = function() {
-			        return 18 - this.getZoom();
-			    }
-			    soc.mapProvider.maps.Map.prototype.setLevel = function(level) {
-			        soc.mapProvider.maps.Map.prototype.setZoom(18 - level);
-			    }
-			}
-
-
-    		if(soc.mapProvider.maps.LatLngBounds.prototype.contain === undefined) {
-			    soc.log("contain undefined");
-			    soc.mapProvider.maps.LatLngBounds.prototype.contain
-			        = soc.mapProvider.maps.LatLngBounds.prototype.contains;
-			}
-
-    		if(soc.mapProvider.maps.LatLng.prototype.getLat === undefined) {
-			    soc.log("getLat undefined");    		    
-    		    soc.mapProvider.maps.LatLng.prototype.getLat
-    		        = soc.mapProvider.maps.LatLng.prototype.lat;
-    		        
-    		    soc.mapProvider.maps.LatLng.prototype.getLng
-    		        = soc.mapProvider.maps.LatLng.prototype.lng;
-    		        
-    		}
-/*    		
-    		if(soc.mapProvider.maps.LatLng.prototype.lat === undefined) {
-			    soc.log("lat undefined");    		        		    
-    		    soc.mapProvider.maps.LatLng.prototype.lat
-    		        = soc.mapProvider.maps.LatLng.prototype.getLat;
-    		        
-    		    soc.mapProvider.maps.LatLng.prototype.lng
-    		        = soc.mapProvider.maps.LatLng.prototype.getLng;
-    		}
 */
+
 
             // 테스트용 고정 마커
             /*
@@ -100,14 +121,12 @@ angular.module('starter.controllers')
                         function deleteMarkers() {
                             for (var i = 0; i < markerList.length; i++) {
                                 markerList[i].setMap(null);
-                                //marker = null;
-                                soc.log("delete marker");
                             }            
                             markerList = [];                            
                         }			
 			$scope.requestInfoCount = 0;
 			$scope.requestCctvs = function() {
-			    
+
 			    // 일단 지금은 실제 요청은 하지않고 테스트
 			    $scope.requestInfoCount += 1;
 			    var bounds = map.getBounds();
@@ -148,7 +167,8 @@ angular.module('starter.controllers')
 			    $scope.requestInfoNE = "(" + params.north + ", " + params.east + ")";
 
                 $scope.requestInfoCenter = map.getCenter().toString();
-			    $scope.lastRequestCenter = map.getCenter();     // 이 변수는 다른곳에서 사용한다
+			    $scope.lastRequestCenterLat = map.getCenter().getLat();     // 이 변수는 다른곳에서 사용한다
+			    $scope.lastRequestCenterLng = map.getCenter().getLng();     // 이 변수는 다른곳에서 사용한다
 
 			    soc.getCctvs(params)
 			        .then(function(res) {
@@ -164,14 +184,21 @@ angular.module('starter.controllers')
                             //if(markerList[cctv.cctvId] === undefined) {
                                 //soc.log(cctv.cctvId + " ADD");
                                 // 마커가 표시될 위치입니다 
-                                var markerPosition  = new soc.mapProvider.maps.LatLng(cctv.latitude, cctv.longitude); 
+                                var markerPosition  = new mapProvider.LatLng(cctv.latitude, cctv.longitude); 
 
                                 // 마커를 생성합니다
-                                var marker = new soc.mapProvider.maps.Marker({
-                                    position: markerPosition,
-                                    image: soc.getMarkerImage(),
-                                    icon: soc.getMarkerImage()
-                                });
+                                if(soc.mapProvider == google) {
+                                    var marker = new mapProvider.Marker({
+                                        position: markerPosition,
+                                        icon: soc.getMarkerImage()
+                                    });
+                                } else {
+                                    var marker = new mapProvider.Marker({
+                                        position: markerPosition,
+                                        image: soc.getMarkerImage()
+                                    });
+                                }
+                                
 
                                 markerList.push(marker);                                                        
                                 // 마커가 지도 위에 표시되도록 설정합니다
@@ -198,15 +225,15 @@ angular.module('starter.controllers')
 			}
 
 			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-			//var mapTypeControl = new soc.mapProvider.maps.MapTypeControl();
+			//var mapTypeControl = new mapProvider.MapTypeControl();
 
 			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-			// soc.mapProvider.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-			//map.addControl(mapTypeControl, soc.mapProvider.maps.ControlPosition.TOPRIGHT);
+			// mapProvider.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+			//map.addControl(mapTypeControl, mapProvider.ControlPosition.TOPRIGHT);
 
 			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-			//var zoomControl = new soc.mapProvider.maps.ZoomControl();
-			//map.addControl(zoomControl, soc.mapProvider.maps.ControlPosition.RIGHT);
+			//var zoomControl = new mapProvider.ZoomControl();
+			//map.addControl(zoomControl, mapProvider.ControlPosition.RIGHT);
 			
 			// 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
 			$scope.zoomIn = function() {
@@ -219,14 +246,13 @@ angular.module('starter.controllers')
 			}
 			
             /* 사용 필요성 없음
-            soc.mapProvider.maps.event.addListener(map, 'dragstart', function() {
+            mapProvider.event.addListener(map, 'dragstart', function() {
                 //soc.log('drag start!');
             });			
 			*/
-			
-            soc.mapProvider.maps.event.addListener(map, 'dragend', function() {
-                //soc.log('drag end!');
 
+            // 함수 이름은 나중에 수정하자
+            var updateInfo = function(isForce) {
                 // 직전에 서버에 요청했던 Bounds 값과 비교하여
                 // 일정 수준이상 차이가 나면 재요청 한다
                 // 이부분은 적절 값에 대한 결정 필요
@@ -234,46 +260,62 @@ angular.module('starter.controllers')
                     $scope.refreshMapInfo();
                     $scope.$apply();
                 }
-
+                
                 var bounds = map.getBounds();
-                if(bounds.contain($scope.lastRequestCenter) == false) {
+                var lastCenter = new mapProvider.LatLng($scope.lastRequestCenterLat, $scope.lastRequestCenterLng);
+                if(bounds.contain(lastCenter) == false || isForce) {
                     // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
                     // 재요청하는 것으로 처리함
                     $scope.requestCctvs();
                     $scope.$apply();
                 }
+            }
+			
+            mapProvider.event.addListener(map, 'dragend', function() {
+                //soc.log('drag end!');
+                //updateInfo();
             });			
             
 			// 중심좌표 이동 이벤트
             // 중심좌표 이동되는 동안 계속 호출된다
 	        // 성능에 좋을리 없으니 사용하지 말자
-	        /*		
-		    soc.mapProvider.maps.event.addListener(map, 'center_changed', function() {
+
+		    mapProvider.event.addListener(map, 'center_changed', function() {
 		        //soc.log("center changed!");
-            });
-            */
-            
-            // 확대수준 변경 이벤트
-            soc.mapProvider.maps.event.addListener(map, 'zoom_changed', function() {
-                //soc.log('zoom changed!');
-                
-                // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
-                // CCTV 목록을 재요청한다
-                
+                // 직전에 서버에 요청했던 Bounds 값과 비교하여
+                // 일정 수준이상 차이가 나면 재요청 한다
+                // 이부분은 적절 값에 대한 결정 필요
                 if(soc.config.isDevelModeVisible) {
                     $scope.refreshMapInfo();
                     $scope.$apply();
                 }
                 
-                $scope.requestCctvs();
-                $scope.$apply();
+                var bounds = map.getBounds();
+                var lastCenter = new mapProvider.LatLng($scope.lastRequestCenterLat, $scope.lastRequestCenterLng);
+                if(bounds.contain(lastCenter) == false) {
+                    // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
+                    // 재요청하는 것으로 처리함
+                    $scope.requestCctvs();
+                    $scope.$apply();
+                }
+		        
+            });
+
+            
+            // 확대수준 변경 이벤트
+            mapProvider.event.addListener(map, 'zoom_changed', function() {
+                //soc.log('zoom changed!');
+                
+                // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
+                // CCTV 목록을 재요청한다
+                updateInfo(true);
             });			
             
             // Bounds 변경 이벤트
             // Bounds가 변경되는 동안 계속 호출된다
             // 성능에 좋을리 없으니 사용하지 말자
             /*
-            soc.mapProvider.maps.event.addListener(map, 'bounds_changed', function() {
+            mapProvider.event.addListener(map, 'bounds_changed', function() {
                 // (중심좌표 이동 및 확대수준 변경)
                 //soc.log('bounds changed!');
 
@@ -286,14 +328,19 @@ angular.module('starter.controllers')
             
             //var googleMapLoaded = false;
             if(soc.mapProvider == google) {
-            soc.mapProvider.maps.event.addListenerOnce(map, 'idle', function() {
-                soc.log("Map Loaded!!!"); 
-        		$scope.refreshMapInfo();
-		    	$scope.requestCctvs();
+                mapProvider.event.addListenerOnce(map, 'idle', function() {
+                    soc.log("googleMap Loaded!!!"); 
+            		$scope.refreshMapInfo();
+	    	    	$scope.requestCctvs();
                 
-                // do something only the first time the map is loaded
-                //googleMapLoaded = true;
-            });                        
+                    // do something only the first time the map is loaded
+                    googleMapLoaded = true;
+                });                   
+                
+                if(googleMapLoaded) {
+            		$scope.refreshMapInfo();
+	    	    	$scope.requestCctvs();
+                }
             } else {
         		$scope.refreshMapInfo();
 		    	$scope.requestCctvs();
@@ -304,8 +351,6 @@ angular.module('starter.controllers')
 		
         $scope.changeMap = function() {
             soc.changeMap();
-            //$state.go($state.current, {}, {reload: true});
-            //$state.go('app.mapTest', {});
             thisIsMap();
         }
         
