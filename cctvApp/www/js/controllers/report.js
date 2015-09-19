@@ -201,9 +201,15 @@ angular.module('starter.controllers')
   $scope.TEST_FILE_READ_STATUS = 'START';
 
       var filedirList = $rootScope.lastCctvPhoto.split('/');
+      var file_path = '';
+      for (var index = 0, length = filedirList.length -1; index < length; index++)
+      {
+        file_path += filedirList[index];
+      }
+      var file_name = filedirList[filedirList.length-1];
 
 
-  $cordovaFile.readAsBinaryString($rootScope.lastCctvPhoto, filedirList[filedirList.length-1]).then(
+  $cordovaFile.readAsBinaryString(file_path, file_name).then(
       function (success)
       {
         $scope.TEST_FILE_READ_STATUS = 'success';
