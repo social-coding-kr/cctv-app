@@ -197,27 +197,6 @@ angular.module('starter.controllers')
   var ex_lat = myLat;
   var ex_lng = myLng;
 
-      $scope.TEST_FILE_READ_STATUS = 'START';
-      $scope.FileRead('$rootScope.lastCctvPhoto', $scope.TEST_FILE_READ_STATUS);
-
-  // 등록 확정시 post service로 보낼 변수들 갱신
-  $rootScope.cctvReportingInfo = {latitude: ex_lat, 
-                                  longitude: ex_lng, 
-                                  purpose: $rootScope.purpose, //undefined
-                                  cctvImage: $rootScope.lastCctvPhoto, 
-                                  noticeImage: $rootScope.lastHangBoardPhoto, 
-                                  userId: 'TestingId_ClubSandwich'};
-  // 등록 확정시
-  $scope.registerButton2Clicked = function() {
-    // 신고선택 변수(reportClicked) 초기화 및 화면전환
-    $rootScope.registerButtonClicked();
-  };
-  // 등록 취소시
-  $scope.cancellButton2Clicked = function() {
-    // 신고선택 변수(reportClicked) 초기화 및 화면전환
-    $rootScope.cancellButtonClicked();
-  };
-
   $scope.FileRead = function (file_url, file_read_status)
   {
     file_read_status = 'WAIT';
@@ -243,4 +222,26 @@ angular.module('starter.controllers')
 
     }
   };
+
+  $scope.TEST_FILE_READ_STATUS = 'START';
+  $scope.FileRead('$rootScope.lastCctvPhoto', $scope.TEST_FILE_READ_STATUS);
+
+  // 등록 확정시 post service로 보낼 변수들 갱신
+  $rootScope.cctvReportingInfo = {latitude: ex_lat, 
+                                  longitude: ex_lng, 
+                                  purpose: $rootScope.purpose, //undefined
+                                  cctvImage: $rootScope.lastCctvPhoto, 
+                                  noticeImage: $rootScope.lastHangBoardPhoto, 
+                                  userId: 'TestingId_ClubSandwich'};
+  // 등록 확정시
+  $scope.registerButton2Clicked = function() {
+    // 신고선택 변수(reportClicked) 초기화 및 화면전환
+    $rootScope.registerButtonClicked();
+  };
+  // 등록 취소시
+  $scope.cancellButton2Clicked = function() {
+    // 신고선택 변수(reportClicked) 초기화 및 화면전환
+    $rootScope.cancellButtonClicked();
+  };
+
 });
