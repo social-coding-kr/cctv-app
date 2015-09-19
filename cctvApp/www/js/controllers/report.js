@@ -192,7 +192,7 @@ angular.module('starter.controllers')
 })
 
 // 등록확정화면에 사용하는 컨트롤러
-.controller('confirmReportCtrl', function($rootScope, $scope, $window, $http) {
+.controller('confirmReportCtrl', function($rootScope, $scope, $window, $cordovaFile, $http) {
   // 현재위치를 나타내는 변수들
   var ex_lat = myLat;
   var ex_lng = myLng;
@@ -231,7 +231,7 @@ angular.module('starter.controllers')
     function gotFile(fileEntry) {
 
       fileEntry.file(function(file) {
-        var reader = new FileReader();
+        var reader = $cordovaFile;
 
         reader.onloadend = function(e) {
           file_read_status = 'SUCCESS';
