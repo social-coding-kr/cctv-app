@@ -234,7 +234,7 @@ angular.module('starter.controllers')
 
   // CAMERA로부터 전달받은 NATIVE FILE PATH 를 전달하여 바이너리 데이터를 가져옮.
   getLoacalFileBinaryStringFromPath($rootScope.lastCctvPhoto, $scope.CCTV_IMAGE_LOADING_STATUS , $scope.CCTV_IMAGE_BINARY_DATA);
-  getLoacalFileBinaryStringFromPath($rootScope.lastCctvPhoto, $scope.NOTICE_IMAGE_LOADING_STATUS , $scope.NOTICE_IMAGE_BINARY_DATA);
+  getLoacalFileBinaryStringFromPath($rootScope.lastHangBoardPhoto, $scope.NOTICE_IMAGE_LOADING_STATUS , $scope.NOTICE_IMAGE_BINARY_DATA);
   // 등록 확정시
   $scope.registerButton2Clicked = function() {
     // 신고선택 변수(reportClicked) 초기화 및 화면전환
