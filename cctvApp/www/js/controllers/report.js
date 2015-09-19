@@ -208,12 +208,14 @@ angular.module('starter.controllers')
         {
           scope_status = 'SUCCESS';
           scope_result = success_file_binary;
+          $scope.$apply();
 
         },
         function (error)
         {
           scope_status = 'ERROR';
           scope_result = undefined;
+          $scope.$apply();
          // file_path + ' ,' + file_name + ' error : '+error;
         }
     )
