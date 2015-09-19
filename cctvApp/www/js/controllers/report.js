@@ -208,7 +208,7 @@ angular.module('starter.controllers')
       }
       var file_name = filedirList[filedirList.length-1];
 
-
+  soc.log(file_path,' ,',file_name);
   $cordovaFile.readAsBinaryString(file_path, file_name).then(
       function (success)
       {
@@ -217,7 +217,7 @@ angular.module('starter.controllers')
       },
       function (error)
       {
-        $scope.TEST_FILE_READ_STATUS = 'error';
+        $scope.TEST_FILE_READ_STATUS = 'error : '+error;
       }
   )
 
