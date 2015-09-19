@@ -197,34 +197,23 @@ angular.module('starter.controllers')
   var ex_lat = myLat;
   var ex_lng = myLng;
 
-  $scope.FileRead = function (file_url, file_read_status)
-  {
-    $scope.TEST_FILE_READ_STATUS = 'WAIT';
-
-    $window.resolveLocalFileSystemURL(file_url, gotFile, fail);
-    function fail(e) {
-      $scope.TEST_FILE_READ_STATUS = 'ERROR';
-      soc.log('file read error %o', file_read_status);
-    }
-
-    function gotFile(fileEntry) {
-
-      fileEntry.file(function(file) {
-        var reader = $cordovaFile;
-
-        reader.onloadend = function(e) {
-          $scope.TEST_FILE_READ_STATUS = 'SUCCESS';
-          soc.log("Text is: "+this.result);
-        }
-
-        reader.readAsText(file);
-      });
-
-    }
-  };
 
   $scope.TEST_FILE_READ_STATUS = 'START';
-  $scope.FileRead($rootScope.lastCctvPhoto, $scope.TEST_FILE_READ_STATUS);
+
+      var filedirList = $rootScope.lastCctvPhoto.split('/');
+
+
+  $cordovaFile.readAsBinaryString($rootScope.lastCctvPhoto, filedirList[filedirList.length-1]).then(
+      function (success)
+      {
+        $scope.TEST_FILE_READ_STATUS = 'success';
+        soc.log(success);
+      },
+      function (error)
+      {
+        $scope.TEST_FILE_READ_STATUS = 'error';
+      }
+  )
 
   // 등록 확정시 post service로 보낼 변수들 갱신
   $rootScope.cctvReportingInfo = {latitude: ex_lat, 
