@@ -197,30 +197,6 @@ angular.module('starter.controllers')
   var ex_lat = myLat;
   var ex_lng = myLng;
 
-  // FILE PATH로 사진 Binary String을 읽어들이는 함수
-  function getLoacalFileBinaryStringFromPath( full_file_path, scope_status, scope_result) {
-    var fullpath = full_file_path;
-    var file_name = fullpath.replace(/^.*[\\\/]/, '');
-    var file_path = fullpath.split('/' + file_name)[0]
-    scope_status = 'START';
-    $cordovaFile.readAsBinaryString(file_path, file_name).then(
-        function (success_file_binary)
-        {
-          scope_status = 'SUCCESS';
-          scope_result = success_file_binary;
-          $scope.$apply();
-
-        },
-        function (error)
-        {
-          scope_status = 'ERROR';
-          scope_result = undefined;
-          $scope.$apply();
-         // file_path + ' ,' + file_name + ' error : '+error;
-        }
-    )
-  }
-
   // 등록 확정시 post service로 보낼 변수들 갱신
   $rootScope.cctvReportingInfo = {latitude: ex_lat, 
                                   longitude: ex_lng, 
@@ -228,15 +204,6 @@ angular.module('starter.controllers')
                                   cctvImage: $rootScope.lastCctvPhoto, 
                                   noticeImage: $rootScope.lastHangBoardPhoto, 
                                   userId: 'TestingId_ClubSandwich'};
-
-  $scope.CCTV_IMAGE_BINARY_DATA = undefined;
-  $scope.CCTV_IMAGE_LOADING_STATUS = undefined;
-  $scope.NOTICE_IMAGE_BINARY_DATA = undefined;
-  $scope.NOTICE_IMAGE_LOADING_STATUS = undefined;
-
-  // CAMERA로부터 전달받은 NATIVE FILE PATH 를 전달하여 바이너리 데이터를 가져옮.
-  getLoacalFileBinaryStringFromPath($rootScope.lastCctvPhoto, $scope.CCTV_IMAGE_LOADING_STATUS , $scope.CCTV_IMAGE_BINARY_DATA);
-  getLoacalFileBinaryStringFromPath($rootScope.lastHangBoardPhoto, $scope.NOTICE_IMAGE_LOADING_STATUS , $scope.NOTICE_IMAGE_BINARY_DATA);
   // 등록 확정시
   $scope.registerButton2Clicked = function() {
     // 신고선택 변수(reportClicked) 초기화 및 화면전환
@@ -247,5 +214,48 @@ angular.module('starter.controllers')
     // 신고선택 변수(reportClicked) 초기화 및 화면전환
     $rootScope.cancellButtonClicked();
   };
+
+  // CAMERA로부터 전달받은 NATIVE FILE PATH 를 전달하여 바이너리 데이터를 가져옮.
+  $scope.CCTV_IMAGE_BINARY_DATA = undefined;
+  $scope.CCTV_IMAGE_LOADING_STATUS = undefined;
+  $scope.NOTICE_IMAGE_BINARY_DATA = undefined;
+  $scope.NOTICE_IMAGE_LOADING_STATUS = undefined;
+
+  var cctv_fullpath = $rootScope.lastCctvPhoto;
+  var cctv_file_name = cctv_fullpath.replace(/^.*[\\\/]/, '');
+  var cctv_file_path = cctv_fullpath.split('/' + cctv_file_name)[0]
+
+  var notice_fullpath = $rootScope.lastHangBoardPhoto;
+  var notice_file_name = notice_fullpath.replace(/^.*[\\\/]/, '');
+  var notice_file_path = notice_fullpath.split('/' + notice_file_name)[0]
+
+  $cordovaFile.readAsBinaryString(file_path, file_name).then(
+      function (success_file_binary)
+      {
+        $scope.CCTV_IMAGE_LOADING_STATUS = 'SUCCESS';
+        $scope.CCTV_IMAGE_BINARY_DATA = success_file_binary;
+      },
+      function (error)
+      {
+        $scope.CCTV_IMAGE_LOADING_STATUS = 'ERROR';
+        $scope.CCTV_IMAGE_BINARY_DATA = undefined;
+        // file_path + ' ,' + file_name + ' error : '+error;
+      }
+  );
+
+  $cordovaFile.readAsBinaryString(file_path, file_name).then(
+      function (success_file_binary)
+      {
+        $scope.NOTICE_IMAGE_LOADING_STATUS = 'SUCCESS';
+        $scope.NOTICE_IMAGE_BINARY_DATA = success_file_binary;
+      },
+      function (error)
+      {
+        $scope.NOTICE_IMAGE_LOADING_STATUS = 'ERROR';
+        $scope.NOTICE_IMAGE_BINARY_DATA = undefined;
+        // file_path + ' ,' + file_name + ' error : '+error;
+      }
+  );
+
 
 });
