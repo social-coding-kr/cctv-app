@@ -221,41 +221,45 @@ angular.module('starter.controllers')
   $scope.NOTICE_IMAGE_BINARY_DATA = undefined;
   $scope.NOTICE_IMAGE_LOADING_STATUS = undefined;
 
-  var cctv_fullpath = $rootScope.lastCctvPhoto;
-  var cctv_file_name = cctv_fullpath.replace(/^.*[\\\/]/, '');
-  var cctv_file_path = cctv_fullpath.split('/' + cctv_file_name)[0]
-
-  var notice_fullpath = $rootScope.lastHangBoardPhoto;
-  var notice_file_name = notice_fullpath.replace(/^.*[\\\/]/, '');
-  var notice_file_path = notice_fullpath.split('/' + notice_file_name)[0]
-
-  $cordovaFile.readAsBinaryString(file_path, file_name).then(
-      function (success_file_binary)
+      if ($rootScope.lastCctvPhoto !== undefined)
       {
-        $scope.CCTV_IMAGE_LOADING_STATUS = 'SUCCESS';
-        $scope.CCTV_IMAGE_BINARY_DATA = success_file_binary;
-      },
-      function (error)
-      {
-        $scope.CCTV_IMAGE_LOADING_STATUS = 'ERROR';
-        $scope.CCTV_IMAGE_BINARY_DATA = undefined;
-        // file_path + ' ,' + file_name + ' error : '+error;
+        var cctv_fullpath = $rootScope.lastCctvPhoto;
+        var cctv_file_name = cctv_fullpath.replace(/^.*[\\\/]/, '');
+        var cctv_file_path = cctv_fullpath.split('/' + cctv_file_name)[0];
+        $cordovaFile.readAsBinaryString(cctv_file_path, cctv_file_name).then(
+            function (success_file_binary)
+            {
+              $scope.CCTV_IMAGE_LOADING_STATUS = 'SUCCESS';
+              $scope.CCTV_IMAGE_BINARY_DATA = success_file_binary;
+            },
+            function (error)
+            {
+              $scope.CCTV_IMAGE_LOADING_STATUS = 'ERROR';
+              $scope.CCTV_IMAGE_BINARY_DATA = undefined;
+              // file_path + ' ,' + file_name + ' error : '+error;
+            }
+        );
       }
-  );
 
-  $cordovaFile.readAsBinaryString(file_path, file_name).then(
-      function (success_file_binary)
+      if ($rootScope.lastHangBoardPhoto !== undefined)
       {
-        $scope.NOTICE_IMAGE_LOADING_STATUS = 'SUCCESS';
-        $scope.NOTICE_IMAGE_BINARY_DATA = success_file_binary;
-      },
-      function (error)
-      {
-        $scope.NOTICE_IMAGE_LOADING_STATUS = 'ERROR';
-        $scope.NOTICE_IMAGE_BINARY_DATA = undefined;
-        // file_path + ' ,' + file_name + ' error : '+error;
+        var notice_fullpath = $rootScope.lastHangBoardPhoto;
+        var notice_file_name = notice_fullpath.replace(/^.*[\\\/]/, '');
+        var notice_file_path = notice_fullpath.split('/' + notice_file_name)[0]
+
+        $cordovaFile.readAsBinaryString(notice_file_name, notice_file_path).then(
+            function (success_file_binary)
+            {
+              $scope.NOTICE_IMAGE_LOADING_STATUS = 'SUCCESS';
+              $scope.NOTICE_IMAGE_BINARY_DATA = success_file_binary;
+            },
+            function (error)
+            {
+              $scope.NOTICE_IMAGE_LOADING_STATUS = 'ERROR';
+              $scope.NOTICE_IMAGE_BINARY_DATA = undefined;
+              // file_path + ' ,' + file_name + ' error : '+error;
+            }
+        );
       }
-  );
-
 
 });
