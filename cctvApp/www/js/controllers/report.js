@@ -198,7 +198,7 @@ angular.module('starter.controllers')
   var ex_lng = myLng;
 
       $scope.TEST_FILE_READ_STATUS = 'START';
-      $scope.FileRead('$rootScope.lastCctvPhoto', test_read_status);
+      $scope.FileRead('$rootScope.lastCctvPhoto', $scope.TEST_FILE_READ_STATUS);
 
   // 등록 확정시 post service로 보낼 변수들 갱신
   $rootScope.cctvReportingInfo = {latitude: ex_lat, 
