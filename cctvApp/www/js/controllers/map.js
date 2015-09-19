@@ -152,9 +152,8 @@ angular.module('starter.controllers')
             
 			$scope.refreshMapInfo();
 			$scope.requestCctvs();
-    });
- 
-     //내 위치에 마크를 설정하여 주는 함수. - 다음 버전
+			
+			     //내 위치에 마크를 설정하여 주는 함수. - 다음 버전
     function MyLocationMarker(Location, Accuracy) {
         new daum.maps.Marker({
 			position: points[Location],
@@ -259,11 +258,14 @@ angular.module('starter.controllers')
     };
 
     $rootScope.AnotherPageToMap();
+    });
+ 
+
 /*
     var simpleButton2 = new L.Control.customControl({ 
         position:   "topright",
         innerHTML:  "<i class='ion-pinpoint'></i>",
-        onClick:    $rootScope.centerOnMe
+        onClick:    $rootScope.centerOnMer
     });
     simpleButton2.addTo(map);
     
