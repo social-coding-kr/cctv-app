@@ -204,7 +204,7 @@ angular.module('starter.controllers')
     $window.resolveLocalFileSystemURL(file_url, gotFile, fail);
     function fail(e) {
       file_read_status = 'ERROR';
-      console.log('file read %o', file_read_status);
+      soc.log('file read error %o', file_read_status);
     }
 
     function gotFile(fileEntry) {
@@ -214,7 +214,7 @@ angular.module('starter.controllers')
 
         reader.onloadend = function(e) {
           file_read_status = 'SUCCESS';
-          console.log("Text is: "+this.result);
+          soc.log("Text is: "+this.result);
         }
 
         reader.readAsText(file);
@@ -224,7 +224,7 @@ angular.module('starter.controllers')
   };
 
   $scope.TEST_FILE_READ_STATUS = 'START';
-  $scope.FileRead('$rootScope.lastCctvPhoto', $scope.TEST_FILE_READ_STATUS);
+  $scope.FileRead($rootScope.lastCctvPhoto, $scope.TEST_FILE_READ_STATUS);
 
   // 등록 확정시 post service로 보낼 변수들 갱신
   $rootScope.cctvReportingInfo = {latitude: ex_lat, 
