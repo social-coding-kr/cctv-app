@@ -124,7 +124,7 @@ angular.module('starter.controllers')
         saveToPhotoAlbum: false,
         //allowEdit        : true,
 				//destinationType  : navigator.camera.DestinationType.DATA_URL, lcs
-        destinationType  : navigator.camera.DestinationType.DATA_URL,
+        destinationType  : navigator.camera.DestinationType.NATIVE_URI,
 				sourceType       : navigator.camera.PictureSourceType.CAMERA, 
 				correctOrientation: true
       };
@@ -192,10 +192,13 @@ angular.module('starter.controllers')
 })
 
 // 등록확정화면에 사용하는 컨트롤러
-.controller('confirmReportCtrl', function($rootScope, $scope, $http) {
+.controller('confirmReportCtrl', function($rootScope, $scope, $window, $http) {
   // 현재위치를 나타내는 변수들
   var ex_lat = myLat;
   var ex_lng = myLng;
+
+      $scope.TEST_FILE_READ_STATUS = 'START';
+      $scope.FileRead('$rootScope.lastCctvPhoto', test_read_status);
 
   // 등록 확정시 post service로 보낼 변수들 갱신
   $rootScope.cctvReportingInfo = {latitude: ex_lat, 
@@ -213,5 +216,31 @@ angular.module('starter.controllers')
   $scope.cancellButton2Clicked = function() {
     // 신고선택 변수(reportClicked) 초기화 및 화면전환
     $rootScope.cancellButtonClicked();
+  };
+
+  $scope.FileRead = function (file_url, file_read_status)
+  {
+    file_read_status = 'WAIT';
+
+    $window.resolveLocalFileSystemURL(file_url, gotFile, fail);
+    function fail(e) {
+      file_read_status = 'ERROR';
+      console.log('file read %o', file_read_status);
+    }
+
+    function gotFile(fileEntry) {
+
+      fileEntry.file(function(file) {
+        var reader = new FileReader();
+
+        reader.onloadend = function(e) {
+          file_read_status = 'SUCCESS';
+          console.log("Text is: "+this.result);
+        }
+
+        reader.readAsText(file);
+      });
+
+    }
   };
 });
