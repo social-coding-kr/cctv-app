@@ -1,4 +1,11 @@
-#map
+
+#mapTestGoogle
+{
+    width: 100%;
+    height: 100%;
+}
+
+#mapTestDaum
 {
     width: 100%;
     height: 100%;
@@ -40,8 +47,7 @@
     /*width:220px; 
     height:140px; 
     */
-
-    width: 90%;
+    width: 85%;
     height: 30%;
     padding-top: 5px;
     padding-right: 5px;
@@ -49,12 +55,11 @@
     padding-left: 5px;    
     overflow:hidden;    /* 내용이 넘치지 않게 */
     z-index:1;          /* map 위로 올리기 위해 사용 */
-    background:rgba(210,210,240,0.7);    /* RGB + 투명도 */
+    background:rgba(210,210,230,0.7);    /* RGB + 투명도 */
     pointer-events: none;    /* 컨트롤이 마우스/터치 이벤트를 뺏지 않도록 한다 */
-    font-size: 80%;
-    line-height: 120%;
+    font-size: 70%;
+    line-height: 110%;
 }
 
 
 /* DAUM MAP API END */
-

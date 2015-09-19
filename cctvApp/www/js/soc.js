@@ -105,6 +105,26 @@ angular.module('starter.controllers')
     obj.getCctvs = function(params) {
       return $http.get(obj.server.mainUrl + "map/cctvs", {params: params});
     }
+
+
+    obj.mapProvider = google;        
+    obj.mapProviderText = "google";
+
+    obj.changeMap = function() {
+      obj.log("changeMap");
+      if(obj.mapProvider === google) {
+        obj.mapProvider = daum;
+        obj.mapProviderText = "daum";
+      } else {
+        obj.mapProvider = google;
+        obj.mapProviderText = "google";
+      }       
+      
+    }
+    
+
+    
+
     
     // Map 공통
     var markerImageSrc = 'img/map-pin_17x30.png'; // 마커이미지의 주소입니다  
@@ -112,11 +132,15 @@ angular.module('starter.controllers')
     var markerImageOption = {offset: new daum.maps.Point(7, 26)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다			
       
     // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-    var markerImage = new daum.maps.MarkerImage(markerImageSrc, markerImageSize, markerImageOption);
+    var daumMarkerImage = new daum.maps.MarkerImage(markerImageSrc, markerImageSize, markerImageOption);
     
     obj.getMarkerImage = function(options) {
       // 추후 options에 따라 다른 마커 이미지를 반환
-      return markerImage;
+      if(obj.mapProvider == google) {
+        return markerImageSrc; 
+      } else {
+        return daumMarkerImage;
+      }
     }
 
 
@@ -135,8 +159,14 @@ angular.module('starter.controllers')
       $localStorage.set('develModeVisible', obj.config.isDevelModeVisible);
     }
     
-
     // config
+    
+    obj.MapTestOnSelect = function(args) {
+    }
+    
+    obj.MapTestOnDeselect = function(args) {
+    }
+    
 
     return obj;
 })

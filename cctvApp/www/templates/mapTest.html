@@ -1,8 +1,21 @@
 
-<ion-view view-title="지도보기">
-    <ion-content scroll="false">
-        <!--<div id="map2" data-tap-disabled="true"></div>-->
-        <div id="map2" data-tap-disabled="true">
+<ion-view view-title="지도Test" on-select="soc.mapTestOnSelect()" 
+            on-deselect="soc.mapTestOnDeselect()">
+    <ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            {{soc.mapProviderText}}
+            <!-- Putting a return between the buttons causes them to be stacked on Android 4.4.2 -->
+            <button class="button" ng-click="changeMap()">지도변환</button>
+            <button class="button" ng-click="formDataTest()">FormTest</button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content scroll="false" drag-content="false">
+        <div id="mapTestDaum" data-tap-disabled="true" ng-show="soc.mapProviderText=='daum'">
+        </div>        
+        <div id="mapTestGoogle" data-tap-disabled="true" ng-show="soc.mapProviderText=='google'">
         </div>
         <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
         <div class="custom_zoomcontrol radius_border"> 
@@ -27,7 +40,8 @@
             
         </div>
         
-        
+
+
     </ion-content>
 </ion-view>
 
