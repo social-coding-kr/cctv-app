@@ -199,11 +199,11 @@ angular.module('starter.controllers')
 
   $scope.FileRead = function (file_url, file_read_status)
   {
-    file_read_status = 'WAIT';
+    $scope.TEST_FILE_READ_STATUS = 'WAIT';
 
     $window.resolveLocalFileSystemURL(file_url, gotFile, fail);
     function fail(e) {
-      file_read_status = 'ERROR';
+      $scope.TEST_FILE_READ_STATUS = 'ERROR';
       soc.log('file read error %o', file_read_status);
     }
 
@@ -213,7 +213,7 @@ angular.module('starter.controllers')
         var reader = $cordovaFile;
 
         reader.onloadend = function(e) {
-          file_read_status = 'SUCCESS';
+          $scope.TEST_FILE_READ_STATUS = 'SUCCESS';
           soc.log("Text is: "+this.result);
         }
 
