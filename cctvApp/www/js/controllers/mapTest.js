@@ -355,4 +355,25 @@ angular.module('starter.controllers')
         }
         
         thisIsMap();
+        
+        
+        
+        
+        $scope.formDataTest = function() {
+            var fd = new FormData();
+            fd.append("item1_number", 100);
+            fd.append("item2_string", "HelloWorld");
+            
+            
+            // Blob 첫번째 인자에 배열로 file 내용을 담아주면 됩니다
+            var blob = new Blob(["HAHAHAHA"], {type: "image/png"});
+            fd.append("item3_file", blob, "temp.txt");
+
+            var blob = new Blob(["HOHOHOHO"], {type: "image/png"});
+            fd.append("item4_file", blob, "temp2.txt");
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://147.46.215.152:9999");
+            xhr.send(fd);
+        }
     })
