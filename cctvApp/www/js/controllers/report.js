@@ -197,17 +197,11 @@ angular.module('starter.controllers')
   var ex_lat = myLat;
   var ex_lng = myLng;
 
+  var fullpath = $rootScope.lastCctvPhoto;
+  var file_name = fullpath.replace(/^.*[\\\/]/, '');
+  var file_path = fullpath.split('/' + file_name)[0]
 
   $scope.TEST_FILE_READ_STATUS = 'START';
-
-      var filedirList = $rootScope.lastCctvPhoto.split('/');
-      var file_path = '';
-      for (var index = 0, length = filedirList.length -1; index < length; index++)
-      {
-        file_path += filedirList[index];
-      }
-      var file_name = filedirList[filedirList.length-1];
-
 
   $cordovaFile.readAsBinaryString(file_path, file_name).then(
       function (success)
