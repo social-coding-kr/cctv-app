@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, soc) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -39,6 +39,13 @@ angular.module('starter.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+  
+  // 좌표주소변환 Test
+  $scope.coordTest = "127.1052208,37.3595122";
+  $scope.PointToAdressTest = function(coordTest) {
+    soc.getAdressFromPoint(coordTest);
+    soc.log("coordTest :"+coordTest);
+  }
   
   // 신고하기버튼 click에 대한 bool값
   $rootScope.reportClicked = false;
@@ -91,23 +98,6 @@ angular.module('starter.controllers', [])
         $rootScope.secondBackButton = true;
         $timeout(function(){$rootScope.secondBackButton = false;}, 2000);
       }
-      /* 팝업 메세지로 띄워서 종료를 알려줄 경우
-      $ionicPopup.show({title :'앱을 종료하시겠습니까?',
-                    buttons: [{ 
-                      text: '네, 종료하겠어요',
-                      type: 'button-positive',
-                      onTap: function(e) {
-                        navigator.app.exitApp();
-                      }
-                    }, {
-                      text: '아니오',
-                      type: 'button-default',
-                      onTap: function(e) {
-                        // do nothing
-                      }
-                    }]
-                    });
-      */
     } 
     // 신고화면에서 back button controll
     else if($location.url() === '/app/takePicture') { // takePicture.html에서 클릭 시
