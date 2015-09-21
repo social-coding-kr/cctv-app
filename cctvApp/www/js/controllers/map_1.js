@@ -6,7 +6,7 @@ angular.module('starter.controllers')
       function init() {
       	 var map = L.map('map');
       	 
-         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {`
             attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
             maxZoom: 18
          }).addTo(map);
