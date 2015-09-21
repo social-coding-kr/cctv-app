@@ -1,10 +1,11 @@
 
-    var google = google || {}
-    var daum = daum || {}
-
+    //window.google = window.google || {}
+    //window.daum = window.daum || {}
 
     (function() {
         console.log("preset Prototype google to daum");
+        
+        // 레벨과 줌은 서로 반대다
         var googleMaxZoom = 19;
         google.maps.Map.prototype.getLevel = function() {
             return googleMaxZoom - this.getZoom();

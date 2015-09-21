@@ -3,7 +3,7 @@ angular.module('starter.controllers')
 
 .controller('MapTestCtrl',
     function($rootScope, $scope, $state, $ionicLoading, $compile, $http, soc, $ionicPlatform) {
-
+/*
 			// 레벨과 줌은 서로 반대다
 			    google.maps.Map.prototype.getLevel = function() {
 			        return 19 - this.getZoom();
@@ -24,27 +24,30 @@ angular.module('starter.controllers')
     		    google.maps.LatLng.prototype.getLng
     		        = google.maps.LatLng.prototype.lng;
 
-
+*/
 
         var googleMapLoaded = false;
 
         var map = null;
-        var mapProvider = null;
+        var anyMaps = null;
         var defLoc = soc.getDefaultLocation();        
         var mapContainer = null;
         
         var level = 3;
         
+        var googleMaps = AnyMaps(google);
+        var daumMaps = AnyMaps(daum);
+        
         var googleMapContainer = document.getElementById('mapTestGoogle');
 		var googleMapOption = { 
-    		center: new google.maps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
+    		center: new googleMaps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
             zoom: 19 - level,        		
 	   	};
-        var googleMap = new google.maps.Map(googleMapContainer, googleMapOption); 
+        var googleMap = new googleMaps.Map(googleMapContainer, googleMapOption); 
 
         var daumMapContainer = document.getElementById('mapTestDaum');
 		var daumMapOption = { 
-    		center: new daum.maps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
+    		center: new daumMaps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
             level: level,        		
 	   	};
         var daumMap = new daum.maps.Map(daumMapContainer, daumMapOption); 
@@ -57,12 +60,12 @@ angular.module('starter.controllers')
             soc.log(soc.mapProvider);
             if(soc.mapProvider == daum) {
                 map = daumMap;
-                mapProvider = daum.maps;
+                anyMaps = daumMaps;
                 //mapContainer = document.getElementById('mapTestDaum'); // 지도를 표시할 div                     
                 //soc.log("daum: " + JSON.stringify(mapContainer));                
             } else {
                 map = googleMap;
-                mapProvider = google.maps;
+                anyMaps = googleMaps;
                 //mapContainer = document.getElementById('mapTestGoogle'); // 지도를 표시할 div                     
                 //soc.log("google: " + JSON.stringify(mapContainer));
             }
@@ -184,16 +187,16 @@ angular.module('starter.controllers')
                             //if(markerList[cctv.cctvId] === undefined) {
                                 //soc.log(cctv.cctvId + " ADD");
                                 // 마커가 표시될 위치입니다 
-                                var markerPosition  = new mapProvider.LatLng(cctv.latitude, cctv.longitude); 
+                                var markerPosition  = new anyMaps.LatLng(cctv.latitude, cctv.longitude); 
 
                                 // 마커를 생성합니다
-                                if(soc.mapProvider == google) {
-                                    var marker = new mapProvider.Marker({
+                                if(anyMaps.isGoogleMap()) {
+                                    var marker = new anyMaps.Marker({
                                         position: markerPosition,
                                         icon: soc.getMarkerImage()
                                     });
                                 } else {
-                                    var marker = new mapProvider.Marker({
+                                    var marker = new anyMaps.Marker({
                                         position: markerPosition,
                                         image: soc.getMarkerImage()
                                     });
@@ -262,7 +265,7 @@ angular.module('starter.controllers')
                 }
                 
                 var bounds = map.getBounds();
-                var lastCenter = new mapProvider.LatLng($scope.lastRequestCenterLat, $scope.lastRequestCenterLng);
+                var lastCenter = new anyMaps.LatLng($scope.lastRequestCenterLat, $scope.lastRequestCenterLng);
                 if(bounds.contain(lastCenter) == false || isForce) {
                     // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
                     // 재요청하는 것으로 처리함
@@ -271,7 +274,7 @@ angular.module('starter.controllers')
                 }
             }
 			
-            mapProvider.event.addListener(map, 'dragend', function() {
+            anyMaps.event.addListener(map, 'dragend', function() {
                 //soc.log('drag end!');
                 //updateInfo();
             });			
@@ -280,7 +283,7 @@ angular.module('starter.controllers')
             // 중심좌표 이동되는 동안 계속 호출된다
 	        // 성능에 좋을리 없으니 사용하지 말자
 
-		    mapProvider.event.addListener(map, 'center_changed', function() {
+		    anyMaps.event.addListener(map, 'center_changed', function() {
 		        //soc.log("center changed!");
                 // 직전에 서버에 요청했던 Bounds 값과 비교하여
                 // 일정 수준이상 차이가 나면 재요청 한다
@@ -291,7 +294,7 @@ angular.module('starter.controllers')
                 }
                 
                 var bounds = map.getBounds();
-                var lastCenter = new mapProvider.LatLng($scope.lastRequestCenterLat, $scope.lastRequestCenterLng);
+                var lastCenter = new anyMaps.LatLng($scope.lastRequestCenterLat, $scope.lastRequestCenterLng);
                 if(bounds.contain(lastCenter) == false) {
                     // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
                     // 재요청하는 것으로 처리함
@@ -303,7 +306,7 @@ angular.module('starter.controllers')
 
             
             // 확대수준 변경 이벤트
-            mapProvider.event.addListener(map, 'zoom_changed', function() {
+            anyMaps.event.addListener(map, 'zoom_changed', function() {
                 //soc.log('zoom changed!');
                 
                 // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
@@ -327,8 +330,8 @@ angular.module('starter.controllers')
             */
             
             //var googleMapLoaded = false;
-            if(soc.mapProvider == google) {
-                mapProvider.event.addListenerOnce(map, 'idle', function() {
+            if(anyMaps.isGoogleMap()) {
+                anyMaps.event.addListenerOnce(map, 'idle', function() {
                     soc.log("googleMap Loaded!!!"); 
             		$scope.refreshMapInfo();
 	    	    	$scope.requestCctvs();
