@@ -126,13 +126,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
   
   $stateProvider
-/*
+
       .state('appstart', {
         url: '/appstart',
         templateUrl: 'templates/splash.html',
         controller: 'AppSplash'
       })
-*/
+
     .state('app', {
     url: '/app',
     abstract: true,
@@ -318,22 +318,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  //$urlRouterProvider.otherwise('/appstart');
-      $urlRouterProvider.otherwise('/app/main');
+  $urlRouterProvider.otherwise('/appstart');
+  //$urlRouterProvider.otherwise('/app/map');
 
 }).controller('AppSplash', function($scope, $location, $interval) {
       $scope.init = function ()
       {
-        var event_splash_delay = $interval($scope.go2mainPage, 2000);
 
-        $scope.$on('$destroy', function() {
-          $interval.cancel(event_splash_delay);
-        });
+        //init
+
+        $scope.event_splash_delay = $interval($scope.go2mainPage, 2000);
+
       };
 
       $scope.go2mainPage = function ()
       {
-
+        $interval.cancel($scope.event_splash_delay);
         $location.path('/app/map');
         $location.replace();
       }
