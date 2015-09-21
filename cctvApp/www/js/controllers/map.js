@@ -94,7 +94,6 @@ angular.module('starter.controllers')
 			    $scope.requestInfoSW = "(" + params.south + ", " + params.west + ")";
 			    $scope.requestInfoNE = "(" + params.north + ", " + params.east + ")";
 
-
 			    $scope.requestInfoCenter = map.getCenter(); 
 			};
 			
@@ -150,22 +149,26 @@ angular.module('starter.controllers')
                 
             });
             
-            
+        $scope.locationAccu = "위치찾기를 하게 되면 위치와 관련된 값이 표시됩니다.";
+        
 			$scope.refreshMapInfo();
 			$scope.requestCctvs();
 			
-			     //내 위치에 마크를 설정하여 주는 함수. - 다음 버전
-    function MyLocationMarker(Location, Accuracy) {
+	//내 위치에 마크를 설정하여 주는 함수. - 다음 버전
+    function MyLocationMarker(Accuracy) {
+        var points  = new daum.maps.LatLng(myLat, myLng);
         new daum.maps.Marker({
-			position: points[Location],
+			position: points
 		}).setMap(map);
-        //MyAccuracy = Accuracy;
+        var AccuText = "";
         if (Accuracy > 100) {
-            AccuText = ('헐 이건 너무 심하잖아.');
+            AccuText = "헐 이건 너무 심하잖아.";
         }
         else {
-            AccuText = ('적절합니다.');
+            AccuText = "적절합니다.";
         }
+        //$scope.locationText = "Accuracy : ";
+        $scope.locationAccu = "이 지점을 기준으로 반경 " + Accuracy + "미터 안에 있습니다." + AccuText;
     }
 
     //일정 시간 동안 gps정보를 이용할 수 없을 시 토스트를 띄워주는 함수.
@@ -184,9 +187,7 @@ angular.module('starter.controllers')
             soc.log("scope.map: not found"); 
             return;
         }
-        
-        soc.log('status1 changed!');
-        
+
         $scope.loading = $ionicLoading.show({
             content: 'Getting current location...',
             showBackdrop: false
@@ -204,17 +205,10 @@ angular.module('starter.controllers')
                 .then(function(pos) {
                     myLat = pos.coords.latitude;
                     myLng = pos.coords.longitude;
-                    soc.log('bounds changed!' + myLat);
-                    soc.log('bounds changed!' + myLng);
-                    //var Location = daum.maps.LatLng(myLat, myLng);
-                    //map.panTo(Location);
                     map.panTo(new daum.maps.LatLng(myLat, myLng));
-                    //var Location = new L.LatLng(myLat, myLng);
                     var accuracy = pos.coords.accuracy;
-                    MyLocationMarker(Location, accuracy);
-                    //$scope.map.setView(Location, 15);
+                    MyLocationMarker(accuracy);
                     $ionicLoading.hide();
-                    //showMapInfo();
                 }, function(error) {
                     TimeExpired();
                     $ionicLoading.hide();
@@ -225,17 +219,10 @@ angular.module('starter.controllers')
             navigator.geolocation.getCurrentPosition(function(pos) {
                 myLat = pos.coords.latitude;
                 myLng = pos.coords.longitude;
-                                    soc.log('bounds changed!' + myLat);
-                    soc.log('bounds changed!' + myLng);
-                //var Location = daum.maps.LatLng(myLat, myLng);
-                //map.panTo(Location);
                 map.panTo(new daum.maps.LatLng(myLat, myLng));
-                //var Location = new L.LatLng(myLat, myLng);
                 var accuracy = pos.coords.accuracy;
-                MyLocationMarker(Location, accuracy);
-                //$scope.map.setView(Location, 15);
+                MyLocationMarker(accuracy);
                 $ionicLoading.hide();
-                //showMapInfo();
             }, function(error) {
                 TimeExpired();
                 $ionicLoading.hide();
