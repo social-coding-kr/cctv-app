@@ -183,7 +183,7 @@ angular.module('starter.controllers')
             return;
         }
         
-        soc.log('status2 changed!');
+        soc.log('status1 changed!');
         
         $scope.loading = $ionicLoading.show({
             content: 'Getting current location...',
