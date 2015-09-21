@@ -101,6 +101,27 @@ angular.module('starter.controllers')
       );
     }
     
+    // 좌표 주소 변환
+    obj.getAdressFromPoint = function(coord) {
+      var apiUrl = ionic.Platform.isWebView()
+        ? "http://openapi.map.naver.com/api/reversegeocode" : "/api/reversegeocode";
+      var apiKey = "c3cdd592f9b2a05e8430c939808ba40b";
+      var options = "?key=" + apiKey 
+        + "&encoding=utf-8&coord=latlng&output=json&query="
+        + coord;
+      var request = apiUrl + options;  
+      obj.log(request);
+      
+      $http.get(request).then(
+        function(response) { // on success
+          var result = response.data.result;
+          obj.log("좌표주소 변환 결과: " + JSON.stringify(response));
+        }, function(response) { // on fail
+          obj.log("response :" + JSON.stringify(response));
+        }
+      );
+    }
+    
     // 추후에 자체 서버 관련 내용은 별도의 JS 파일로 빼는게 좋을듯
     obj.getCctvs = function(params) {
       return $http.get(obj.server.mainUrl + "map/cctvs", {params: params});
