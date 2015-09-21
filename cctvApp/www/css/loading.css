@@ -1,5 +1,5 @@
-
 @import url(http://fonts.googleapis.com/css?family=Lato:300);
+
 
 .container{
     text-align: center;
@@ -629,19 +629,19 @@
 
 .loader8{
     position: relative;
-    width: 20px;
-    height: 20px;
+    width: 80px;
+    height: 80px;
 
     top: 28%;
     top: -webkit-calc(50% - 43px);
     top: calc(50% - 43px);
     left: 35%;
-    left: -webkit-calc(50% - 23px);
-    left: calc(50% - 23px);
+    left: -webkit-calc(50% - 43px);
+    left: calc(50% - 43px);
 
     border-radius: 50px;
     background-color: rgba(255, 255, 255, .2);
-    border-width: 20px;
+    border-width: 40px;
     border-style: double;
     border-color:transparent  #fff;
 
@@ -649,7 +649,7 @@
     -moz-box-sizing:border-box;
     box-sizing:border-box;
 
-    -webkit-transform-origin:  530% 50%;
+    -webkit-transform-origin:  50% 50%;
     transform-origin:  50% 50% ;
     -webkit-animation: loader8 2s linear infinite;
     animation: loader8 2s linear infinite;
