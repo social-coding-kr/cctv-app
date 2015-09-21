@@ -124,7 +124,7 @@ angular.module('starter.controllers')
         saveToPhotoAlbum: false,
         //allowEdit        : true,
 				//destinationType  : navigator.camera.DestinationType.DATA_URL, lcs
-        destinationType  : navigator.camera.DestinationType.DATA_URL,
+        destinationType  : navigator.camera.DestinationType.NATIVE_URI,
 				sourceType       : navigator.camera.PictureSourceType.CAMERA, 
 				correctOrientation: true
       };
@@ -192,7 +192,7 @@ angular.module('starter.controllers')
 })
 
 // 등록확정화면에 사용하는 컨트롤러
-.controller('confirmReportCtrl', function($rootScope, $scope, $http) {
+.controller('confirmReportCtrl', function($rootScope, $scope, $window, $cordovaFile, $http) {
   // 현재위치를 나타내는 변수들
   var ex_lat = myLat;
   var ex_lng = myLng;
@@ -214,4 +214,52 @@ angular.module('starter.controllers')
     // 신고선택 변수(reportClicked) 초기화 및 화면전환
     $rootScope.cancellButtonClicked();
   };
+
+  // CAMERA로부터 전달받은 NATIVE FILE PATH 를 전달하여 바이너리 데이터를 가져옮.
+  $scope.CCTV_IMAGE_BINARY_DATA = undefined;
+  $scope.CCTV_IMAGE_LOADING_STATUS = undefined;
+  $scope.NOTICE_IMAGE_BINARY_DATA = undefined;
+  $scope.NOTICE_IMAGE_LOADING_STATUS = undefined;
+
+      if ($rootScope.lastCctvPhoto !== undefined)
+      {
+        var cctv_fullpath = $rootScope.lastCctvPhoto;
+        var cctv_file_name = cctv_fullpath.replace(/^.*[\\\/]/, '');
+        var cctv_file_path = cctv_fullpath.split('/' + cctv_file_name)[0];
+        $cordovaFile.readAsBinaryString(cctv_file_path, cctv_file_name).then(
+            function (success_file_binary)
+            {
+              $scope.CCTV_IMAGE_LOADING_STATUS = 'SUCCESS';
+              $scope.CCTV_IMAGE_BINARY_DATA = success_file_binary;
+            },
+            function (error)
+            {
+              $scope.CCTV_IMAGE_LOADING_STATUS = 'ERROR';
+              $scope.CCTV_IMAGE_BINARY_DATA = undefined;
+              // file_path + ' ,' + file_name + ' error : '+error;
+            }
+        );
+      }
+
+      if ($rootScope.lastHangBoardPhoto !== undefined)
+      {
+        var notice_fullpath = $rootScope.lastHangBoardPhoto;
+        var notice_file_name = notice_fullpath.replace(/^.*[\\\/]/, '');
+        var notice_file_path = notice_fullpath.split('/' + notice_file_name)[0]
+
+        $cordovaFile.readAsBinaryString(notice_file_name, notice_file_path).then(
+            function (success_file_binary)
+            {
+              $scope.NOTICE_IMAGE_LOADING_STATUS = 'SUCCESS';
+              $scope.NOTICE_IMAGE_BINARY_DATA = success_file_binary;
+            },
+            function (error)
+            {
+              $scope.NOTICE_IMAGE_LOADING_STATUS = 'ERROR';
+              $scope.NOTICE_IMAGE_BINARY_DATA = undefined;
+              // file_path + ' ,' + file_name + ' error : '+error;
+            }
+        );
+      }
+
 });

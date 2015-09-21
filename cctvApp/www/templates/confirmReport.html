@@ -22,12 +22,15 @@
       <ion-item class="item-divider">안내판 내용</ion-item>
       <ion-item class="item-thumbnail-left">
         <!-- <img src="{{lastHangBoardPhoto}}"> -->
+        notice url : {{$rootScope.lastHangBoardPhoto}}
       </ion-item>
 
     <ion-list>    
     
     <h5>화면과 같이 등록됩니다.</h5>
     <form action="http://147.46.215.152:8099/cctv" method="post" enctype="multipart/form-data" ng-controller="confirmReportCtrl">
+      FILE CCTV=>[{{CCTV_IMAGE_BINARY_DATA}}]<br /> <br />
+      FILE NOTICE=>[{{NOTICE_IMAGE_BINARY_DATA}}]
       <div id="등록 정보들">
         latitude :<input type="number" name="latitude" value={{cctvReportingInfo.latitude}}><br>
         longitude :<input type="number" name="longitude" value={{cctvReportingInfo.longitude}}><br>
