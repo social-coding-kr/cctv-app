@@ -9,10 +9,9 @@ angular.module('starter.controllers')
 })
 
 // 신고시에 사용할 변수들에 대한 정의
-.controller('generalReportCtrl', function($rootScope, $window, $cordovaToast, $location) {
-  // 현재위치를 나타내는 변수들
-  var ex_lat = myLat;
-  var ex_lng = myLng;
+.controller('generalReportCtrl', function($rootScope, $window, $cordovaToast, $location, soc) {
+  // 현재 주소를 나타내는 변수
+  $rootScope.currentAddress = soc.currentAddress;
   // 신고화면 도중 신고화면으로 넘어갈 때 바꿔줘야할 변수
   $rootScope.reportClicked = false; // true : 하단 등록확인버튼 보임, false : 하단 등록버튼 안보임
   // 사진 관련 변수들
@@ -105,6 +104,17 @@ angular.module('starter.controllers')
 
 // cctv 및 안내판을 찍을 때 사용하는 컨트롤러
 .controller('takePictureCtrl', function($scope, $ionicPopup, $window, $location, $rootScope, soc) {
+  // 현재위치를 나타내는 변수들
+  $scope.currentLat = myLat;
+  $scope.currentLng = myLng;
+  
+  // 좌표주소변환
+  var currentCoord = $scope.currentLng + "," + $scope.currentLat;
+  $scope.pointToAdress = function(currentCoord) {
+    soc.getAdressFromPoint(currentCoord);
+    // soc.log("currentCoord :" + currentCoord);
+  }
+  
   // 카메라 옵션
   var options = {
                   quality: 50,
@@ -122,8 +132,7 @@ angular.module('starter.controllers')
         targetWidth: 240,
         targetHeight: 240, 
         saveToPhotoAlbum: false,
-        //allowEdit        : true,
-				//destinationType  : navigator.camera.DestinationType.DATA_URL, lcs
+        //allowEdit        : true, // 사용자의 직접적인 편집 불허
         destinationType  : navigator.camera.DestinationType.NATIVE_URI,
 				sourceType       : navigator.camera.PictureSourceType.CAMERA, 
 				correctOrientation: true
@@ -131,19 +140,13 @@ angular.module('starter.controllers')
       // 사진을 찍는 함수
       navigator.camera.getPicture(
         function(imageURI) {
-          //soc.log(imageURI);
-          //alert("Length: " + imageURI.length);
           if($rootScope.lastCctvPhoto === $rootScope.basicCctvPhoto) {
             $rootScope.cctvPhotoTaken = true;
-            //$rootScope.lastCctvPhoto = "data:image/png;base64,"+imageURI; lcs
-            //$rootScope.lastCctvPhoto = "data:image/png,"+imageURI;
             $rootScope.lastCctvPhoto = imageURI;
-            //alert($rootScope.lastCctvPhoto);
-            soc.log(JSON.stringify($rootScope.lastCctvPhoto));
             $scope.$apply();
           } else {
-            //$rootScope.lastHangBoardPhoto = "data:image/png;base64,"+imageURI; lcs
-			$rootScope.lastHangBoardPhoto = imageURI;
+			      $rootScope.lastHangBoardPhoto = imageURI;
+			      $scope.$apply();
           }
         }, function(err) {
           soc.log(err);
@@ -164,6 +167,7 @@ angular.module('starter.controllers')
   };
   // 안내판 유무에 관한 팝업, 안내판이 있다면 네이티브 카메라를 불러오는 함수
   $scope.hasHangBoard = function() {
+    $scope.pointToAdress(currentCoord);
     $ionicPopup.show({title :'CCTV 주변에 안내판이 설치되어 있습니까?',
                       buttons: [{ 
                         text: '네, 안내판을 찍습니다.',
@@ -226,6 +230,7 @@ angular.module('starter.controllers')
         var cctv_fullpath = $rootScope.lastCctvPhoto;
         var cctv_file_name = cctv_fullpath.replace(/^.*[\\\/]/, '');
         var cctv_file_path = cctv_fullpath.split('/' + cctv_file_name)[0];
+        
         $cordovaFile.readAsBinaryString(cctv_file_path, cctv_file_name).then(
             function (success_file_binary)
             {
@@ -245,9 +250,9 @@ angular.module('starter.controllers')
       {
         var notice_fullpath = $rootScope.lastHangBoardPhoto;
         var notice_file_name = notice_fullpath.replace(/^.*[\\\/]/, '');
-        var notice_file_path = notice_fullpath.split('/' + notice_file_name)[0]
+        var notice_file_path = notice_fullpath.split('/' + notice_file_name)[0];
 
-        $cordovaFile.readAsBinaryString(notice_file_name, notice_file_path).then(
+        $cordovaFile.readAsBinaryString(notice_file_path, notice_file_name).then(
             function (success_file_binary)
             {
               $scope.NOTICE_IMAGE_LOADING_STATUS = 'SUCCESS';

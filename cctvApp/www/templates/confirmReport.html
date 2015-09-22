@@ -4,8 +4,7 @@
     
       <ion-item class="item-thumbnail-left">
         <!-- <img src="{{lastCctvPhoto}}"> -->
-		
-		cctv image= url :: {{cctvReportingInfo.cctvImage}}
+		    cctv image= url :: {{cctvReportingInfo.cctvImage}}
       </ion-item>
       
       <ion-item class="item-divider">세부정보</ion-item>
@@ -16,13 +15,13 @@
 
       <ion-item>
         <p>주소</p>
-        <h2>{{"주소가 들어갈 자리다아"}}</h2>
+        <h2>{{currentAddress}}</h2>
       </ion-item>
 
       <ion-item class="item-divider">안내판 내용</ion-item>
       <ion-item class="item-thumbnail-left">
         <!-- <img src="{{lastHangBoardPhoto}}"> -->
-        notice url : {{$rootScope.lastHangBoardPhoto}}
+        notice image url :: {{cctvReportingInfo.noticeImage}}
       </ion-item>
 
     <ion-list>    
@@ -35,8 +34,8 @@
         latitude :<input type="number" name="latitude" value={{cctvReportingInfo.latitude}}><br>
         longitude :<input type="number" name="longitude" value={{cctvReportingInfo.longitude}}><br>
         purpose :<input type="string" name="purpose" ng-repeat="item in purposeForReport" ng-model="item.checked"><br>
-        cctvImage :<input type="file" name="cctvImage" value={{cctvReportingInfo.cctvImage}} style="width:128px;height:128px;"><br>
-        noticeImage :<input type="file" name="noticeImage" value={{cctvReportingInfo.noticeImage}} style="width:128px;height:128px;"><br>
+        cctvImage :<input type="file" name="cctvImage" file-model="uploadFile" style="width:128px;height:128px;"><br>
+        noticeImage :<input type="file" name="noticeImage" file-model="uploadFile" style="width:128px;height:128px;"><br>
         userId :<input type="string" name="userId" value={{cctvReportingInfo.userId}}><br>
         <input type="submit" value="Submit">
       </div>

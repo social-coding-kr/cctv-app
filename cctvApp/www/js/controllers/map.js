@@ -150,13 +150,13 @@ angular.module('starter.controllers')
             
         });
             
-    $scope.locationAccu = "위치찾기를 하게 되면 위치와 관련된 값이 표시됩니다.";
-        
+    $scope.locationAccu = "위치찾기 시 정확도와 관련된 값이 표시됩니다.";
+    $scope.responseTime = "위치찾기 시 응답시간과 관련된 값이 표시됩니다.";
 	$scope.refreshMapInfo();
 	$scope.requestCctvs();
 			
 	//내 위치에 마크를 설정하여 주는 함수.
-    function MyLocationMarker(Accuracy) {
+    function MyLocationMarker(Accuracy, Time) {
         if (markers.length > 0){
             //기존 마커를 제거하고 배열을 비운다.
             markers[0].setMap(null);
@@ -167,15 +167,8 @@ angular.module('starter.controllers')
 			position: points
 		});
 		marker.setMap(map);
-		
-        var AccuText = "";
-        if (Accuracy > 100) {
-            AccuText = "헐 이건 너무 심하잖아.";
-        }
-        else {
-            AccuText = "적절합니다.";
-        }
-        $scope.locationAccu = "이 지점을 기준으로 반경 " + Accuracy + "미터 안에 있습니다." + AccuText;
+		$scope.locationAccu = "이 지점을 기준으로 반경 " + Accuracy.toFixed(8) + "미터 안에 있습니다.";
+		$scope.responseTime = Time + "ms";
         markers.push(marker);
     }
 
@@ -215,7 +208,8 @@ angular.module('starter.controllers')
                     myLng = pos.coords.longitude;
                     map.panTo(new daum.maps.LatLng(myLat, myLng));
                     var accuracy = pos.coords.accuracy;
-                    MyLocationMarker(accuracy);
+                    var time = pos.timestamp;
+                    MyLocationMarker(accuracy, time);
                     $ionicLoading.hide();
                 }, function(error) {
                     TimeExpired();
@@ -229,7 +223,8 @@ angular.module('starter.controllers')
                 myLng = pos.coords.longitude;
                 map.panTo(new daum.maps.LatLng(myLat, myLng));
                 var accuracy = pos.coords.accuracy;
-                MyLocationMarker(accuracy);
+                var time = pos.timestamp;
+                MyLocationMarker(accuracy, time);
                 $ionicLoading.hide();
             }, function(error) {
                 TimeExpired();

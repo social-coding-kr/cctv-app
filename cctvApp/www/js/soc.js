@@ -115,7 +115,9 @@ angular.module('starter.controllers')
       $http.get(request).then(
         function(response) { // on success
           var result = response.data.result;
-          obj.log("좌표주소 변환 결과: " + JSON.stringify(response));
+          // obj.log("좌표주소 변환 결과 :" + JSON.stringify(response));
+          // obj.log("주소 :" + JSON.stringify(response.data.result.items[0].address));
+          $rootScope.currentAddress = response.data.result.items[0].address;
         }, function(response) { // on fail
           obj.log("response :" + JSON.stringify(response));
         }
