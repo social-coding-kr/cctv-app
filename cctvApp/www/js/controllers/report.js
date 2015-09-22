@@ -132,8 +132,7 @@ angular.module('starter.controllers')
         targetWidth: 240,
         targetHeight: 240, 
         saveToPhotoAlbum: false,
-        //allowEdit        : true,
-				//destinationType  : navigator.camera.DestinationType.DATA_URL, lcs
+        //allowEdit        : true, // 사용자의 직접적인 편집 불허
         destinationType  : navigator.camera.DestinationType.NATIVE_URI,
 				sourceType       : navigator.camera.PictureSourceType.CAMERA, 
 				correctOrientation: true
@@ -141,19 +140,13 @@ angular.module('starter.controllers')
       // 사진을 찍는 함수
       navigator.camera.getPicture(
         function(imageURI) {
-          //soc.log(imageURI);
-          //alert("Length: " + imageURI.length);
           if($rootScope.lastCctvPhoto === $rootScope.basicCctvPhoto) {
             $rootScope.cctvPhotoTaken = true;
-            //$rootScope.lastCctvPhoto = "data:image/png;base64,"+imageURI; lcs
-            //$rootScope.lastCctvPhoto = "data:image/png,"+imageURI;
             $rootScope.lastCctvPhoto = imageURI;
-            //alert($rootScope.lastCctvPhoto);
-            soc.log(JSON.stringify($rootScope.lastCctvPhoto));
             $scope.$apply();
           } else {
-            //$rootScope.lastHangBoardPhoto = "data:image/png;base64,"+imageURI; lcs
-			$rootScope.lastHangBoardPhoto = imageURI;
+			      $rootScope.lastHangBoardPhoto = imageURI;
+			      $scope.$apply();
           }
         }, function(err) {
           soc.log(err);
@@ -237,6 +230,7 @@ angular.module('starter.controllers')
         var cctv_fullpath = $rootScope.lastCctvPhoto;
         var cctv_file_name = cctv_fullpath.replace(/^.*[\\\/]/, '');
         var cctv_file_path = cctv_fullpath.split('/' + cctv_file_name)[0];
+        
         $cordovaFile.readAsBinaryString(cctv_file_path, cctv_file_name).then(
             function (success_file_binary)
             {
@@ -256,9 +250,9 @@ angular.module('starter.controllers')
       {
         var notice_fullpath = $rootScope.lastHangBoardPhoto;
         var notice_file_name = notice_fullpath.replace(/^.*[\\\/]/, '');
-        var notice_file_path = notice_fullpath.split('/' + notice_file_name)[0]
+        var notice_file_path = notice_fullpath.split('/' + notice_file_name)[0];
 
-        $cordovaFile.readAsBinaryString(notice_file_name, notice_file_path).then(
+        $cordovaFile.readAsBinaryString(notice_file_path, notice_file_name).then(
             function (success_file_binary)
             {
               $scope.NOTICE_IMAGE_LOADING_STATUS = 'SUCCESS';
