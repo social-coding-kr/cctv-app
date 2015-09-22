@@ -47,28 +47,28 @@ angular.module('starter.controllers')
     // server
     obj.getDefaultLocation = function() {
       return {
-        lat: 37.555107,
-        lon: 126.970691
-      }
-    }
+        lat: 37.5665,
+        lon: 126.97864
+      };
+    };
     
     obj.dongjakLoc = { lat: 37.51245, lon: 126.9395 };
     obj.sindaebang2Loc = { lat: 37.498926, lon: 126.925838 };
 
     // GPS 정보
     obj.currentLocation = {
-        lat: 37.555107,
-        lon: 126.970691
+        lat: 37.5665,
+        lon: 126.97864
     };
     
     obj.getCurrentLocation = function() {
       return obj.currentLocation;
-    }
+    };
     
     obj.setCurrentLocation = function(lat, lon) {
       obj.currentLocation.lat = lat;
       obj.currentLocation.lon = lon;
-    }
+    };
     
     obj.getPointFromAddress = function(addr, cbThen, cbError, opts) {
       var apiUrl = ionic.Platform.isWebView() 
