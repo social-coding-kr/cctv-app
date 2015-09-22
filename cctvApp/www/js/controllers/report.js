@@ -10,6 +10,8 @@ angular.module('starter.controllers')
 
 // 신고시에 사용할 변수들에 대한 정의
 .controller('generalReportCtrl', function($rootScope, $window, $cordovaToast, $location, soc) {
+  // UserId
+  $rootScope.userId = 'TestingId_ClubSandwich';
   // 현재 주소를 나타내는 변수
   $rootScope.currentAddress = soc.currentAddress;
   // 신고화면 도중 신고화면으로 넘어갈 때 바꿔줘야할 변수
@@ -29,7 +31,7 @@ angular.module('starter.controllers')
                                   purpose: '', 
                                   cctvImage: $rootScope.lastCctvPhoto, 
                                   noticeImage: $rootScope.lastHangBoardPhoto, 
-                                  userId: 'TestingId_ClubSandwich'};
+                                  userId: $rootScope.userId};
   // 등록 및 취소 버튼 클릭 함수
   $rootScope.registerButtonClicked = function() {
     // 변수들 초기화
@@ -196,7 +198,7 @@ angular.module('starter.controllers')
 })
 
 // 등록확정화면에 사용하는 컨트롤러
-.controller('confirmReportCtrl', function($rootScope, $scope, $window, $cordovaFile, $http) {
+.controller('confirmReportCtrl', function($rootScope, $scope, $window, $cordovaFile, $http, soc) {
   // 현재위치를 나타내는 변수들
   var ex_lat = myLat;
   var ex_lng = myLng;
@@ -207,7 +209,7 @@ angular.module('starter.controllers')
                                   purpose: $rootScope.purpose, //undefined
                                   cctvImage: $rootScope.lastCctvPhoto, 
                                   noticeImage: $rootScope.lastHangBoardPhoto, 
-                                  userId: 'TestingId_ClubSandwich'};
+                                  userId: $rootScope.userId};
   // 등록 확정시
   $scope.registerButton2Clicked = function() {
     // 신고선택 변수(reportClicked) 초기화 및 화면전환
@@ -267,4 +269,27 @@ angular.module('starter.controllers')
         );
       }
 
+  $scope.registerUpload = function(){
+    var uploadUrl = "http://147.46.215.152:8099/cctv";
+    var formdata = new FormData();
+    formdata.append('latitude', ex_lat);
+    formdata.append('longitude', ex_lng);
+    formdata.append('purpose', $rootScope.purpose);
+    formdata.append('cctvImage', new Blob([$scope.CCTV_IMAGE_BINARY_DATA]));
+    formdata.append('noticeImage', new Blob([$scope.NOTICE_IMAGE_BINARY_DATA]));
+    formdata.append('userId', $rootScope.userId);
+
+    $http.post(uploadUrl, formdata, {
+      transformRequest: angular.identity,
+      headers: {'Content-Type': undefined}
+    })
+    .success(function(response){
+      soc.log("등록 성공 :" + formdata);
+      soc.log("response :" + JSON.stringify(response));
+    })
+    .error(function(response){
+      soc.log("등록 실패 :" + formdata);
+      soc.log("response :" + JSON.stringify(response));
+    });
+  }
 });
