@@ -21,7 +21,7 @@ angular.module('starter.controllers')
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new daum.maps.Map(mapContainer, mapOption); 
 		$scope.map = map;   // centerOnMe 호출시에 사용한다
-			
+
 			
 		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
 		//var mapTypeControl = new daum.maps.MapTypeControl();
