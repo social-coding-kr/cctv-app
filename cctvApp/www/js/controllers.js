@@ -40,13 +40,6 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
   
-  // 좌표주소변환 Test
-  $scope.coordTest = "127.1052208,37.3595122";
-  $scope.PointToAdressTest = function(coordTest) {
-    soc.getAdressFromPoint(coordTest);
-    soc.log("coordTest :"+coordTest);
-  }
-  
   // 신고하기버튼 click에 대한 bool값
   $rootScope.reportClicked = false;
   $rootScope.nowReportClicked = function() {
