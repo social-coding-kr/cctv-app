@@ -129,13 +129,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
   
   $stateProvider
-
+/*
       .state('appstart', {
         url: '/appstart',
         templateUrl: 'templates/splash.html',
         controller: 'AppSplash'
       })
-
+*/
     .state('app', {
     url: '/app',
     abstract: true,
@@ -324,7 +324,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   $urlRouterProvider.otherwise('/appstart');
   //$urlRouterProvider.otherwise('/app/map');
 
-}).controller('AppSplash', function($scope, $location, $interval) {
+})
+/*
+.controller('AppSplash', function($scope, $location, $interval) {
+
+      // this controller is dead or sleep
+      //
+
       $scope.init = function ()
       {
 
@@ -343,3 +349,4 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
 
 });
+*/
