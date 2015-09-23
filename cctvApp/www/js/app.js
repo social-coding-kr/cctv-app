@@ -13,7 +13,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     setTimeout(function() {
       $cordovaSplashscreen.hide();
     }, 500);
-    
+
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
