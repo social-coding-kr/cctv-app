@@ -10,7 +10,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    
+
     setTimeout(function() {
       navigator.splashscreen.hide();
     }, 100);
