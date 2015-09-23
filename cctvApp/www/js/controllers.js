@@ -77,6 +77,8 @@ angular.module('starter.controllers', [])
     if($location.url() === '/app/map') { // 홈 화면일 경우
       // 토스트로 종료를 예고할 경우
       if($rootScope.secondBackButton === true) { // 두 번째 back button 클릭일 경우
+        navigator.app.clearCache();
+        navigator.app.clearHistory();
         navigator.app.exitApp();
       } else {  
         // 종료 토스트 알려줌
