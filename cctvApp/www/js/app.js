@@ -10,9 +10,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    setTimeout(function() {
-      navigator.splashscreen.hide();
-    }, 500);
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -131,13 +128,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
   
   $stateProvider
-/*
+
       .state('appstart', {
         url: '/appstart',
         templateUrl: 'templates/splash.html',
         controller: 'AppSplash'
       })
-*/
+
     .state('app', {
     url: '/app',
     abstract: true,
@@ -323,11 +320,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  //$urlRouterProvider.otherwise('/appstart');
-  $urlRouterProvider.otherwise('/app/map');
+  $urlRouterProvider.otherwise('/appstart');
+  //$urlRouterProvider.otherwise('/app/map');
 
 })
-/*
+
 .controller('AppSplash', function($scope, $location, $interval) {
 
       // this controller is dead or sleep
@@ -351,4 +348,3 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
 
 });
-*/
