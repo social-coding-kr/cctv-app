@@ -157,19 +157,40 @@ angular.module('starter.controllers')
 			
 	//내 위치에 마크를 설정하고, 개발자 정보에서 위치정보를 갱신해 주는 함수.
     function MyLocationMarker(Accuracy, Time) {
-        if (markers.length > 0){
+        var i = 0;
+        var dummyLength = markers.length;
+        while (dummyLength > i){
             //기존 마커를 제거하고 배열을 비운다.
-            markers[0].setMap(null);
+            markers[dummyLength - i - 1].setMap(null);
             markers.pop();
+            i++;
         }
         var points  = new daum.maps.LatLng(myLat, myLng);
         var marker = new daum.maps.Marker({
 			position: points
 		});
 		marker.setMap(map);
-		$scope.locationAccu = "이 지점을 기준으로 반경 " + Accuracy + "미터 안에 있습니다.";
+		$scope.locationAccu = "이 지점을 기준으로 반경 " + Accuracy.toFixed(8) + "미터 안에 있습니다.";
 		$scope.responseTime = Time + "ms";
         markers.push(marker);
+        
+        if (soc.config.isDevelModeVisible == true)
+        {
+            var circle = new daum.maps.Circle({
+                center : new daum.maps.LatLng(myLat, myLng),  // 원의 중심좌표 입니다 
+                radius: Accuracy, // 미터 단위의 원의 반지름입니다 
+                strokeWeight: 3, // 선의 두께입니다 
+                strokeColor: '#75B8FA', // 선의 색깔입니다
+                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeStyle: 'dashed', // 선의 스타일 입니다
+                fillColor: '#CFE7FF', // 채우기 색깔입니다
+                fillOpacity: 0.7  // 채우기 불투명도 입니다   
+            }); 
+    
+            // 지도에 원을 표시합니다 
+            circle.setMap(map);
+            markers.push(circle);
+        }
     }
 
     //일정 시간 동안 gps정보를 이용할 수 없을 시 토스트를 띄워주는 함수.
@@ -205,7 +226,6 @@ angular.module('starter.controllers')
             showBackdrop: false
         });
         
-        //markers.clearLayers();
         if (ionic.Platform.isWebView() == true) {
             // 플러그인 사용
             var posOptions = {
