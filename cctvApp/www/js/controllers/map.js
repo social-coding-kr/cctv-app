@@ -167,7 +167,7 @@ angular.module('starter.controllers')
 			position: points
 		});
 		marker.setMap(map);
-		$scope.locationAccu = "이 지점을 기준으로 반경 " + Accuracy.toFixed(8) + "미터 안에 있습니다.";
+		$scope.locationAccu = "이 지점을 기준으로 반경 " + Accuracy + "미터 안에 있습니다.";
 		$scope.responseTime = Time + "ms";
         markers.push(marker);
     }
@@ -191,6 +191,7 @@ angular.module('starter.controllers')
         $rootScope.reportClicked = false;
         alertPopup.then();
     }
+
 
     //내 위치를 잡아주는 함수
     $rootScope.centerOnMe = function() {
@@ -219,7 +220,7 @@ angular.module('starter.controllers')
                     var accuracy = pos.coords.accuracy;
                     
                     //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
-                    if (accuracy > 100){
+                    if (accuracy < 100){
                         map.panTo(new daum.maps.LatLng(myLat, myLng));
                         var time = pos.timestamp;
                         MyLocationMarker(accuracy, time);
@@ -239,9 +240,9 @@ angular.module('starter.controllers')
                 myLat = pos.coords.latitude;
                 myLng = pos.coords.longitude;
                 var accuracy = pos.coords.accuracy;
-                
+
                 //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
-                if (accuracy > 100){
+                if (accuracy < 100){
                     map.panTo(new daum.maps.LatLng(myLat, myLng));
                     var time = pos.timestamp;
                     MyLocationMarker(accuracy, time);
