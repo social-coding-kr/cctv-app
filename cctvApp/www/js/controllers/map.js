@@ -155,7 +155,7 @@ angular.module('starter.controllers')
 	$scope.refreshMapInfo();
 	$scope.requestCctvs();
 			
-	//내 위치에 마크를 설정하여 주는 함수.
+	//내 위치에 마크를 설정하고, 개발자 정보에서 위치정보를 갱신해 주는 함수.
     function MyLocationMarker(Accuracy, Time) {
         if (markers.length > 0){
             //기존 마커를 제거하고 배열을 비운다.
@@ -177,6 +177,16 @@ angular.module('starter.controllers')
         var alertPopup = $ionicPopup.alert({
             title: 'GPS 정보를 이용할 수 없습니다.',
             template: '기기의 GPS상태를 확인하거나 유저 폴트의 여부를 확인하세요.'
+        });
+        $rootScope.reportClicked = false;
+        alertPopup.then();
+    }
+    
+    //정확도가 일정 범위를 넘어가면 자신의 위치를 보여주는 것이 아니라 기기 작동을 멈추고 띄우는 토스트.
+    function LowLocationAccuracy() {
+        var alertPopup = $ionicPopup.alert({
+            title: '위치 정확도가 매우 낮습니다.',
+            template: 'GPS가 이용가능한 위치로 이동하거나, 위치찾기 버튼을 다시 한 번 눌러 주세요.'
         });
         $rootScope.reportClicked = false;
         alertPopup.then();
@@ -206,10 +216,17 @@ angular.module('starter.controllers')
                 .then(function(pos) {
                     myLat = pos.coords.latitude;
                     myLng = pos.coords.longitude;
-                    map.panTo(new daum.maps.LatLng(myLat, myLng));
                     var accuracy = pos.coords.accuracy;
-                    var time = pos.timestamp;
-                    MyLocationMarker(accuracy, time);
+                    
+                    //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
+                    if (accuracy > 100){
+                        map.panTo(new daum.maps.LatLng(myLat, myLng));
+                        var time = pos.timestamp;
+                        MyLocationMarker(accuracy, time);
+                    }
+                    else{
+                        LowLocationAccuracy();
+                    }
                     $ionicLoading.hide();
                 }, function(error) {
                     TimeExpired();
@@ -221,10 +238,17 @@ angular.module('starter.controllers')
             navigator.geolocation.getCurrentPosition(function(pos) {
                 myLat = pos.coords.latitude;
                 myLng = pos.coords.longitude;
-                map.panTo(new daum.maps.LatLng(myLat, myLng));
                 var accuracy = pos.coords.accuracy;
-                var time = pos.timestamp;
-                MyLocationMarker(accuracy, time);
+                
+                //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
+                if (accuracy > 100){
+                    map.panTo(new daum.maps.LatLng(myLat, myLng));
+                    var time = pos.timestamp;
+                    MyLocationMarker(accuracy, time);
+                }
+                else{
+                    LowLocationAccuracy();
+                }
                 $ionicLoading.hide();
             }, function(error) {
                 TimeExpired();
