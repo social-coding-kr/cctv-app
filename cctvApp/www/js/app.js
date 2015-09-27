@@ -11,7 +11,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     setTimeout(function() {
-      navigator.splashscreen.hide();
+      if(navigator.splashscreen)
+        navigator.splashscreen.hide();
     }, 500);
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -308,6 +309,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       'menuContent': {
         templateUrl: 'templates/mapTest.html',
         controller: 'MapTestCtrl'
+      }
+    }
+  })
+
+  .state('app.mapTest2', {
+    url: '/mapTest2',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/mapTest2.html',
+        controller: 'MapTest2Ctrl'
       }
     }
   })
