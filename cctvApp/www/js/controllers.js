@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, soc) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, $http, oauthService, soc) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -18,6 +18,17 @@ angular.module('starter.controllers', [])
   }).then(function(modal) {
     $scope.modal = modal;
   });
+  
+  $scope.$watch(function() {return $rootScope.facebook_data.picture; },
+    function() {
+      //var picture = eval($rootScope.facebook_data.picture);
+      $scope.user_email = $rootScope.facebook_data.email;
+      //$scope.user_profile = picture.url;
+    }
+  );
+  
+  $scope.user_email = 'please sign-in';
+  $scope.user_profile = 'img/ionic.png';
 
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
@@ -26,7 +37,8 @@ angular.module('starter.controllers', [])
 
   // Open the login modal
   $scope.login = function() {
-    $scope.modal.show();
+    //$scope.modal.show();
+    oauthService.login();
   };
 
   // Perform the login action when the user submits the login form
