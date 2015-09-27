@@ -50,9 +50,9 @@ angular.module('starter.controllers')
     		center: new daumMaps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
             level: level,        		
 	   	};
-        var daumMap = new daum.maps.Map(daumMapContainer, daumMapOption); 
+        var daumMap = new daumMaps.Map(daumMapContainer, daumMapOption); 
 
-
+        
 
         var thisIsMap = function() {
             $scope.lastRequestCenterLat = null;
@@ -69,6 +69,8 @@ angular.module('starter.controllers')
                 //mapContainer = document.getElementById('mapTestGoogle'); // 지도를 표시할 div                     
                 //soc.log("google: " + JSON.stringify(mapContainer));
             }
+            
+            anyMaps.registMarkerImage("default", "img/map-pin_17x30.png", 17, 30);
 
 /*
     		var mapOption = { 
@@ -180,7 +182,7 @@ angular.module('starter.controllers')
                         //soc.log("PREV length: " + markerList.length);
 
                         deleteMarkers();
-                        
+
                         var cctvLength = res.data.cctvs.length;
                         for(var i=0; i<cctvLength; i++) {
                             var cctv = res.data.cctvs[i];
@@ -190,17 +192,18 @@ angular.module('starter.controllers')
                                 var markerPosition  = new anyMaps.LatLng(cctv.latitude, cctv.longitude); 
 
                                 // 마커를 생성합니다
+                                /*
                                 if(anyMaps.isGoogleMap()) {
                                     var marker = new anyMaps.Marker({
                                         position: markerPosition,
-                                        icon: soc.getMarkerImage()
+                                        icon: anyMaps.getMarkerImage("default")
                                     });
-                                } else {
+                                } else {*/
                                     var marker = new anyMaps.Marker({
                                         position: markerPosition,
-                                        image: soc.getMarkerImage()
+                                        image: anyMaps.getMarkerImage("default")
                                     });
-                                }
+                                //}
                                 
 
                                 markerList.push(marker);                                                        
