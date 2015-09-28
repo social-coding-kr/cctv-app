@@ -49,7 +49,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   }
 }])
 
-
 .config(function($stateProvider, $urlRouterProvider, $provide) {
 
 //** Exception Handling

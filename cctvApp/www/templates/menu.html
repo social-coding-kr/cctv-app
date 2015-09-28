@@ -22,10 +22,11 @@
     <ion-content>
       <!-- login area -->
       <div class="row">
-        <div class="col col-100" menu-close ng-click="login()">
+        <div class="col col-100" ng-click="login()">
           <div class="big-login-photo-area">
-            <img src="img/ionic.png"><br />
-            <span>로그인</span>
+            <!-- img src="img/ionic.png"><br /-->
+            <img ng-src="{{user_profile}}"/><br />
+            <span>{{user_email}}</span>
           </div>
         </div>
       </div>
