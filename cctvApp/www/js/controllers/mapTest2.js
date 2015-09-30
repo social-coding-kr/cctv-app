@@ -4,6 +4,7 @@ angular.module('starter.controllers')
 
 .controller('MapTest2Ctrl',
   function($scope, soc) {
+    $scope.search = {};
 
     var maps = google.maps;
 
@@ -25,8 +26,6 @@ angular.module('starter.controllers')
       };
       var map = new maps.Map(mapContainer, mapOption);
 
-
-
       return map;
     }
 
@@ -40,42 +39,27 @@ angular.module('starter.controllers')
     }
 
     var map = initMap();
+    var geocoder = new google.maps.Geocoder();
 
     maps.event.addListenerOnce(map, 'idle', function() {
       soc.log("Map Loaded!");
-      
-      // Create the search box and link it to the UI element.
-      var input = document.getElementById('pac-input');
-      var searchBox = new maps.places.SearchBox(input);
-      map.controls[maps.ControlPosition.TOP_LEFT].push(input);
-
-      soc.log("map.controls");
-      searchBox.addListener('places_changed', function() {
-        var places = searchBox.getPlaces();
-        soc.log("places.length: " + places.length);
-        
-        if (places.length == 0) {
-          return;
-        }
-
-        // For each place, get the icon, name and location.
-        var bounds = new maps.LatLngBounds();
-        
-        places.forEach(function(place) {
-
-          if (place.geometry.viewport) {
-            // Only geocodes have viewport.
-            bounds.union(place.geometry.viewport);
-          }
-          else {
-            bounds.extend(place.geometry.location);
-          }
-        });
-        map.fitBounds(bounds);
-      });      
-
       refreshMapInfo(map);
       // requestCctvs();
     });
+    
+    // 주소 검색
+    $scope.searchAddress = function() {
+      soc.log($scope.search.address);
+      geocoder.geocode({'address': $scope.search.address}, function(results, status) {
+
+        if (status === google.maps.GeocoderStatus.OK) {
+          map.setCenter(results[0].geometry.location);
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });      
+    }
   }
+  
+  
 )
