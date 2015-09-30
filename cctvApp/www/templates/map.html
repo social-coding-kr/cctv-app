@@ -1,5 +1,5 @@
 <ion-view view-title="Home">
-    <ion-content>
+    <ion-content scroll="false">
         <!--<div class="row">
             <div class="col col-70 col-offset-10">
                 <div class="bar bar-header item-input-inset">
@@ -43,7 +43,25 @@
             <b>Accuracy:</b> {{ locationAccu }} <br>
             <b>Time:</b> {{ responseTime }} <br>
         </div>
-        
+        <div class="bar bar-subfooter" style="margin: 0px;" ng-show="reportClicked">
+            <div class="row" style="padding: 0px;">
+                <div class="col col-100 cctv-text-center" style="margin: 0px;">
+                    <strong>현재 위치에 CCTV를 등록하시겠습니까?</strong>
+                </div>
+            </div>
+        </div>
+        <div class="bar bar-footer bar-footer" ng-show="reportClicked" ng-controller="generalReportCtrl">
+            <div class="row" style="padding: 0px;" ng-controller="mapToTakePictureViewCtrl">
+                <div class="col col-50" style="padding: 0px;">
+                    <button class="button button-full button-positive" style="margin: 0px;" ng-click="registerButton1Clicked()">등록</button>
+                </div>
+                <div class="col col-50" style="padding: 0px;">
+                    <button class="button button-full button-assertive" style="margin: 0px;" ng-click="cancellButton1Clicked()">취소</button>
+                </div>
+            </div>
+        </div>
+
+        <!--
         <div class="bar bar-footer item-input-inset" ng-show="reportClicked">
             <div class="row">
                 <div class="col col-100">
@@ -57,5 +75,6 @@
                 </div>
             </div>
         </div>
+        -->
     </ion-content>
 </ion-view>
