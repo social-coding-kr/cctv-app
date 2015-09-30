@@ -20,16 +20,16 @@
                     <div class="row" ng-hide="cctvPhotoTaken">
                         <div class="col col-100 cctv-text-center" style="padding: 0px;">
                             <button class="button button-full button-positive" style="margin: 0px;" ng-click="getPhoto()">
-                                <i class="icon ion-camera" style="font-size: larger !important;"></i>
+                                <i class="icon ion-camera" style="font-size: 1.3em !important;"></i>
                             </button>
                             <a ng-hide="true" ng-click="photoLocation()" class="button button-block button-primary">사진의 위치는?</a>
                         </div>
                     </div>
                     <div class="row" ng-show="cctvPhotoTaken">
                         <div class="col col-100 cctv-text-center">
-                            <a ng-click="hasHangBoard()" class="button button-full button-balanced">
+                            <button class="button button-full button-balanced" style="margin: 0px;" ng-click="hasHangBoard()">
                                 <i class="icon ion-checkmark"></i>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
