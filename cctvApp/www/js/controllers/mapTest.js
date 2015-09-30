@@ -70,7 +70,7 @@ angular.module('starter.controllers')
                 //soc.log("google: " + JSON.stringify(mapContainer));
             }
             
-            anyMaps.registMarkerImage("default", "img/map-pin_17x30.png", 17, 30);
+            anyMaps.registMarkerImage("default", "img/marker1_18x31.png", 18, 31);
 
 /*
     		var mapOption = { 
@@ -192,18 +192,17 @@ angular.module('starter.controllers')
                                 var markerPosition  = new anyMaps.LatLng(cctv.latitude, cctv.longitude); 
 
                                 // 마커를 생성합니다
-                                /*
                                 if(anyMaps.isGoogleMap()) {
                                     var marker = new anyMaps.Marker({
                                         position: markerPosition,
                                         icon: anyMaps.getMarkerImage("default")
                                     });
-                                } else {*/
+                                } else {
                                     var marker = new anyMaps.Marker({
                                         position: markerPosition,
                                         image: anyMaps.getMarkerImage("default")
                                     });
-                                //}
+                                }
                                 
 
                                 markerList.push(marker);                                                        

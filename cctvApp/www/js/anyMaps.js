@@ -2,7 +2,7 @@
     //window.google = window.google || {}
     //window.daum = window.daum || {}
 
-    var anyMapsRealGoogleMarker = null;
+    //var anyMapsRealGoogleMarker = null;
     (function() {
         console.log("preset Prototype google to daum");
         
@@ -26,7 +26,7 @@
             = google.maps.LatLng.prototype.lng;
         
         // Marker 바꿔치기    
-        anyMapsRealGoogleMarker = google.maps.Marker;
+        //anyMapsRealGoogleMarker = google.maps.Marker;
         
         //console.log(google.maps.prototype.Marker);
         /*
@@ -53,7 +53,7 @@
         anyMaps.registMarkerImage = function(name, image, width, height) {
             var daumMarkerImageSize = new daum.maps.Size(width, height);
             var daumMarketImageOption = {offset: new daum.maps.Point(width/2, height)};
-            var daumMarkerImage
+            //var daumMarkerImage
             
             anyMapsMarkerImages[name] = {
                 image: image,
