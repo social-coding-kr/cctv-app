@@ -270,13 +270,13 @@ angular.module('starter.controllers')
       }
 
   $scope.registerUpload = function(){
-    var uploadUrl = "http://147.46.215.152:8099/cctv";
+    var uploadUrl = "http://147.46.215.152:8099/cctv";/*9030 for test*/
     var formdata = new FormData();
     formdata.append('latitude', ex_lat);
     formdata.append('longitude', ex_lng);
     formdata.append('purpose', $rootScope.purpose);
-    formdata.append('cctvImage', new Blob([$scope.CCTV_IMAGE_BINARY_DATA]));
-    formdata.append('noticeImage', new Blob([$scope.NOTICE_IMAGE_BINARY_DATA]));
+    formdata.append('cctvImage', $scope.CCTV_IMAGE_BINARY_DATA);
+    formdata.append('noticeImage', $scope.NOTICE_IMAGE_BINARY_DATA);
     formdata.append('userId', $rootScope.userId);
 
     $http.post(uploadUrl, formdata, {
