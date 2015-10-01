@@ -71,7 +71,7 @@ angular.module('starter.controllers')
             }
             
             anyMaps.registMarkerImage("default", "img/map-pin_17x30.png", 17, 30);
-
+            var bound1 = map.getBounds();
 /*
     		var mapOption = { 
         		center: new soc.mapProvider.maps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표

@@ -40,6 +40,7 @@ angular.module('starter.controllers')
     }
 
     var map = initMap();
+    var bound1 = map.getBounds();
 
     maps.event.addListenerOnce(map, 'idle', function() {
       soc.log("Map Loaded!");
