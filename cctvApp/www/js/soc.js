@@ -119,7 +119,7 @@ angular.module('starter.controllers')
           // obj.log("주소 :" + JSON.stringify(response.data.result.items[0].address));
           $rootScope.currentAddress = response.data.result.items[0].address;
         }, function(response) { // on fail
-          obj.log("response :" + JSON.stringify(response));
+          // obj.log("response :" + JSON.stringify(response));
         }
       );
     }
