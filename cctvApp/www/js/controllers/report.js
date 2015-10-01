@@ -170,17 +170,17 @@ angular.module('starter.controllers')
   // 안내판 유무에 관한 팝업, 안내판이 있다면 네이티브 카메라를 불러오는 함수
   $scope.hasHangBoard = function() {
     $scope.pointToAdress(currentCoord);
-    $ionicPopup.show({title :'CCTV 주변에 안내판이 설치되어 있습니까?',
+    $ionicPopup.show({title :'CCTV 안내판을 찍겠습니까?',
                       buttons: [{ 
-                        text: '네, 안내판을 찍습니다.',
-                        type: 'button-positive',
+                        text: '<i class="icon ion-checkmark"></i>',
+                        type: 'button-balanced',
                         onTap: function(e) {
                           $scope.getPhoto();
                           $location.path('/app/selectPurpose');
                         }
                       }, {
-                        text: '안 보입니다.',
-                        type: 'button-default',
+                        text: '<i class="icon ion-close"></i>',
+                        type: 'button-assertive',
                         onTap: function(e) {
                           $location.path('/app/confirmReport');
                         }

@@ -67,14 +67,14 @@ angular.module('starter.controllers', [])
   $scope.locationInfoConfirm = function() {
     $ionicPopup.show({title :'위치정보 제공에 동의하십니까?',
                       buttons: [{ 
-                        text: '네, 동의합니다',
+                        text: '동의',
                         type: 'button-positive',
                         onTap: function(e) {
                           $rootScope.centerOnMe();
                           $rootScope.reportClicked = true;
                         }
                       }, {
-                        text: '아니오',
+                        text: '거부',
                         type: 'button-default',
                         onTap: function(e) {
                           $rootScope.reportClicked = false;

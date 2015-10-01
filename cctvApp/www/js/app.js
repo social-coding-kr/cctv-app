@@ -173,6 +173,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     })
 
+  .state('app.cctvlaw', {
+    url: '/cctvlaw',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/cctvlaw.html',
+        controller: 'CctvLawCtrl'
+      }
+    }
+  })
 
   .state('app.devel', {
     url: '/devel',
