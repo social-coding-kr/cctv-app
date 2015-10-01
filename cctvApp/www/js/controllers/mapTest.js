@@ -70,8 +70,8 @@ angular.module('starter.controllers')
                 //soc.log("google: " + JSON.stringify(mapContainer));
             }
             
-            anyMaps.registMarkerImage("default", "img/marker1_18x31.png", 18, 31);
 
+            anyMaps.registMarkerImage("default", "img/marker1_18x31.png", 18, 31);
 /*
     		var mapOption = { 
         		center: new soc.mapProvider.maps.LatLng(defLoc.lat, defLoc.lon), // 지도의 중심좌표
