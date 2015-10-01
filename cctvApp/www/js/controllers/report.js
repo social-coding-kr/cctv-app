@@ -270,7 +270,7 @@ angular.module('starter.controllers')
       }
 
   $scope.registerUpload = function(){
-    var uploadUrl = "http://147.46.215.152:8099/cctv";/*9030 for test*/
+    var uploadUrl = "http://147.46.215.152:8099/cctv";/*9030 for test, 8099/cctv for register*/
     var formdata = new FormData();
     formdata.append('latitude', ex_lat);
     formdata.append('longitude', ex_lng);
