@@ -95,7 +95,7 @@ angular.module('starter.controllers', [])
       } else {  
         // 종료 토스트 알려줌
         $cordovaToast
-        .show('한번 더 뒤로 가기 누르면 앱 꺼짐 ㅇㅇ', 'long', 'bottom')
+        .show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 'long', 'bottom')
         .then(function(success) {
           // success
         }, function (error) {
