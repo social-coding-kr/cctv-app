@@ -159,11 +159,7 @@ $ionicPlatform.ready(function(){
             
     $scope.locationAccu = "위치찾기 시 정확도와 관련된 값이 표시됩니다.";
     $scope.responseTime = "위치찾기 시 응답시간과 관련된 값이 표시됩니다.";
-    
-    //왜 아래의 두 함수가 에러가 나는 것일까??
-	//$scope.refreshMapInfo();
-	//$scope.requestCctvs();
-	};
+    };
 	
 	//기다리는 자에게 노버그가 있나니...
 	function waiting_func(){
@@ -172,7 +168,7 @@ $ionicPlatform.ready(function(){
 	}
 	
 	mapGenerator(map);
-	setTimeout(waiting_func, 100);
+	setTimeout(waiting_func, 1000);
 	
 	//내 위치에 마크를 설정하고, 개발자 정보에서 위치정보를 갱신해 주는 함수.
     function MyLocationMarker(Accuracy, Time) {
