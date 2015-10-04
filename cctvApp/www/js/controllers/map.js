@@ -7,9 +7,9 @@ var myLng;
 angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc,
-    $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $ionicPlatform) {
+    $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $ionicPlatform, $cordovaToast) {
 
-    $ionicPlatform.ready(function() {
+    //$ionicPlatform.ready(function() {
         $scope.search = {}; // 주소 검색에서 사용하는 변수
 
         var defaultLatLng = soc.getDefaultLocation();
@@ -311,9 +311,20 @@ angular.module('starter.controllers')
         };
 
         $rootScope.AnotherPageToMap();
+        
+        $scope.search.keyEvent = function(event) {
+            if(event.keyCode == 13) {
+                // EnterKey 입력되었을때 주소 검색을 실행한다
+                // 웹에서는 엔터키, 모바일에서는 소프트키보드의 돋보기키에 해당한다
+                // 모바일에서 돋보기키를 클릭했을때 소프트키보드가 닫혀야 함
+                document.activeElement.blur();  // ActiveElement인 소프크키보드를 닫는다
+                $scope.searchAddress();
+            }
+        }
 
         $scope.searchAddress = function() {
             soc.log($scope.search.address);
+
             geocoder.geocode({
                 'address': $scope.search.address
             }, function(results, status) {
@@ -322,7 +333,19 @@ angular.module('starter.controllers')
                     map.setCenter(results[0].geometry.location);
                 }
                 else {
-                    alert('Geocode was not successful for the following reason: ' + status);
+                    var searchErrorMsg = "검색결과가 없습니다";
+                    if (window.plugins != undefined) {
+                        $cordovaToast.show(searchErrorMsg, 'long', 'bottom')
+                            .then(function(success) {
+                                // success
+                                //alert("Toast Success: ");
+                            }, function(error) {
+                                // error
+                                alert("Toast Error: " + error);
+                            });
+                    } else {
+                        alert(searchErrorMsg);
+                    }
                 }
             });
 
@@ -330,7 +353,7 @@ angular.module('starter.controllers')
 
     });
 
-});
+//});
 
 
 /*
