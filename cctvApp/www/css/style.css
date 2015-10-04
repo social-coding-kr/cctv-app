@@ -48,6 +48,10 @@ textarea#devel_log {
 	background-color: rgba( 255, 255, 255, 0 );
 }
 
+.pull-right {
+  float: right;
+}
+
 .cctv-round-button {
 	border-radius: 60px;
 }
