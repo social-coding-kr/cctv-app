@@ -1,4 +1,21 @@
-<ion-view view-title="Home">
+<ion-view view-title="">
+    
+    <!-- 주소검색을 올리기 위해 다시 NavBar 다시 추가함 -->
+    <!-- 레이아웃 정리 필요함 -->
+    <ion-nav-bar>    
+        <ion-nav-buttons side="left">
+            <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <!-- Putting a return between the buttons causes them to be stacked on Android 4.4.2 -->
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="search" placeholder="Search" ng-model="search.address">
+            </label>            
+            <button class="button" ng-click="searchAddress()">검색</button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
     <ion-content scroll="false">
         <!--<div class="row">
             <div class="col col-70 col-offset-10">
@@ -12,8 +29,15 @@
                     </button>
                 </div>
             </div>-->
-        
+            
+            
+        <!-- 지도 -->
         <div class="scroll-content" id="map" data-tap-disabled="true"></div>
+
+
+
+        <!-- 위치찾기 버튼 -->        
+        <!-- 지도상의 다른 컨트롤들과 동일한 방식으로 변경 -->
         <div class="col col-20">
             <div class="bar bar-header item-input-inset background-trans cctv-text-right">
                 <button class="button cctv-round-button" ng-click="centerOnMe()"><i class="icon ion-pinpoint"></i>
@@ -26,6 +50,7 @@
             <span ng-click="zoomIn()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>
             <span ng-click="zoomOut()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
         </div>-->
+        <!-- 확대/축소 컨트롤은 우선 구글지도 기본 버튼을 사용 -->
         
         <div class="custom_mapinfocontrol radius_border" ng-if="soc.config.isDevelModeVisible">
             <b>mapInfo</b><br>

@@ -10,6 +10,8 @@ angular.module('starter.controllers')
     $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $ionicPlatform) {
 
 $ionicPlatform.ready(function(){
+    $scope.search = {}; // 주소 검색에서 사용하는 변수
+    
         var defaultLatLng = soc.getDefaultLocation();
 
         var mapContainer = document.getElementById('map');
@@ -21,7 +23,7 @@ $ionicPlatform.ready(function(){
         };
         
         var map = new google.maps.Map(mapContainer, mapOption);
-
+        var geocoder = new google.maps.Geocoder();
 
 
     $scope.map = map; // centerOnMe 호출시에 사용한다.
@@ -309,7 +311,22 @@ $ionicPlatform.ready(function(){
     };
 
     $rootScope.AnotherPageToMap();
+    
+    $scope.searchAddress = function() {
+        soc.log($scope.search.address);
+        geocoder.geocode({'address': $scope.search.address}, function(results, status) {
+
+            if (status === google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });      
+        
+    }
+    
 });
+
 });
 
 
