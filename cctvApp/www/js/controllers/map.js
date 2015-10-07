@@ -24,6 +24,10 @@ angular.module('starter.controllers')
 
         var map = new google.maps.Map(mapContainer, mapOption);
         var geocoder = new google.maps.Geocoder();
+        
+        //처음에는 공공 및 민간 모두 보여준다.
+        var publicCCTVChecker = 1;
+        var privateCCTVChecker = 1;
 
 
         $scope.map = map; // centerOnMe 호출시에 사용한다.
@@ -99,7 +103,35 @@ angular.module('starter.controllers')
             $scope.zoomOut = function() {
                 map.setLevel(map.getLevel() + 1);
             };
+            
+            //민간 cctv의 필터링 여부
+            $scope.privateCCTV = function() {
+                privateCCTVChecker++;
+                deleteMarkers();
+                if (privateCCTVChecker % 2 == 0)
+                {
+                    //민간cctv는 필터링하고 보여준다.
+                }
+                
+            };
 
+            //공공 cctv의 필터링 여부
+            $scope.publicCCTV = function() {
+                publicCCTVChecker++;
+                deleteMarkers();
+                if (publicCCTVChecker % 2 == 0)
+                {
+                    //공공cctv는 필터링하고 보여준다.
+                }
+            };
+            
+            function deleteMarkers() {
+                for (var i = 0; i < markerList.length; i++) {
+                        markerList[i].setMap(null);
+                    }            
+                    markerList = [];                            
+            }
+    
             google.maps.event.addListener(map, 'dragstart', function() {
                 $scope.isDraging = true;
                 soc.log('drag start!');
@@ -163,7 +195,7 @@ angular.module('starter.controllers')
             $scope.responseTime = "위치찾기 시 응답시간과 관련된 값이 표시됩니다.";
         };
 
-        //기다리는 자에게 노버그가 있나니...
+        //기다려서 버그를 나지 않게 해 주는 함수.
         function waiting_func() {
             $scope.refreshMapInfo();
             $scope.requestCctvs();
