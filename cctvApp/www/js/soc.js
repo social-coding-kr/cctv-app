@@ -165,7 +165,11 @@ angular.module('starter.controllers')
         return daumMarkerImage;
       }
     }
-
+    
+    obj.markerImage = {
+      default: "img/marker1_18x31.png",
+      
+    }
 
     // config
     obj.config = {};
