@@ -1,12 +1,11 @@
 <ion-view view-title="CCTV 등록 확인용 화면">
   <ion-content>
     <ion-list>   
-    
-      <ion-item class="item-thumbnail-left">
-        <!-- <img src="{{lastCctvPhoto}}"> -->
-		    cctv image= url :: {{cctvReportingInfo.cctvImage}}
+
+      <ion-item class="item-thumbnail-left cctv-text-center">
+        <img src="{{lastCctvPhoto}}">
       </ion-item>
-      
+
       <ion-item class="item-divider">세부정보</ion-item>
       <ion-item>
         <p>목적</p>
@@ -19,15 +18,14 @@
       </ion-item>
 
       <ion-item class="item-divider">안내판 내용</ion-item>
-      <ion-item class="item-thumbnail-left">
-        <!-- <img src="{{lastHangBoardPhoto}}"> -->
-        notice image url :: {{cctvReportingInfo.noticeImage}}
+      <ion-item class="item-thumbnail-left cctv-text-center">
+        <img src="{{lastHangBoardPhoto}}">
       </ion-item>
 
     <ion-list>    
     
     <h5>화면과 같이 등록됩니다.</h5>
-    <div ng-hide="true">
+    <div ng-if="false">
     FILE CCTV=>[{{CCTV_IMAGE_BINARY_DATA}}]<br /> <br />
     FILE NOTICE=>[{{NOTICE_IMAGE_BINARY_DATA}}]
     </div>

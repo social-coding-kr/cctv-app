@@ -6,16 +6,17 @@
         <ion-nav-buttons side="left">
             <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
-        <ion-nav-buttons side="right">
+        <ion-nav-buttons side="primary">
             <!-- Putting a return between the buttons causes them to be stacked on Android 4.4.2 -->
-            <label class="item item-input">
+            <label class="item item-input" >
                 <i class="icon ion-search placeholder-icon"></i>
                 
                 <!-- input type="search" -->
                 <!-- ng-model: input 에서 ng-model은 객체안의 객체가 아니면 작동하지 않음 -->
                 <input type="search" placeholder="Search" ng-model="search.address"
                     ng-keypress="search.keyEvent($event)">
-            </label>            
+            </label>
+            &nbsp;
             <button class="button" ng-click="searchAddress()">검색</button>
         </ion-nav-buttons>
     </ion-nav-bar>
@@ -44,7 +45,7 @@
 
         <!-- 위치찾기 버튼 -->        
         <!-- 지도상의 다른 컨트롤들과 동일한 방식으로 변경 -->
-        <div class="col col-20">
+        <div class="col col-40">
             <div class="bar bar-header item-input-inset background-trans cctv-text-right">
                 <button class="button cctv-round-button pull-right" ng-click="centerOnMe()"><i class="icon ion-pinpoint"></i>
                 </button>
@@ -57,6 +58,13 @@
             <span ng-click="zoomOut()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
         </div>-->
         <!-- 확대/축소 컨트롤은 우선 구글지도 기본 버튼을 사용 -->
+        
+        <!-- 공공, 민간 필터링 div 입니다 -->
+        <!-- 기존에 있던 zoomcontrol을 사용, 이미지는 +, -를 임시로 사용 -->
+        <div class="custom_zoomcontrol radius_border"> 
+            <span ng-click="publicCCTV()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="공공"></span>
+            <span ng-click="privateCCTV()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="민간"></span>
+        </div>
         
         <div class="custom_mapinfocontrol radius_border" ng-if="soc.config.isDevelModeVisible">
             <b>mapInfo</b><br>
