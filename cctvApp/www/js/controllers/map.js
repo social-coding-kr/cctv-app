@@ -33,7 +33,8 @@ angular.module('starter.controllers')
         $scope.map = map; // centerOnMe 호출시에 사용한다.
         var markers = []; // 위치찾기를 연속으로 수행할 때 마커를 지우기 위해 사용된다.
 
-
+        
+        // 지도생성 Begin
         var mapGenerator = function(map) {
 
             $scope.lastRequestCenterLat = null;
@@ -184,25 +185,20 @@ angular.module('starter.controllers')
                 //$scope.$apply();
 
             });
-
-            google.maps.event.addListener(map, 'loading', function() {
-                $scope.refreshMapInfo();
-                $scope.$apply();
-
+            
+            // google map 에서 loading 을 기다리는 이벤트
+            google.maps.event.addListenerOnce(map, 'idle', function() {
+                soc.log("googleMap Loaded!!!"); 
+            	$scope.refreshMapInfo();
+	    	    $scope.requestCctvs();
             });
 
             $scope.locationAccu = "위치찾기 시 정확도와 관련된 값이 표시됩니다.";
             $scope.responseTime = "위치찾기 시 응답시간과 관련된 값이 표시됩니다.";
         };
-
-        //기다려서 버그를 나지 않게 해 주는 함수.
-        function waiting_func() {
-            $scope.refreshMapInfo();
-            $scope.requestCctvs();
-        }
+        // 지도생성 End
 
         mapGenerator(map);
-        setTimeout(waiting_func, 1000);
 
         //내 위치에 마크를 설정하고, 개발자 정보에서 위치정보를 갱신해 주는 함수.
         function MyLocationMarker(Accuracy, Time) {
@@ -354,11 +350,12 @@ angular.module('starter.controllers')
                 // EnterKey 입력되었을때 주소 검색을 실행한다
                 // 웹에서는 엔터키, 모바일에서는 소프트키보드의 돋보기키에 해당한다
                 // 모바일에서 돋보기키를 클릭했을때 소프트키보드가 닫혀야 함
-                document.activeElement.blur();  // ActiveElement인 소프크키보드를 닫는다
+                document.activeElement.blur();  // ActiveElement인 소프트키보드를 닫는다
                 $scope.searchAddress();
             }
         }
 
+        // 주소검색 Begin
         $scope.searchAddress = function() {
             soc.log($scope.search.address);
 
@@ -387,6 +384,9 @@ angular.module('starter.controllers')
             });
 
         }
+        // 주소검색 End
+        
+        
 
     });
 
