@@ -6,16 +6,17 @@
         <ion-nav-buttons side="left">
             <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
-        <ion-nav-buttons side="right">
+        <ion-nav-buttons side="primary">
             <!-- Putting a return between the buttons causes them to be stacked on Android 4.4.2 -->
-            <label class="item item-input">
+            <label class="item item-input" >
                 <i class="icon ion-search placeholder-icon"></i>
                 
                 <!-- input type="search" -->
                 <!-- ng-model: input 에서 ng-model은 객체안의 객체가 아니면 작동하지 않음 -->
                 <input type="search" placeholder="Search" ng-model="search.address"
                     ng-keypress="search.keyEvent($event)">
-            </label>            
+            </label>
+            &nbsp;
             <button class="button" ng-click="searchAddress()">검색</button>
         </ion-nav-buttons>
     </ion-nav-bar>
