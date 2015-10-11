@@ -20,6 +20,12 @@ angular.module('starter.controllers')
             zoom: 16,
             maxZoom: 19,
             minZoom: 11,    // 서울시 전체가 들어오는 레벨임
+            // 아래는 Control 옵션
+            disableDefaultUI: true,            
+            zoomControl: true,
+            scaleControl: true,
+            streetViewControl: true,
+            mapTypeControl: true,
         };
 
         var map = new google.maps.Map(mapContainer, mapOption);
@@ -56,8 +62,7 @@ angular.module('starter.controllers')
             $scope.requestInfoCount = 0;
             $scope.requestCctvs = function() {
 
-			    // 일단 지금은 실제 요청은 하지않고 테스트
-			    $scope.requestInfoCount += 1;
+                $scope.requestInfoCount += 1;
 			    var bounds = map.getBounds();
 
                 // ----------------------
@@ -138,7 +143,6 @@ angular.module('starter.controllers')
                         soc.log("ERROR: " + JSON.stringify(err));
                     }
                 );
-                
             };
 
 
@@ -208,7 +212,9 @@ angular.module('starter.controllers')
 
                 if(soc.config.isDevelModeVisible) {
                     $scope.refreshMapInfo();
-                    $scope.$apply();
+                    if(!$scope.$$phase) {
+                        $scope.$apply();
+                    }
                 }
                 
                 var bounds = map.getBounds();
@@ -217,7 +223,11 @@ angular.module('starter.controllers')
                     // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
                     // 재요청하는 것으로 처리함
                     $scope.requestCctvs();
-                    $scope.$apply();
+                    if(soc.config.isDevelModeVisible) {                    
+                        if(!$scope.$$phase) {
+                            $scope.$apply();
+                        }
+                    }
                 }
                 
             });
@@ -249,29 +259,28 @@ angular.module('starter.controllers')
         // 지도생성 End
 
         mapGenerator(map);
-
+        
+        $scope.currentPos = {};
         //내 위치에 마크를 설정하고, 개발자 정보에서 위치정보를 갱신해 주는 함수.
         function MyLocationMarker(Accuracy, Time) {
-            var i = 0;
-            var dummyLength = markers.length;
-            while (dummyLength > i) {
-                //기존 마커를 제거하고 배열을 비운다.
-                markers[dummyLength - i - 1].setMap(null);
-                markers.pop();
-                i++;
-            }
+
+            if($scope.currentPos.marker)
+                $scope.currentPos.marker.setMap(null);
+            if($scope.currentPos.circle)                
+                $scope.currentPos.circle.setMap(null);
+            
             var points = new google.maps.LatLng(myLat, myLng);
-            var marker = new google.maps.Marker({
+            $scope.currentPos.marker = new google.maps.Marker({
                 position: points
             });
-            marker.setMap(map);
+            $scope.currentPos.marker.setMap(map);
+            
             $scope.locationAccu = "이 지점을 기준으로 반경 " + Accuracy.toFixed(8) + "미터 안에 있습니다.";
             $scope.responseTime = Time + "ms";
-            markers.push(marker);
 
             if (soc.config.isDevelModeVisible == true) //개발자 정보 옵션이 켜져 있을 경우,
             {
-                var circle = new google.maps.Circle({
+                $scope.currentPos.circle = new google.maps.Circle({
                     center: new google.maps.LatLng(myLat, myLng), // 원의 중심좌표 입니다 
                     radius: Accuracy, // 미터 단위의 원의 반지름입니다 
                     strokeWeight: 3, // 선의 두께입니다 
@@ -282,8 +291,7 @@ angular.module('starter.controllers')
                 });
 
                 // 지도에 원을 표시합니다 
-                circle.setMap(map);
-                markers.push(circle);
+                $scope.currentPos.circle.setMap(map);
             }
         }
 
@@ -340,7 +348,7 @@ angular.module('starter.controllers')
 
                         //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
                         if (accuracy < 100) {
-                            $scope.map.setCenter(new google.maps.LatLng(myLat, myLng));
+                            $scope.map.setCenter(new google.maps.LatLng(myLat, myLng));                            
                             var time = pos.timestamp;
                             MyLocationMarker(accuracy, time);
                         }
