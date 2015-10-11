@@ -111,6 +111,8 @@ angular.module('starter.controllers')
                         
                         for(var i=0; i<cctvLength; i++) {
                             var cctv = res.data.cctvs[i];
+                            //soc.log(JSON.stringify(cctv));
+                            
                             // 마커가 표시될 위치입니다 
                             var markerPosition  = new google.maps.LatLng(cctv.latitude, cctv.longitude); 
 
@@ -118,7 +120,10 @@ angular.module('starter.controllers')
                             var marker = new google.maps.Marker({
                                 position: markerPosition,
                                 icon: soc.markerImage["default"],
+                                cctv: cctv, // 마커 자체에 서버에서 받은 cctv 데이터를 포함
                             });
+                            
+                            //soc.log(JSON.stringify(marker));
 
                             markerList.push(marker);                                                        
                         }
