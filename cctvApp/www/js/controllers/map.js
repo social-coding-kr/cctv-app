@@ -187,6 +187,7 @@ angular.module('starter.controllers')
             });
             
             // google map 에서 loading 을 기다리는 이벤트
+            // 맵이 완전히 로딩된 후 해야할 작업은 여기서 처리한다
             google.maps.event.addListenerOnce(map, 'idle', function() {
                 soc.log("googleMap Loaded!!!"); 
             	$scope.refreshMapInfo();
