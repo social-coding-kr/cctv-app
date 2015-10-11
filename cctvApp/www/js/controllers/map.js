@@ -6,7 +6,7 @@ var myLng;
 
 angular.module('starter.controllers')
 
-.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $http, soc,
+.controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $window, $http, soc,
     $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $ionicPlatform, $cordovaToast) {
 
     //$ionicPlatform.ready(function() {
@@ -232,6 +232,14 @@ angular.module('starter.controllers')
 
         //내 위치를 잡아주는 함수
         $rootScope.centerOnMe = function() {
+            var posOptions = {
+                timeout: soc.config.geoOptions.timeout,
+                enableHighAccuracy: soc.config.geoOptions.enableHighAccuracy,
+                maximumAge: 0,  // 현재위치를 캐시 저장하지 않는다
+            };
+            
+            // enableHighAccuracy를 true로 설정하고 
+            
             if (!$scope.map) {
                 soc.log("scope.map: not found");
                 return;
@@ -244,10 +252,7 @@ angular.module('starter.controllers')
 
             if (ionic.Platform.isWebView() == true) {
                 // 플러그인 사용
-                var posOptions = {
-                    timeout: 10000,
-                    enableHighAccuracy: false
-                };
+                soc.log("모바일 기기에서 위치검색을 실행함")
                 $cordovaGeolocation
                     .getCurrentPosition(posOptions)
                     .then(function(pos) {
@@ -290,7 +295,7 @@ angular.module('starter.controllers')
                 }, function(error) {
                     TimeExpired();
                     $ionicLoading.hide();
-                });
+                }, posOptions);
             }
         };
 
@@ -334,14 +339,14 @@ angular.module('starter.controllers')
                 }
                 else {
                     var searchErrorMsg = "검색결과가 없습니다";
-                    if (window.plugins != undefined) {
+                    if ($window.plugins != undefined) {
                         $cordovaToast.show(searchErrorMsg, 'long', 'bottom')
                             .then(function(success) {
                                 // success
                                 //alert("Toast Success: ");
                             }, function(error) {
                                 // error
-                                alert("Toast Error: " + error);
+                                soc.log("Toast Error: " + error);
                             });
                     } else {
                         alert(searchErrorMsg);

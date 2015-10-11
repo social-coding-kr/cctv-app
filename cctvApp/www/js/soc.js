@@ -182,6 +182,24 @@ angular.module('starter.controllers')
       $localStorage.set('develModeVisible', obj.config.isDevelModeVisible);
     }
     
+    obj.config.geoOptions = {};
+    obj.config.geoOptions.timeout 
+      = $localStorage.get('geoOptions.timeout', 10000);
+      
+    obj.log("geoOptions.timeout: " + obj.config.geoOptions.timeout);
+    
+    obj.config.geoOptions.onChangeTimeout = function() {
+      $localStorage.set('geoOptions.timeout', obj.config.geoOptions.timeout);
+    }
+  
+    obj.config.geoOptions.enableHighAccuracy 
+      = $localStorage.get('geoOptions.enableHighAccuracy', 'true') == 'true';
+
+
+    obj.config.geoOptions.onChangeEnableHighAccuracy = function() {
+      $localStorage.set('geoOptions.enableHighAccuracy', obj.config.geoOptions.enableHighAccuracy);
+    }
+    
     // config
     
     obj.MapTestOnSelect = function(args) {
