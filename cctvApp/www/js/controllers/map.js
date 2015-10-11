@@ -17,9 +17,9 @@ angular.module('starter.controllers')
         var mapContainer = document.getElementById('map');
         var mapOption = {
             center: new google.maps.LatLng(defaultLatLng.lat, defaultLatLng.lon),
-            zoom: 17,
+            zoom: 16,
             maxZoom: 19,
-            minZoom: 14,
+            minZoom: 11,    // 서울시 전체가 들어오는 레벨임
         };
 
         var map = new google.maps.Map(mapContainer, mapOption);
@@ -50,7 +50,7 @@ angular.module('starter.controllers')
                 var bounds = map.getBounds();
                 $scope.mapInfoSW = bounds.getSouthWest().toString();
                 $scope.mapInfoNE = bounds.getNorthEast().toString();
-                $scope.mapInfoZoomLevel = map.getLevel();
+                $scope.mapInfoZoomLevel = map.getZoom();
             };
 
             $scope.requestInfoCount = 0;
@@ -66,19 +66,19 @@ angular.module('starter.controllers')
                 var southWest   = bounds.getSouthWest();
                 var center      = map.getCenter();
 
-                var centerLng   = center.getLng();                
-                var centerLat   = center.getLat();
+                var centerLng   = center.lng();                
+                var centerLat   = center.lat();
 
-                var east    = northEast.getLng();
-		        var north   = northEast.getLat();
-			    var west    = southWest.getLng();
-			    var south   = southWest.getLat();
+                var east    = northEast.lng();
+		        var north   = northEast.lat();
+			    var west    = southWest.lng();
+			    var south   = southWest.lat();
 			    
 			    var width   = east - west;
 			    var height  = north - south;
 
                 // 서버측 API가 준비될때까지 ZoomLevel이 크면 요청을 하지 않는다			    
-			    if(map.getLevel() > 5) {
+			    if(map.getZoom() < 15) {
 			        return;
 			    }
 			    
@@ -96,8 +96,8 @@ angular.module('starter.controllers')
 			    $scope.requestInfoNE = "(" + params.north + ", " + params.east + ")";
 
                 $scope.requestInfoCenter = map.getCenter().toString();
-			    $scope.lastRequestCenterLat = map.getCenter().getLat();     // 이 변수는 다른곳에서 사용한다
-			    $scope.lastRequestCenterLng = map.getCenter().getLng();     // 이 변수는 다른곳에서 사용한다
+			    $scope.lastRequestCenterLat = map.getCenter().lat();     // 이 변수는 다른곳에서 사용한다
+			    $scope.lastRequestCenterLng = map.getCenter().lng();     // 이 변수는 다른곳에서 사용한다
 
 			    soc.getCctvs(params)
 			        .then(function(res) {
@@ -149,7 +149,7 @@ angular.module('starter.controllers')
                 
                 var bounds = map.getBounds();
                 var lastCenter = new google.maps.LatLng($scope.lastRequestCenterLat, $scope.lastRequestCenterLng);
-                if(bounds.contain(lastCenter) == false || isForce) {
+                if(bounds.contains(lastCenter) == false || isForce) {
                     // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
                     // 재요청하는 것으로 처리함
                     $scope.requestCctvs();
@@ -157,6 +157,7 @@ angular.module('starter.controllers')
                 }
             }
             
+            /*
             // 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
             $scope.zoomIn = function() {
                 map.setLevel(map.getLevel() - 1);
@@ -166,6 +167,7 @@ angular.module('starter.controllers')
             $scope.zoomOut = function() {
                 map.setLevel(map.getLevel() + 1);
             };
+            */
             
             //민간 cctv의 필터링 여부
             $scope.privateCCTV = function() {
@@ -206,7 +208,7 @@ angular.module('starter.controllers')
                 
                 var bounds = map.getBounds();
                 var lastCenter = new google.maps.LatLng($scope.lastRequestCenterLat, $scope.lastRequestCenterLng);
-                if(bounds.contain(lastCenter) == false) {
+                if(bounds.contains(lastCenter) == false) {
                     // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
                     // 재요청하는 것으로 처리함
                     $scope.requestCctvs();
