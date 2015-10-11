@@ -324,8 +324,9 @@ angular.module('starter.controllers')
                 maximumAge: 0,  // 현재위치를 캐시 저장하지 않는다
             };
             
-            // enableHighAccuracy를 true로 설정하고 
-            
+            $scope.lastEnableHighAccuracy = posOptions.enableHighAccuracy;
+            $scope.lastTimeout = posOptions.timeout;
+
             if (!$scope.map) {
                 soc.log("scope.map: not found");
                 return;
