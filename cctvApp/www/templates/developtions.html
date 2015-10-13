@@ -1,6 +1,18 @@
 <ion-view title="개발자옵션">
     <ion-content padding="true" class="has-header">
         <ion-list>
+            <ion-item class="item-divider">Geolocation</ion-item>            
+            <ion-toggle toggle-class="toggle-positive"
+                ng-model="soc.config.geoOptions.enableHighAccuracy"
+                ng-change="soc.config.geoOptions.onChangeEnableHighAccuracy()">
+                enableHighAccuracy
+            </ion-toggle>
+            <label class="item item-input">
+                <span class="input-label">Timeout</span>
+                <input type="text" placeholder="시간"
+                    ng-model="soc.config.geoOptions.timeout"
+                    ng-change="soc.config.geoOptions.onChangeTimeout()">
+            </label>
         </ion-list>
     </ion-content>
 </ion-view>

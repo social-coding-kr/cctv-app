@@ -165,7 +165,11 @@ angular.module('starter.controllers')
         return daumMarkerImage;
       }
     }
-
+    
+    obj.markerImage = {
+      default: "img/marker1_18x31.png",
+      
+    }
 
     // config
     obj.config = {};
@@ -180,6 +184,24 @@ angular.module('starter.controllers')
       obj.log("change develModeVisible: " + obj.config.isDevelModeVisible
         + ", " + typeof(obj.config.isDevelModeVisible));
       $localStorage.set('develModeVisible', obj.config.isDevelModeVisible);
+    }
+    
+    obj.config.geoOptions = {};
+    obj.config.geoOptions.timeout 
+      = $localStorage.get('geoOptions.timeout', 10000);
+      
+    obj.log("geoOptions.timeout: " + obj.config.geoOptions.timeout);
+    
+    obj.config.geoOptions.onChangeTimeout = function() {
+      $localStorage.set('geoOptions.timeout', obj.config.geoOptions.timeout);
+    }
+  
+    obj.config.geoOptions.enableHighAccuracy 
+      = $localStorage.get('geoOptions.enableHighAccuracy', 'true') == 'true';
+
+
+    obj.config.geoOptions.onChangeEnableHighAccuracy = function() {
+      $localStorage.set('geoOptions.enableHighAccuracy', obj.config.geoOptions.enableHighAccuracy);
     }
     
     // config
