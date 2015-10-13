@@ -125,6 +125,8 @@ angular.module('starter.controllers')
                 }
             };
             
+            var markerList = [];
+            
             function deleteMarkers() {
                 for (var i = 0; i < markerList.length; i++) {
                         markerList[i].setMap(null);
