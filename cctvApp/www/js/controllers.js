@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, $http, oauthService, soc) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, $http, oauthService, Toast, soc) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -94,6 +94,9 @@ angular.module('starter.controllers', [])
         navigator.app.exitApp();
       } else {  
         // 종료 토스트 알려줌
+
+        Toast.show('뒤로 버튼을 한번 더 누르시면 종료됩니다', 'long', 'bottom');
+/*
         $cordovaToast
         .show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 'long', 'bottom', 0)
         .then(function(success) {
@@ -101,6 +104,8 @@ angular.module('starter.controllers', [])
         }, function (error) {
         // error
         });
+
+      */
         // 다음 touch가 두 번째 back button 클릭이 됨
         $rootScope.secondBackButton = true;
         $timeout(function(){$rootScope.secondBackButton = false;}, 2000);
