@@ -38,12 +38,15 @@ angular.module('starter.controllers')
 
         $scope.map = map; // centerOnMe 호출시에 사용한다.
 		var markerList = [];
+		var purposeList = []; // 목적 리스트
+		
         function deleteMarkers() {
             for (var i = 0; i < markerList.length; i++) {
                 markerList[i].setMap(null);
             }            
-            markerList = [];                            
-        }			
+            markerList = [];
+            purposeList = [];
+        }
 
         // 지도생성 Begin
         var mapGenerator = function(map) {
@@ -94,7 +97,7 @@ angular.module('starter.controllers')
 			        west:   (centerLng - width  - 0.000005).toFixed(6),			        
 			        north:  (centerLat + height + 0.000005).toFixed(6),
 			        south:  (centerLat - height - 0.000005).toFixed(6)
-			    }
+			    };
 
 			    // 실제 요청할때는 이 범위보다 2배(?) 큰범위를 요청한다
 			    $scope.requestInfoSW = "(" + params.south + ", " + params.west + ")";
@@ -118,6 +121,15 @@ angular.module('starter.controllers')
                             var cctv = res.data.cctvs[i];
                             //soc.log(JSON.stringify(cctv));
                             
+                            
+                            //목적 저장을 위한 코드
+                            //목적은 public, private으로 구분.
+                            var cctv_ID = cctv.cctvID;
+                            var cctvInfo = $http.get(obj.server.mainUrl + "map/cctvs/{cctv_ID}");
+                            var cctv_purpose = cctvInfo.data.cctv.purpose;
+                            purposeList.push(cctv_purpose);
+                            
+                            
                             // 마커가 표시될 위치입니다 
                             var markerPosition  = new google.maps.LatLng(cctv.latitude, cctv.longitude); 
 
@@ -129,11 +141,10 @@ angular.module('starter.controllers')
                             });
                             
                             //soc.log(JSON.stringify(marker));
-
                             markerList.push(marker);                                                        
                         }
                         
-                        for(var i=0; i<markerList.length; i++) {
+                        for(i=0; i<markerList.length; i++) {
                                 markerList[i].setMap(map);
                         }
 
@@ -164,7 +175,7 @@ angular.module('starter.controllers')
                     $scope.requestCctvs();
                     $scope.$apply();
                 }
-            }
+            };
             
             /*
             // 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
@@ -181,32 +192,48 @@ angular.module('starter.controllers')
             //민간 cctv의 필터링 여부
             $scope.privateCCTV = function() {
                 privateCCTVChecker++;
-                deleteMarkers();
                 if (privateCCTVChecker % 2 == 0)
                 {
                     //민간cctv는 필터링하고 보여준다.
+                    for (var i = 0; i < purposeList.length; i++) {
+                        if (purposeList[i] == "pirvate"){
+                            markerList[i].setMap(null);
+                        }
+                    }            
                 }
-                
+                else
+                {
+                    //민간cctv를 보여준다.
+                    for (var i = 0; i < purposeList.length; i++) {
+                        if (purposeList[i] == "pirvate"){
+                            markerList[i].setMap(map);
+                        }
+                    }
+                }
             };
 
             //공공 cctv의 필터링 여부
             $scope.publicCCTV = function() {
                 publicCCTVChecker++;
-                deleteMarkers();
                 if (publicCCTVChecker % 2 == 0)
                 {
                     //공공cctv는 필터링하고 보여준다.
+                    for (var i = 0; i < purposeList.length; i++) {
+                        if (purposeList[i] == "public"){
+                            markerList[i].setMap(null);
+                        }
+                    }            
+                }
+                else
+                {
+                    //공공cctv를 보여준다.
+                    for (var i = 0; i < purposeList.length; i++) {
+                        if (purposeList[i] == "public"){
+                            markerList[i].setMap(map);
+                        }
+                    }
                 }
             };
-            
-            var markerList = [];
-            
-            function deleteMarkers() {
-                for (var i = 0; i < markerList.length; i++) {
-                        markerList[i].setMap(null);
-                    }            
-                    markerList = [];                            
-            }
             
             // 중심좌표 이동 이벤트
             google.maps.event.addListener(map, 'center_changed', function() {
