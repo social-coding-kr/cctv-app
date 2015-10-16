@@ -28,7 +28,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
     if ($cordovaNetwork.isOffline())
     {
-      alert('ÀÎÅÍ³İ°úÀÇ ¿¬°áÀÌ ²÷¾îÁ® ¼­ºñ½º ÀÌ¿ëÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù. Åë½Å»óÅÂ¸¦ È®ÀÎÇØÁÖ¼¼¿ä.');
+      alert('ì¸í„°ë„·ê³¼ì˜ ì—°ê²°ì´ ëŠì–´ì ¸ ì„œë¹„ìŠ¤ ì´ìš©ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤. í†µì‹ ìƒíƒœë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”.');
       navigator.app.clearCache();
       navigator.app.clearHistory();
       navigator.app.exitApp();
@@ -37,7 +37,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
     document.addEventListener("deviceready", function () {
       $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
-        alert('ÀÎÅÍ³İ°úÀÇ ¿¬°áÀÌ ²÷¾îÁ® ¼­ºñ½º ÀÌ¿ëÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù. Åë½Å»óÅÂ¸¦ È®ÀÎÇØÁÖ¼¼¿ä.');
+        alert('ì¸í„°ë„·ê³¼ì˜ ì—°ê²°ì´ ëŠì–´ì ¸ ì„œë¹„ìŠ¤ ì´ìš©ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤. í†µì‹ ìƒíƒœë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”.');
         navigator.app.clearCache();
         navigator.app.clearHistory();
         navigator.app.exitApp();
