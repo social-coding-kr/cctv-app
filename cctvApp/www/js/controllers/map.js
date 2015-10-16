@@ -125,7 +125,7 @@ angular.module('starter.controllers')
                             //목적 저장을 위한 코드
                             //목적은 public, private으로 구분.
                             var cctv_ID = cctv.cctvID;
-                            var cctvInfo = $http.get(obj.server.mainUrl + "map/cctvs/{cctv_ID}");
+                            var cctvInfo = $http.get("http://147.46.215.152:8099/map/cctvs/{cctv_ID}");
                             var cctv_purpose = cctvInfo.data.cctv.purpose;
                             purposeList.push(cctv_purpose);
                             
