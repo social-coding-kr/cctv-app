@@ -56,10 +56,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       position = position || 'top';
 
         if (duration == 'short') {
-          duration = 2000;
+          duration = 1000;
         }
         else {
-          duration = 5000;
+          duration = 2000;
         }
 
         var myPopup = $ionicPopup.show({
