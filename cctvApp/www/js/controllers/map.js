@@ -15,6 +15,11 @@ angular.module('starter.controllers')
         var defaultLatLng = soc.getDefaultLocation();
 
 
+        if (typeof google !== 'object' && typeof google.maps !== 'object')
+        {
+            alert('지도를 정상적으로 불러오지 못했습니다. <br />통신환경을 확인해주세요', '경고');
+        }
+
 
         var mapContainer = document.getElementById('map');
         var mapOption = {
