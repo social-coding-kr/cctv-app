@@ -48,33 +48,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   }
 }])
-.factory('cctvToast', function($rootScope, $timeout, $ionicPopup, $cordovaToast) {
-  return {
-    show: function (message, duration, position) {
-      message = message || "There was a problem...";
-      duration = duration || 'short';
-      position = position || 'top';
-
-        if (duration == 'short') {
-          duration = 1000;
-        }
-        else {
-          duration = 2000;
-        }
-
-        var myPopup = $ionicPopup.show({
-          template: "<div class='toast'>" + message + "</div>",
-          scope: $rootScope,
-          buttons: []
-        });
-
-        $timeout(function() {
-          myPopup.close();
-        }, duration);
-
-    }
-  };
-})
 
 .config(function($stateProvider, $urlRouterProvider, $provide) {
 

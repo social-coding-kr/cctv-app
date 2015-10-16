@@ -347,6 +347,9 @@ angular.module('starter.controllers')
 
         //내 위치를 잡아주는 함수
         $rootScope.centerOnMe = function() {
+
+            $scope.isCenterOnMeLoadingComplite = false;
+
             var posOptions = {
                 timeout: soc.config.geoOptions.timeout,
                 enableHighAccuracy: soc.config.geoOptions.enableHighAccuracy,
@@ -386,6 +389,7 @@ angular.module('starter.controllers')
                             LowLocationAccuracy();
                         }
                         $ionicLoading.hide();
+                        $scope.isCenterOnMeLoadingComplite = true;
                     }, function(error) {
                         TimeExpired();
                         $ionicLoading.hide();
@@ -408,6 +412,7 @@ angular.module('starter.controllers')
                         LowLocationAccuracy();
                     }
                     $ionicLoading.hide();
+                    $scope.isCenterOnMeLoadingComplite = true;
                 }, function(error) {
                     TimeExpired();
                     $ionicLoading.hide();
@@ -457,7 +462,7 @@ angular.module('starter.controllers')
                 else {
                     var searchErrorMsg = "검색결과가 없습니다";
                     if ($window.plugins != undefined) {
-                        $cordovaToast.show(searchErrorMsg, 'long', 'bottom', 0)
+                        $cordovaToast.show(searchErrorMsg, 'long', 'bottom')
                             .then(function(success) {
                                 // success
                                 //alert("Toast Success: ");

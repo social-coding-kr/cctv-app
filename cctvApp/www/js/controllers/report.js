@@ -48,7 +48,7 @@ angular.module('starter.controllers')
     // 등록 확정 토스트 메세지
     if($window.plugins != undefined) {
       $cordovaToast
-      .show('성공적으로 등록되었습니다', 'long', 'bottom', 0)
+      .show('성공적으로 등록되었습니다', 'long', 'bottom')
       .then(function(success) {
         // success
       }, function (error) {
@@ -76,7 +76,7 @@ angular.module('starter.controllers')
     // 토스트 메세지
     if($window.plugins != undefined) {
       $cordovaToast
-      .show('등록을 취소했습니다', 'long', 'bottom', 0)
+      .show('등록을 취소했습니다', 'long', 'bottom')
       .then(function(success) {
         // success
       }, function (error) {
