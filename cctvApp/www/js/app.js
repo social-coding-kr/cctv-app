@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
-.run(function($ionicPlatform, $cordovaSplashscreen, $rootScope, soc) {
+.run(function($ionicPlatform, $cordovaSplashscreen, $rootScope, $cordovaNetwork, soc) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -25,7 +25,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
       StatusBar.styleDefault();
     }
-    
+
+    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+      alert('인터넷과의 연결이 끊어져 서비스 이용이 불가능합니다. 통신상태를 확인해주세요.');
+      navigator.app.clearCache();
+      navigator.app.clearHistory();
+      navigator.app.exitApp();
+    })
+
     $rootScope.soc = soc;
 
   });
