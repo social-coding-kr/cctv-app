@@ -51,8 +51,10 @@ angular.module('starter.controllers')
       .show('성공적으로 등록되었습니다', 'long', 'bottom', 0)
       .then(function(success) {
         // success
+            alert('성공 [' + error);
       }, function (error) {
-        // error
+            // error
+            alert('에러 [' + error);
       });
     } else {
       alert('성공적으로 등록되었습니다');
