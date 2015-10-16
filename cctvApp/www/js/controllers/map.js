@@ -14,6 +14,8 @@ angular.module('starter.controllers')
 
         var defaultLatLng = soc.getDefaultLocation();
 
+
+
         var mapContainer = document.getElementById('map');
         var mapOption = {
             center: new google.maps.LatLng(defaultLatLng.lat, defaultLatLng.lon),
