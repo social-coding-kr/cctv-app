@@ -21,6 +21,14 @@ angular.module('starter.controllers')
 
         };
 
+        if ($cordovaNetwork.isOffline())
+        {
+            alert('인터넷과의 연결이 끊어져 서비스 이용이 불가능합니다. 통신상태를 확인해주세요.');
+            navigator.app.clearCache();
+            navigator.app.clearHistory();
+            navigator.app.exitApp();
+        }
+
     //$ionicPlatform.ready(function() {
         $scope.search = {}; // 주소 검색에서 사용하는 변수
 
