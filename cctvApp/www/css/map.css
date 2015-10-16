@@ -33,9 +33,9 @@
 #cctvMaps .custom_zoomcontrol span:first-child{border-bottom:1px solid #bfbfbf;}
 
 #cctvMaps .filterControl { direction: ltr; overflow: hidden; text-align: center; color: rgb(0, 0, 0); font-family: Roboto,Arial,sans-serif; -moz-user-select: none; font-size: 11px; background-color: rgb(255, 255, 255); padding: 8px; border-bottom-left-radius: 2px; border-top-left-radius: 2px; background-clip: padding-box; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3); min-width: 22px; font-weight: 500;}
-#cctvMaps .publicFilterPositionFix {top:10px; left:112px; width:38px; height: 36px; position: absolute;}
+#cctvMaps .publicFilterPositionFix {top:10px; left:112px; width:40px; height: 40px; position: absolute;}
 #cctvMaps .filterPublicInActive {background-color : blue; color: white;}
-#cctvMaps .privateFilterPositionFix {top:10px; left:150px; width:38px; height: 36px; position: absolute;}
+#cctvMaps .privateFilterPositionFix {top:10px; left:150px; width:40px; height: 40px; position: absolute;}
 #cctvMaps .filterPrivateInActive {background-color : #e6b400; color: white;}
 
 
