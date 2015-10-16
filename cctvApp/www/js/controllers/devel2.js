@@ -8,7 +8,7 @@ angular.module('starter.controllers')
     soc.log("개발자용2 화면에서 로그를 남겼습니다.");
 
   $cordovaToast
-    .show('Here is a message', 'long', 'bottom')
+    .show('Here is a message', 'long', 'bottom', 0)
     .then(function(success) {
       // success
     }, function (error) {

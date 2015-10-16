@@ -457,7 +457,7 @@ angular.module('starter.controllers')
                 else {
                     var searchErrorMsg = "검색결과가 없습니다";
                     if ($window.plugins != undefined) {
-                        $cordovaToast.show(searchErrorMsg, 'long', 'bottom')
+                        $cordovaToast.show(searchErrorMsg, 'long', 'bottom', 0)
                             .then(function(success) {
                                 // success
                                 //alert("Toast Success: ");
