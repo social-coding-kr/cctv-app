@@ -95,13 +95,11 @@ angular.module('starter.controllers', [])
       } else {  
         // 종료 토스트 알려줌
         $cordovaToast
-        .show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 'long', 'bottom')
+        .show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 'long', 'bottom', 0)
         .then(function(success) {
           // success
-              alert('suc : ' + success);
         }, function (error) {
         // error
-              alert('err : ' + error);
         });
         // 다음 touch가 두 번째 back button 클릭이 됨
         $rootScope.secondBackButton = true;
