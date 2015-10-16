@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, $http, oauthService, Toast, soc) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, $http, oauthService, cctvToast, soc) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -95,7 +95,7 @@ angular.module('starter.controllers', [])
       } else {  
         // 종료 토스트 알려줌
 
-        Toast.show('뒤로 버튼을 한번 더 누르시면 종료됩니다', 'long', 'bottom');
+        cctvToast.show('뒤로 버튼을 한번 더 누르시면 종료됩니다', 'long', 'bottom');
 /*
         $cordovaToast
         .show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 'long', 'bottom', 0)
