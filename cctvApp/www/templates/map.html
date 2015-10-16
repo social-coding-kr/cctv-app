@@ -59,18 +59,13 @@
         
         <!-- 공공, 민간 필터링 div 입니다 -->
         <!-- 기존에 있던 zoomcontrol을 사용, 이미지는 +, -를 임시로 사용 -->
-        <div class="filterControl publicFilterPositionFix">
+        <div class="filterControl publicFilterPositionFix" ng-class="{true : '' , false : 'filterPublicInActive'}[isFilteringPublicCCTV]" ng-click="publicCCTV()">
             공공
         </div>
-        <div class="filterControl privateFilterPositionFix">
+        <div class="filterControl privateFilterPositionFix" ng-class="{true : '' , false : 'filterPrivateInActive'}[isFilteringPrivateCCTV]" ng-click="privateCCTV()">
             민간
         </div>
-        <!--
-        <div class="custom_zoomcontrol radius_border"> 
-            <span ng-click="publicCCTV()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="공공"></span>
-            <span ng-click="privateCCTV()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="민간"></span>
-        </div>
-        -->
+
         <div class="custom_mapinfocontrol radius_border" ng-if="soc.config.isDevelModeVisible">
             <b>mapInfo</b><br>
             <b>zoomLevel:</b> {{ mapInfoZoomLevel }}<br>

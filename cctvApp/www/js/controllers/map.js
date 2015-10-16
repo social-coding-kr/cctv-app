@@ -36,7 +36,8 @@ angular.module('starter.controllers')
         //처음에는 공공 및 민간 모두 보여준다.
         var publicCCTVChecker = 1;
         var privateCCTVChecker = 1;
-
+        $scope.isFilteringPrivateCCTV = false;
+        $scope.isFilteringPublicCCTV = false;
 
         $scope.map = map; // centerOnMe 호출시에 사용한다.
 		var markerList = [];
@@ -196,6 +197,7 @@ angular.module('starter.controllers')
                 privateCCTVChecker++;
                 if (privateCCTVChecker % 2 == 0)
                 {
+                    $scope.isFilteringPrivateCCTV = true;
                     //민간cctv는 필터링하고 보여준다.
                     for (var i = 0; i < purposeList.length; i++) {
                         if (purposeList[i] == "pirvate"){
@@ -205,6 +207,7 @@ angular.module('starter.controllers')
                 }
                 else
                 {
+                    $scope.isFilteringPrivateCCTV = false;
                     //민간cctv를 보여준다.
                     for (var i = 0; i < purposeList.length; i++) {
                         if (purposeList[i] == "pirvate"){
@@ -219,6 +222,7 @@ angular.module('starter.controllers')
                 publicCCTVChecker++;
                 if (publicCCTVChecker % 2 == 0)
                 {
+                    $scope.isFilteringPublicCCTV = true;
                     //공공cctv는 필터링하고 보여준다.
                     for (var i = 0; i < purposeList.length; i++) {
                         if (purposeList[i] == "public"){
@@ -228,6 +232,7 @@ angular.module('starter.controllers')
                 }
                 else
                 {
+                    $scope.isFilteringPublicCCTV = false;
                     //공공cctv를 보여준다.
                     for (var i = 0; i < purposeList.length; i++) {
                         if (purposeList[i] == "public"){
