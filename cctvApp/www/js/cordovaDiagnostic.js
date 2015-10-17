@@ -5,10 +5,11 @@ angular.module('starter.controllers')
 function($q, $window) {
 
     var Diagnostic;
-    if (ionic.Platform.isWebView() && ionic.Platform.isAndroid()) {
-        Diagnostic = $window.cordova.plugins.diagnostic;
-    }
-    
+    document.addEventListener("deviceready", function () {
+        if (ionic.Platform.isWebView() && ionic.Platform.isAndroid()) {
+            Diagnostic = $window.cordova.plugins.diagnostic;
+        }
+    });    
     return {
 
         getLocationMode: function() {
@@ -71,5 +72,6 @@ function($q, $window) {
             }
         },
     };
+
 }    
 ]);
