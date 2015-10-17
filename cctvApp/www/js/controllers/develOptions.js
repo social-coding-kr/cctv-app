@@ -27,7 +27,7 @@ angular.module('starter.controllers')
                 $scope.GpsLocationEnabled = error;
             });
 
-        cordovaDiagnostic.isNetworkLocationEnabled().then(
+        $cordovaDiagnostic.isNetworkLocationEnabled().then(
             function(enable) {
                 $scope.NetworkLocationEnabled = enable;            
             }, function(error) {
