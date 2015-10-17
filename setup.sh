@@ -17,6 +17,7 @@ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappb
 cordova plugin add https://github.com/cloverhearts/cordova-plugin-splashscreen
 cordova plugin add cordova-plugin-network-information
 cordova plugin add https://github.com/dpa99c/cordova-diagnostic-plugin.git
+cordova plugin add cordova-plugin-dialogs
 
 ionic platform rm android
 ionic platform add android
