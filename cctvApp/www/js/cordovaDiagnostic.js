@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers')
 
-.factory('cordovaDiagnostic', ['$q', '$window',
+.factory('$cordovaDiagnostic', ['$q', '$window',
 function($q, $window) {
 
     var Diagnostic;
