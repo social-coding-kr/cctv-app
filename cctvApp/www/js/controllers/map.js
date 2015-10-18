@@ -141,7 +141,7 @@ angular.module('starter.controllers')
                             // 마커를 생성합니다
                             var marker = new google.maps.Marker({
                                 position: markerPosition,
-                                icon: soc.markerImage["default"],
+                                icon: soc.data.image.defaultMarker,
                                 cctv: cctv, // 마커 자체에 서버에서 받은 cctv 데이터를 포함
                             });
                             
