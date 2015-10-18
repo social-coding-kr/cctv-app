@@ -7,12 +7,14 @@ var myLng;
 angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $window, $http, soc,
-    $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $ionicPlatform, $cordovaToast) {
+    $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $ionicPlatform, $cordovaToast, $cordovaNetwork,
+    locationFactory) {
 
     //$ionicPlatform.ready(function() {
         $scope.search = {}; // 주소 검색에서 사용하는 변수
 
         var defaultLatLng = soc.getDefaultLocation();
+
 
         var mapContainer = document.getElementById('map');
         var mapOption = {
@@ -34,7 +36,8 @@ angular.module('starter.controllers')
         //처음에는 공공 및 민간 모두 보여준다.
         var publicCCTVChecker = 1;
         var privateCCTVChecker = 1;
-
+        $scope.isFilteringPrivateCCTV = false;
+        $scope.isFilteringPublicCCTV = false;
 
         $scope.map = map; // centerOnMe 호출시에 사용한다.
 		var markerList = [];
@@ -196,6 +199,7 @@ angular.module('starter.controllers')
                 privateCCTVChecker++;
                 if (privateCCTVChecker % 2 == 0)
                 {
+                    $scope.isFilteringPrivateCCTV = true;
                     //민간cctv는 필터링하고 보여준다.
                     for (var i = 0; i < purposeList.length; i++) {
                         if (purposeList[i] == "pirvate"){
@@ -205,6 +209,7 @@ angular.module('starter.controllers')
                 }
                 else
                 {
+                    $scope.isFilteringPrivateCCTV = false;
                     //민간cctv를 보여준다.
                     for (var i = 0; i < purposeList.length; i++) {
                         if (purposeList[i] == "pirvate"){
@@ -219,6 +224,7 @@ angular.module('starter.controllers')
                 publicCCTVChecker++;
                 if (publicCCTVChecker % 2 == 0)
                 {
+                    $scope.isFilteringPublicCCTV = true;
                     //공공cctv는 필터링하고 보여준다.
                     for (var i = 0; i < purposeList.length; i++) {
                         if (purposeList[i] == "public"){
@@ -228,6 +234,7 @@ angular.module('starter.controllers')
                 }
                 else
                 {
+                    $scope.isFilteringPublicCCTV = false;
                     //공공cctv를 보여준다.
                     for (var i = 0; i < purposeList.length; i++) {
                         if (purposeList[i] == "public"){
@@ -326,15 +333,7 @@ angular.module('starter.controllers')
             }
         }
 
-        //일정 시간 동안 gps정보를 이용할 수 없을 시 토스트를 띄워주는 함수.
-        function TimeExpired() {
-            var alertPopup = $ionicPopup.alert({
-                title: 'GPS 정보를 이용할 수 없습니다.',
-                template: '기기의 GPS상태를 확인하거나 유저 폴트의 여부를 확인하세요.'
-            });
-            $rootScope.reportClicked = false;
-            alertPopup.then();
-        }
+
 
         //정확도가 일정 범위를 넘어가면 자신의 위치를 보여주는 것이 아니라 기기 작동을 멈추고 띄우는 토스트.
         function LowLocationAccuracy() {
@@ -349,6 +348,9 @@ angular.module('starter.controllers')
 
         //내 위치를 잡아주는 함수
         $rootScope.centerOnMe = function() {
+
+            $scope.isCenterOnMeLoadingComplite = false;
+
             var posOptions = {
                 timeout: soc.config.geoOptions.timeout,
                 enableHighAccuracy: soc.config.geoOptions.enableHighAccuracy,
@@ -365,56 +367,32 @@ angular.module('starter.controllers')
 
             $scope.loading = $ionicLoading.show({
                 content: 'Getting current location...',
-                showBackdrop: false
+                showBackdrop: false,
+                showDelay: 100,
             });
 
-            if (ionic.Platform.isWebView() == true) {
-                // 플러그인 사용
-                soc.log("모바일 기기에서 위치검색을 실행함")
-                $cordovaGeolocation
-                    .getCurrentPosition(posOptions)
-                    .then(function(pos) {
-                        myLat = pos.coords.latitude;
-                        myLng = pos.coords.longitude;
-                        var accuracy = pos.coords.accuracy;
-
-                        //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
-                        if (accuracy < 100) {
-                            $scope.map.setCenter(new google.maps.LatLng(myLat, myLng));                            
-                            var time = pos.timestamp;
-                            MyLocationMarker(accuracy, time);
-                        }
-                        else {
-                            LowLocationAccuracy();
-                        }
-                        $ionicLoading.hide();
-                    }, function(error) {
-                        TimeExpired();
-                        $ionicLoading.hide();
-                    });
-            }
-            else {
-                // html5 기존 함수 사용
-                navigator.geolocation.getCurrentPosition(function(pos) {
+            locationFactory
+                .getCurrentPosition(posOptions)
+                .then(function(pos) {
+                    $scope.loading.hide();
                     myLat = pos.coords.latitude;
                     myLng = pos.coords.longitude;
                     var accuracy = pos.coords.accuracy;
 
                     //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
                     if (accuracy < 100) {
-                        $scope.map.setCenter(new google.maps.LatLng(myLat, myLng));
+                        $scope.map.setCenter(new google.maps.LatLng(myLat, myLng));                            
                         var time = pos.timestamp;
                         MyLocationMarker(accuracy, time);
                     }
                     else {
                         LowLocationAccuracy();
                     }
-                    $ionicLoading.hide();
+                    
+                    $scope.isCenterOnMeLoadingComplite = true;
                 }, function(error) {
-                    TimeExpired();
-                    $ionicLoading.hide();
-                }, posOptions);
-            }
+                    $scope.loading.hide();
+                });
         };
 
         // 등록 확정화면에서 넘어올 때 현재 위치를 잡아주고 뒤로가기 버튼을 없애주는 함수

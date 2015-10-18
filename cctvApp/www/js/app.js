@@ -6,13 +6,26 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
-.run(function($ionicPlatform, $cordovaSplashscreen, $rootScope, soc) {
+.run(function($ionicPlatform, $cordovaSplashscreen, $rootScope, $cordovaNetwork, soc) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     setTimeout(function() {
       if(navigator.splashscreen)
         navigator.splashscreen.hide();
+
+      if(ionic.Platform.isWebView()) {
+        var isOnline = $cordovaNetwork.isOnline();
+        var isOffline = $cordovaNetwork.isOffline();
+
+        if (isOnline === false || isOffline === true)
+        {
+          alert('인터넷과의 연결이 끊어져 서비스 이용이 불가능합니다. 통신상태를 확인해주세요.');
+          navigator.app.clearCache();
+          navigator.app.clearHistory();
+          navigator.app.exitApp();
+        }
+      }
     }, 500);
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -25,9 +38,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
       StatusBar.styleDefault();
     }
-    
-    $rootScope.soc = soc;
 
+    
+
+
+    document.addEventListener("deviceready", function () {
+
+
+
+      $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+        alert('인터넷과의 연결이 끊어져 서비스 이용이 불가능합니다. 통신상태를 확인해주세요.');
+        navigator.app.clearCache();
+        navigator.app.clearHistory();
+        navigator.app.exitApp();
+      });
+    }, false);
+
+    $rootScope.soc = soc;
   });
 
 })
@@ -266,7 +293,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     url: '/developtions',
     views: {
       'menuContent': {
-        templateUrl: 'templates/developtions.html'
+        templateUrl: 'templates/developtions.html',
+        controller: 'develOptionsCtrl'
       }
     }
   })

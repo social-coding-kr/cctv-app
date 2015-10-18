@@ -27,12 +27,22 @@
 #cctvMaps .custom_typecontrol .selected_btn:hover {color:#fff;}   
 
 /* zoom Control */
-#cctvMaps .custom_zoomcontrol {position:absolute;top:50px;right:10px;width:36px;height:80px;overflow:hidden;z-index:1;background-color:#f5f5f5;} 
+#cctvMaps .custom_zoomcontrol {position:absolute;top:58px;right:10px;width:36px;height:80px;overflow:hidden;z-index:1;background-color:#f5f5f5;}
 #cctvMaps .custom_zoomcontrol span {display:block;width:36px;height:40px;text-align:center;cursor:pointer;}     
 #cctvMaps .custom_zoomcontrol span img {width:15px;height:15px;padding:12px 0;border:none;}             
-#cctvMaps .custom_zoomcontrol span:first-child{border-bottom:1px solid #bfbfbf;}     
+#cctvMaps .custom_zoomcontrol span:first-child{border-bottom:1px solid #bfbfbf;}
 
-/* mapInfo Control */
+#cctvMaps .filterControl { direction: ltr; overflow: hidden; text-align: center; color: rgb(0, 0, 0); font-family: Roboto,Arial,sans-serif; -moz-user-select: none; font-size: 11px; background-color: rgb(255, 255, 255); padding: 8px; border-bottom-left-radius: 2px; border-top-left-radius: 2px; background-clip: padding-box; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3); min-width: 22px; font-weight: 500;}
+#cctvMaps .publicFilterPositionFix {top:10px; left:112px; width:40px; height: 40px; position: absolute;}
+#cctvMaps .filterPublicInActive {background-color : blue; color: white;}
+#cctvMaps .privateFilterPositionFix {top:10px; left:150px; width:40px; height: 40px; position: absolute;}
+#cctvMaps .filterPrivateInActive {background-color : #e6b400; color: white;}
+
+
+/* zoom Control */
+#cctvMaps .currentPositionControl { direction: ltr; overflow: hidden; text-align: center; color: rgb(0, 0, 0); font-family: Roboto,Arial,sans-serif; -moz-user-select: none; font-size: 11px; background-color: rgb(255, 255, 255); padding: 8px; border-bottom-left-radius: 2px; border-top-left-radius: 2px; background-clip: padding-box; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3); min-width: 22px; font-weight: 500;}
+#cctvMaps .currentPositionFix {top:8px; right:10px; width:40px; height: 40px; position: absolute; }
+    /* mapInfo Control */
 #cctvMaps .custom_mapinfocontrol {
     position:absolute; 
     bottom:10px; 

@@ -8,8 +8,9 @@
         </ion-nav-buttons>
         <ion-nav-buttons side="primary">
             <!-- Putting a return between the buttons causes them to be stacked on Android 4.4.2 -->
-            <label class="item item-input" >
-                <i class="icon ion-search placeholder-icon"></i>
+            <label class="item-input" style="width: 100%;" >
+                <i class="icon ion-search placeholder-icon" ng-hide="search.address.length > 0"></i>
+                <i class="icon ion-search placeholder-icon" style="color: blue;" ng-show="search.address.length > 0"></i>
                 
                 <!-- input type="search" -->
                 <!-- ng-model: input 에서 ng-model은 객체안의 객체가 아니면 작동하지 않음 -->
@@ -17,7 +18,7 @@
                     ng-keypress="search.keyEvent($event)">
             </label>
             &nbsp;
-            <button class="button" ng-click="searchAddress()">검색</button>
+            <a class="button button-icon ion-ios-navigate" ng-show="search.address.length > 0" ng-click="searchAddress()"></a>
         </ion-nav-buttons>
     </ion-nav-bar>
 
@@ -34,7 +35,7 @@
                     </button>
                 </div>
             </div>-->
-            
+
     <!-- 이 화면에서 독립적인 CSS 적용을 위해 id="cctvMaps" 를 적용함 -->
     <!-- 다른 화면에서 지도를 사용할 필요가 있다면 별도 id를 사용할 것 -->
     <div id="cctvMaps" data-tap-disabled="true">            
@@ -43,15 +44,13 @@
 
 
 
-        <!-- 위치찾기 버튼 -->        
+        <!-- 위치찾기 버튼 -->
         <!-- 지도상의 다른 컨트롤들과 동일한 방식으로 변경 -->
-        <div class="col col-40">
-            <div class="bar bar-header item-input-inset background-trans cctv-text-right">
-                <button class="button cctv-round-button pull-right" ng-click="centerOnMe()"><i class="icon ion-pinpoint"></i>
-                </button>
-            </div>
+
+        <div class="currentPositionControl currentPositionFix">
+            <span ng-click="centerOnMe()"><i class="icon ion-pinpoint" style="font-size : 23px;"></i></span>
         </div>
-        
+
         <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
         <!--<div class="custom_zoomcontrol radius_border"> 
             <span ng-click="zoomIn()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>
@@ -61,11 +60,13 @@
         
         <!-- 공공, 민간 필터링 div 입니다 -->
         <!-- 기존에 있던 zoomcontrol을 사용, 이미지는 +, -를 임시로 사용 -->
-        <div class="custom_zoomcontrol radius_border"> 
-            <span ng-click="publicCCTV()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="공공"></span>
-            <span ng-click="privateCCTV()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="민간"></span>
+        <div class="filterControl publicFilterPositionFix" ng-class="{true : '' , false : 'filterPublicInActive'}[isFilteringPublicCCTV]" ng-click="publicCCTV()">
+            공공
         </div>
-        
+        <div class="filterControl privateFilterPositionFix" ng-class="{true : '' , false : 'filterPrivateInActive'}[isFilteringPrivateCCTV]" ng-click="privateCCTV()">
+            민간
+        </div>
+
         <div class="custom_mapinfocontrol radius_border" ng-if="soc.config.isDevelModeVisible">
             <b>mapInfo</b><br>
             <b>zoomLevel:</b> {{ mapInfoZoomLevel }}<br>
@@ -86,20 +87,31 @@
             <b>Accuracy:</b> {{ locationAccu }} <br>
             <b>Time:</b> {{ responseTime }} <br>
         </div>
-        <div class="bar bar-subfooter" style="margin: 0px;" ng-show="reportClicked">
+
+        <!-- GPS Loading Complite -->
+        <div class="bar bar-subfooter" style="margin: 0px;" ng-show="reportClicked && isCenterOnMeLoadingComplite === true">
             <div class="row" style="padding: 0px;">
                 <div class="col col-100 cctv-text-center" style="margin: 0px;">
                     <strong>현재 위치에 CCTV를 등록하시겠습니까?</strong>
                 </div>
             </div>
         </div>
-        <div class="bar bar-footer bar-footer" ng-show="reportClicked" ng-controller="generalReportCtrl">
+        <div class="bar bar-footer" ng-show="reportClicked && isCenterOnMeLoadingComplite === true" ng-controller="generalReportCtrl">
             <div class="row" style="padding: 0px;" ng-controller="mapToTakePictureViewCtrl">
                 <div class="col col-50" style="padding: 0px;">
                     <button class="button button-full button-positive" style="margin: 0px;" ng-click="registerButton1Clicked()">등록</button>
                 </div>
                 <div class="col col-50" style="padding: 0px;">
                     <button class="button button-full button-assertive" style="margin: 0px;" ng-click="cancellButton1Clicked()">취소</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GPS Loading -->
+        <div class="bar bar-footer" style="margin: 0px;" ng-show="reportClicked && isCenterOnMeLoadingComplite === false">
+            <div class="row" style="padding: 0px;">
+                <div class="col col-100 cctv-text-center" style="margin: 0px;">
+                    <strong>현재 위치를 탐색하는 중</strong>
                 </div>
             </div>
         </div>

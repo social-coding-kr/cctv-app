@@ -13,6 +13,44 @@
                     ng-model="soc.config.geoOptions.timeout"
                     ng-change="soc.config.geoOptions.onChangeTimeout()">
             </label>
+
+            <ion-item class="item-divider">Device Location(Android)</ion-item>
+            <div class="item item-button-right">
+                위치 모드
+                <span class="item-note">
+                    {{ LocationMode }}
+                </span>
+                <button class="button button-clear button-calm" 
+                    ng-click="refreshAllStatus()">
+                    <i class="icon ion-ios-refresh"></i>
+                </button>
+            </div>
+            <a class="item">
+                위치 허용
+                <span class="item-note">
+                    {{ LocationEnabled }}
+                </span>
+            </a>
+            <a class="item">
+                GPS 위치 허용
+                <span class="item-note">
+                    {{ GpsLocationEnabled }}
+                </span>
+            </a>
+            <a class="item">
+                Network 위치 허용
+                <span class="item-note">
+                    {{ NetworkLocationEnabled }}
+                </span>
+            </a>
+
+            <div class="item item-button-right">
+                안드로이드 위치 설정
+                <button class="button button-clear button-calm" 
+                    ng-click="switchToLocationSettings()">
+                    <i class="icon ion-ios-location"></i>
+                </button>
+            </div>            
         </ion-list>
     </ion-content>
 </ion-view>

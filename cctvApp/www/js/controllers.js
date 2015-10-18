@@ -94,6 +94,8 @@ angular.module('starter.controllers', [])
         navigator.app.exitApp();
       } else {  
         // 종료 토스트 알려줌
+
+
         $cordovaToast
         .show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 'long', 'bottom')
         .then(function(success) {

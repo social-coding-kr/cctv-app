@@ -52,7 +52,7 @@ angular.module('starter.controllers')
       .then(function(success) {
         // success
       }, function (error) {
-        // error
+            // error
       });
     } else {
       alert('성공적으로 등록되었습니다');
