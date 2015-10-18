@@ -21,7 +21,7 @@ angular.module('starter.controllers')
             center: new google.maps.LatLng(defaultLatLng.lat, defaultLatLng.lon),
             zoom: 16,
             maxZoom: 19,
-            minZoom: 11,    // 서울시 전체가 들어오는 레벨임
+            minZoom: 9,    // 서울시 전체가 들어오는 레벨임
             // 아래는 Control 옵션
             disableDefaultUI: true,            
             zoomControl: true,
@@ -311,8 +311,6 @@ angular.module('starter.controllers')
             });
             $scope.currentPos.marker.setMap(map);
             
-            $scope.locationAccu = "이 지점을 기준으로 반경 " + Accuracy.toFixed(8) + "미터 안에 있습니다.";
-            $scope.responseTime = Time + "ms";
 
             if (soc.config.isDevelModeVisible == true) //개발자 정보 옵션이 켜져 있을 경우,
             {
@@ -335,12 +333,31 @@ angular.module('starter.controllers')
 
         //정확도가 일정 범위를 넘어가면 자신의 위치를 보여주는 것이 아니라 기기 작동을 멈추고 띄우는 토스트.
         function LowLocationAccuracy() {
+            var accuracy = pos.coords.accuracy;
+            var time = pos.coords.accuracy;                
+            
+            $scope.locationAccu = "이 지점을 기준으로 반경 " + accuracy.toFixed(8) + "미터 안에 있습니다.";
+            $scope.responseTime = time + "ms";
+
             var alertPopup = $ionicPopup.alert({
                 title: '위치 정확도가 매우 낮습니다.',
                 template: 'GPS가 이용가능한 위치로 이동하거나, 위치찾기 버튼을 다시 한 번 눌러 주세요.'
             });
             $rootScope.reportClicked = false;
             alertPopup.then();
+        }
+
+        function showCurrentPosition(pos) {
+            myLat = pos.coords.latitude;
+            myLng = pos.coords.longitude;
+            var accuracy = pos.coords.accuracy;
+            var time = pos.coords.accuracy;                
+            
+            $scope.locationAccu = "이 지점을 기준으로 반경 " + accuracy.toFixed(8) + "미터 안에 있습니다.";
+            $scope.responseTime = time + "ms";
+            
+            $scope.map.setCenter(new google.maps.LatLng(myLat, myLng));                            
+            MyLocationMarker(accuracy, time);
         }
 
 
@@ -363,35 +380,75 @@ angular.module('starter.controllers')
                 return;
             }
 
+
+
             $scope.loading = $ionicLoading.show({
                 content: 'Getting current location...',
                 showBackdrop: false,
                 showDelay: 100,
             });
 
+
+
             locationFactory
                 .getCurrentPosition(posOptions)
                 .then(function(pos) {
-                    $scope.loading.hide();
+                    $ionicLoading.hide();
                     myLat = pos.coords.latitude;
                     myLng = pos.coords.longitude;
                     var accuracy = pos.coords.accuracy;
+                    var time = pos.coords.accuracy;
+
+                    $scope.locationAccu = "이 지점을 기준으로 반경 " + accuracy.toFixed(8) + "미터 안에 있습니다.";
+                    $scope.responseTime = time + "ms";
 
                     //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
-                    if (accuracy < 100) {
-                        $scope.map.setCenter(new google.maps.LatLng(myLat, myLng));                            
-                        var time = pos.timestamp;
-                        MyLocationMarker(accuracy, time);
+                    if (accuracy < 1000000) {
+                        showCurrentPosition(pos);
                     }
                     else {
-                        LowLocationAccuracy();
+                        LowLocationAccuracy(pos);
                     }
                     
                     $scope.isCenterOnMeLoadingComplite = true;
                 }, function(error) {
-                    $scope.loading.hide();
+                    $ionicLoading.hide();
                 });
         };
+
+        $scope.watchLocation = function() {
+            
+            $scope.isCenterOnMeLoadingComplite = false;
+
+            var posOptions = {
+                timeout: soc.config.geoOptions.timeout,
+                enableHighAccuracy: soc.config.geoOptions.enableHighAccuracy,
+                maximumAge: 0,  // 현재위치를 캐시 저장하지 않는다
+            };
+            
+            $scope.lastEnableHighAccuracy = posOptions.enableHighAccuracy;
+            $scope.lastTimeout = posOptions.timeout;
+
+            if (!$scope.map) {
+                soc.log("scope.map: not found");
+                return;
+            }            
+            
+            if($scope.watch) {
+
+                locationFactory.clearWatch($scope.watch);
+                soc.log("watch end");
+                $scope.watch = null;
+
+            } else {
+                $scope.watch = locationFactory.watchPosition(posOptions);
+            
+                $scope.watch.then(null, null, function(pos) {
+                    showCurrentPosition(pos);                    
+                });
+                
+            }            
+        }
 
         // 등록 확정화면에서 넘어올 때 현재 위치를 잡아주고 뒤로가기 버튼을 없애주는 함수
         $ionicHistory.nextViewOptions({
@@ -452,3 +509,5 @@ angular.module('starter.controllers')
         }
         // 주소검색 End
     });
+
+
