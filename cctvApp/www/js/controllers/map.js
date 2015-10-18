@@ -127,11 +127,13 @@ angular.module('starter.controllers')
                             
                             //목적 저장을 위한 코드
                             //목적은 public, private으로 구분.
-                            var cctv_ID = cctv.cctvID;
-                            var cctvInfo = $http.get("http://147.46.215.152:8099/map/cctvs/{cctv_ID}");
-                            var cctv_purpose = cctvInfo.data.cctv.purpose;
-                            purposeList.push(cctv_purpose);
-                            
+                            soc.getCctvInfo(cctv.cctvID)
+                                .then(function(cctvInfo){
+                                var cctv_purpose = cctvInfo.data.cctv.purpose;
+                                purposeList.push(cctv_purpose);
+                            }, function(err) {
+                                soc.log("ERROR: " + JSON.stringify(err));
+                            });
                             
                             // 마커가 표시될 위치입니다 
                             var markerPosition  = new google.maps.LatLng(cctv.latitude, cctv.longitude); 
