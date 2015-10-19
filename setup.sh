@@ -18,6 +18,8 @@ cordova plugin add https://github.com/cloverhearts/cordova-plugin-splashscreen
 cordova plugin add cordova-plugin-network-information
 cordova plugin add https://github.com/dpa99c/cordova-diagnostic-plugin.git
 cordova plugin add cordova-plugin-dialogs
+cordova plugin add https://github.com/katzer/cordova-plugin-background-mode.git
+cordova plugin add https://github.com/SidneyS/cordova-plugin-nativeaudio.git
 
 ionic platform rm android
 ionic platform add android

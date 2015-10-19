@@ -230,6 +230,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
 
+  .state('app.labs', {
+    url: '/labs',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/labs.html',
+        controller: 'labsCtrl'
+      }
+    }
+  })
+
   .state('app.devlog', {
     url: '/devlog',
     views: {
