@@ -20,6 +20,7 @@ cordova plugin add https://github.com/dpa99c/cordova-diagnostic-plugin.git
 cordova plugin add cordova-plugin-dialogs
 cordova plugin add https://github.com/katzer/cordova-plugin-background-mode.git
 cordova plugin add https://github.com/SidneyS/cordova-plugin-nativeaudio.git
+cordova plugin add ../plugins/sky1core.cordova.plugin.labs/
 
 ionic platform rm android
 ionic platform add android

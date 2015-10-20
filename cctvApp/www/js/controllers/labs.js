@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers')
 
-.controller('labsCtrl', function($scope, $window, soc) {
+.controller('labsCtrl', function($scope, $window, soc, $cordovaToast) {
     
     var audioFile = "data/1.mp3";
     
@@ -64,6 +64,13 @@ if(ionic.Platform.isWebView()) {
       window.cordova.plugins.backgroundMode.disable();      
     };
 
-  
+    $scope.testLabs = function() {
+        soc.log("hahaha");
+        window.cordova.exec(function(message, message2) {
+            alert(message);
+        }, function() {
+            alert("실패");
+        }, 'Labs', 'actionName', ['hahaha']);
+    } 
 }
 })

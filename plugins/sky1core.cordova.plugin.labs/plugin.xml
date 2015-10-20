@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="sky1core.cordova.plugin.labs"
+        version="0.0.1">
+
+    <name>Labs</name>
+    <description>Cordova Labs Plugin</description>
+    <license>MIT</license>
+    <keywords>test, labs</keywords>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Labs">
+                <param name="android-package" value="sky1core.cordova.plugin.labs.Labs"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/Labs.java" target-dir="src/sky1core/cordova/plugin/labs"/>
+        <!--
+        <config-file target="AndroidManifest.xml" parent="/*">
+
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+            
+        </config-file>
+        -->
+
+    </platform>
+
+</plugin>
