@@ -342,7 +342,7 @@ angular.module('starter.controllers')
 
 
         //정확도가 일정 범위를 넘어가면 자신의 위치를 보여주는 것이 아니라 기기 작동을 멈추고 띄우는 토스트.
-        function LowLocationAccuracy() {
+        function LowLocationAccuracy(pos) {
             var accuracy = pos.coords.accuracy;
             var time = pos.coords.accuracy;                
             
