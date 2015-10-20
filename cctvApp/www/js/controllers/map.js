@@ -287,8 +287,15 @@ angular.module('starter.controllers')
             // 맵이 완전히 로딩된 후 해야할 작업은 여기서 처리한다
             google.maps.event.addListenerOnce(map, 'idle', function() {
                 soc.log("googleMap Loaded!!!"); 
-            	$scope.refreshMapInfo();
-	    	    $scope.requestCctvs();
+                function doMapLoadDefault() {
+                	$scope.refreshMapInfo();
+	        	    $scope.requestCctvs();
+                }
+                locationFactory.getCurrentPosition(locationFactory.defaultOptions).then(
+                    showCurrentPosition,
+                    doMapLoadDefault);
+                    
+                
             });
 
             $scope.locationAccu = "위치찾기 시 정확도와 관련된 값이 표시됩니다.";
@@ -393,7 +400,7 @@ angular.module('starter.controllers')
 
 
             locationFactory
-                .getCurrentPosition(posOptions)
+                .getCurrentPositionSmart(posOptions)
                 .then(function(pos) {
                     $ionicLoading.hide();
                     myLat = pos.coords.latitude;
@@ -405,7 +412,7 @@ angular.module('starter.controllers')
                     $scope.responseTime = time + "ms";
 
                     //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
-                    if (accuracy < 1000000) {
+                    if (accuracy < 200) {
                         showCurrentPosition(pos);
                     }
                     else {
@@ -443,7 +450,7 @@ angular.module('starter.controllers')
                 $scope.watch = null;
 
             } else {
-                $scope.watch = locationFactory.watchPosition(posOptions);
+                $scope.watch = locationFactory.watchPositionSmart(posOptions);
             
                 $scope.watch.then(null, null, function(pos) {
                     showCurrentPosition(pos);                    
