@@ -127,6 +127,7 @@ angular.module('starter.controllers')
                             
                             //목적 저장을 위한 코드
                             //목적은 public, private으로 구분.
+                            /*
                             soc.getCctvInfo(cctv.cctvID)
                                 .then(function(cctvInfo){
                                 var cctv_purpose = cctvInfo.data.cctv.purpose;
@@ -134,7 +135,7 @@ angular.module('starter.controllers')
                             }, function(err) {
                                 soc.log("ERROR: " + JSON.stringify(err));
                             });
-                            
+                            */
                             // 마커가 표시될 위치입니다 
                             var markerPosition  = new google.maps.LatLng(cctv.latitude, cctv.longitude); 
 
