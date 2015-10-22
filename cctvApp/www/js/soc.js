@@ -128,10 +128,6 @@ angular.module('starter.controllers')
     obj.getCctvs = function(params) {
       return $http.get(obj.server.mainUrl + "map/cctvs", {params: params});
     };
-    
-    obj.getCctvInfo = function(cctvID){
-      return $http.get("http://147.46.215.152:8099/map/cctvs/" + cctvID);
-    };
 
     obj.mapProvider = google;        
     obj.mapProviderText = "google";
