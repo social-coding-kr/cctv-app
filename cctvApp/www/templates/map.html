@@ -2,27 +2,27 @@
     
     <!-- 주소검색을 올리기 위해 다시 NavBar 다시 추가함 -->
     <!-- 레이아웃 정리 필요함 -->
-    <ion-nav-bar>    
+    <ion-nav-bar class="bg-common-app-color">
         <ion-nav-buttons side="left">
-            <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+            <button menu-toggle="left" class="button button-icon icon ion-navicon" style="color: white;"></button>
         </ion-nav-buttons>
         <ion-nav-buttons side="primary">
             <!-- Putting a return between the buttons causes them to be stacked on Android 4.4.2 -->
-            <label class="item-input" style="width: 100%;" >
-                <i class="icon ion-search placeholder-icon" ng-hide="search.address.length > 0"></i>
-                <i class="icon ion-search placeholder-icon" style="color: blue;" ng-show="search.address.length > 0"></i>
+            <label class="item-input" style="width: 100%;">
+                <i class="icon ion-search placeholder-icon" style="color: #c2f3ff" ng-hide="search.address.length > 0"></i>
+                <i class="icon ion-search placeholder-icon" style="color: white;" ng-show="search.address.length > 0"></i>
                 
                 <!-- input type="search" -->
                 <!-- ng-model: input 에서 ng-model은 객체안의 객체가 아니면 작동하지 않음 -->
-                <input type="search" placeholder="Search" ng-model="search.address"
-                    ng-keypress="search.keyEvent($event)">
+                <input type="search" placeholder="Search" style="color : white;" ng-model="search.address"
+                    ng-keypress="search.keyEvent($event)" id="searchInputBox" ng-click="search.address = ''">
             </label>
             &nbsp;
-            <a class="button button-icon ion-ios-navigate" ng-show="search.address.length > 0" ng-click="searchAddress()"></a>
+            <a class="button button-icon ion-ios-navigate" style="color: white;" ng-show="search.address.length > 0" ng-click="searchAddress()"></a>
         </ion-nav-buttons>
     </ion-nav-bar>
 
-    <ion-content scroll="false">
+    <ion-content scroll="false" id="contentArea" ng-click="search.blur()">
         <!--<div class="row">
             <div class="col col-70 col-offset-10">
                 <div class="bar bar-header item-input-inset">
@@ -40,12 +40,12 @@
     <!-- 다른 화면에서 지도를 사용할 필요가 있다면 별도 id를 사용할 것 -->
     <div id="cctvMaps" data-tap-disabled="true">            
         <!-- 지도 -->
-        <div class="scroll-content" id="map" data-tap-disabled="true"></div>
+        <div class="scroll-content" id="map" data-tap-disabled="true" ng-click="search.blur()"></div>
 
         <!-- 위치찾기 버튼 -->
         <!-- 지도상의 다른 컨트롤들과 동일한 방식으로 변경 -->
-        <div class="watchPositionControl watchPositionFix">
-            <span ng-click="watchLocation()"><i class="icon ion-pinpoint" style="font-size : 23px;"></i></span>
+        <div class="watchPositionControl watchPositionFix" ng-click="watchLocation()" ng-class="{true : 'watchPositionActive' , false : ''}[watchLocationInterval !== undefined]">
+            <span><i class="icon ion-pinpoint" style="font-size : 23px;"></i></span>
         </div>
 
         <!-- 지도 확대, 축소 컨트롤 div 입니다 -->

@@ -7,8 +7,10 @@ var myLng;
 angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $window, $http, soc,
-    $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $ionicPlatform, $cordovaToast, $cordovaNetwork,
-    locationFactory) {
+    $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $interval, $ionicPlatform, $cordovaToast, $cordovaNetwork,
+                                $cordovaKeyboard, locationFactory) {
+
+        $rootScope.centerOnMe = $scope.centerOnMe;
 
     //$ionicPlatform.ready(function() {
         $scope.search = {}; // 주소 검색에서 사용하는 변수
@@ -343,7 +345,7 @@ angular.module('starter.controllers')
             $scope.responseTime = time + "ms";
 
             var alertPopup = $ionicPopup.alert({
-                title: '위치 정확도가 매우 낮습니다.',
+                title: '<span class="cctv-app-font">위치 정확도가 매우 낮습니다.</span>',
                 template: 'GPS가 이용가능한 위치로 이동하거나, 위치찾기 버튼을 다시 한 번 눌러 주세요.'
             });
             $rootScope.reportClicked = false;
@@ -365,16 +367,18 @@ angular.module('starter.controllers')
 
 
         //내 위치를 잡아주는 함수
-        $rootScope.centerOnMe = function() {
-
+        $rootScope.centerOnMe = function (isViewLoading)
+        {
             $scope.isCenterOnMeLoadingComplite = false;
+            isViewLoading = (isViewLoading === undefined)? true : isViewLoading;
+            //내 위치를 잡아주는 함수
 
             var posOptions = {
                 timeout: soc.config.geoOptions.timeout,
                 enableHighAccuracy: soc.config.geoOptions.enableHighAccuracy,
                 maximumAge: 0,  // 현재위치를 캐시 저장하지 않는다
             };
-            
+
             $scope.lastEnableHighAccuracy = posOptions.enableHighAccuracy;
             $scope.lastTimeout = posOptions.timeout;
 
@@ -385,18 +389,24 @@ angular.module('starter.controllers')
 
 
 
-            $scope.loading = $ionicLoading.show({
-                content: 'Getting current location...',
-                showBackdrop: false,
-                showDelay: 100,
-            });
-
-
+            if (isViewLoading === true)
+            {
+                $scope.loading = $ionicLoading.show({
+                    content: 'Getting current location...',
+                    showBackdrop: false,
+                    showDelay: 100,
+                });
+            }
 
             locationFactory
                 .getCurrentPositionSmart(posOptions)
                 .then(function(pos) {
-                    $ionicLoading.hide();
+                    if (isViewLoading === true)
+                    {
+                        $ionicLoading.hide();
+                    }
+
+
                     myLat = pos.coords.latitude;
                     myLng = pos.coords.longitude;
                     var accuracy = pos.coords.accuracy;
@@ -404,7 +414,7 @@ angular.module('starter.controllers')
 
                     $scope.locationAccu = "이 지점을 기준으로 반경 " + accuracy.toFixed(8) + "미터 안에 있습니다.";
                     $scope.responseTime = time + "ms";
-
+                    $scope.isCenterOnMeLoadingComplite = true;
                     //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
                     if (accuracy < 200) {
                         showCurrentPosition(pos);
@@ -412,13 +422,32 @@ angular.module('starter.controllers')
                     else {
                         LowLocationAccuracy(pos);
                     }
-                    
-                    $scope.isCenterOnMeLoadingComplite = true;
                 }, function(error) {
-                    $ionicLoading.hide();
+                    if (isViewLoading === true)
+                    {
+                        $ionicLoading.hide();
+                    }
+                    $scope.isCenterOnMeLoadingComplite = false;
                 });
         };
 
+        $scope.watchLocation = function ()
+        {
+            $scope.centerOnMe(false);
+            if ($scope.watchLocationInterval === undefined)
+            {
+                $scope.watchLocationInterval = $interval(function () {$scope.centerOnMe(false)}, 1000);
+            }
+            else
+            {
+                $interval.cancel($scope.watchLocationInterval);
+                $scope.watchLocationInterval = undefined;
+            }
+
+
+        }
+
+        /*
         $scope.watchLocation = function() {
             
             $scope.isCenterOnMeLoadingComplite = false;
@@ -452,6 +481,7 @@ angular.module('starter.controllers')
                 
             }            
         }
+        */
 
         // 등록 확정화면에서 넘어올 때 현재 위치를 잡아주고 뒤로가기 버튼을 없애주는 함수
         $ionicHistory.nextViewOptions({
@@ -472,14 +502,24 @@ angular.module('starter.controllers')
         $rootScope.AnotherPageToMap();
         
         $scope.search.keyEvent = function(event) {
+            $scope.onUsingSearch = true;
             if(event.keyCode == 13) {
                 // EnterKey 입력되었을때 주소 검색을 실행한다
                 // 웹에서는 엔터키, 모바일에서는 소프트키보드의 돋보기키에 해당한다
                 // 모바일에서 돋보기키를 클릭했을때 소프트키보드가 닫혀야 함
                 document.activeElement.blur();  // ActiveElement인 소프트키보드를 닫는다
                 $scope.searchAddress();
+                $scope.search.blur();
             }
-        }
+        };
+
+        $scope.search.blur = function () {
+            if (ionic.Platform.isAndroid() || ionic.Platform.isIOS() || ionic.Platform.isIPad())
+            {
+                $cordovaKeyboard.close();
+            }
+
+        };
 
         // 주소검색 Begin
         $scope.searchAddress = function() {
@@ -511,6 +551,7 @@ angular.module('starter.controllers')
 
         }
         // 주소검색 End
+
     });
 
 

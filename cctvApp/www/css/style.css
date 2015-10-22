@@ -66,3 +66,17 @@ textarea#devel_log {
 	font-weight: 200;
 	text-align: center;
 }
+
+.watchPositionActive {
+	background-color: blue !important;
+	color: white !important;
+}
+
+.bg-common-app-color {
+	background-color : #15cfce !important;
+	color : white !important;
+}
+
+.bg-input-box-highlight {
+	background-color : #CAFFFC;
+}

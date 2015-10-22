@@ -65,7 +65,7 @@ angular.module('starter.controllers', [])
   
   //위치정보 제공 동의 팝업
   $scope.locationInfoConfirm = function() {
-    $ionicPopup.show({title :'위치정보 제공에 동의하십니까?',
+    $ionicPopup.show({title :'<span class="cctv-app-font">위치정보 제공에 동의하십니까?</span>',
                       buttons: [{ 
                         text: '동의',
                         type: 'button-positive',
