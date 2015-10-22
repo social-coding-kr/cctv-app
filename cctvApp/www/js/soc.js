@@ -147,7 +147,7 @@ angular.module('starter.controllers')
 
     
 
-    
+/*   
     // Map 공통
     var markerImageSrc = 'img/map-pin_17x30.png'; // 마커이미지의 주소입니다  
     var markerImageSize = new daum.maps.Size(15, 26); // 마커이미지의 크기입니다
@@ -164,11 +164,15 @@ angular.module('starter.controllers')
         return daumMarkerImage;
       }
     }
-    
-    obj.markerImage = {
-      default: "img/marker1_18x31.png",
-      
-    }
+*/    
+    var dataUrl = "http://147.46.215.152:9000/data/";
+    obj.data = {
+      image: {
+        defaultMarker:  dataUrl + "img/marker2.png",
+        publicMarker:   dataUrl + "img/marker1.png",
+        privateMarker:  dataUrl + "img/marker2.png",
+      },
+    };
 
     // config
     obj.config = {};
