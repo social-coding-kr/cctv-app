@@ -55,14 +55,14 @@ angular.module('starter.controllers')
 
         $rootScope.map = map; // centerOnMe 호출시에 사용한다.
 		var markerList = [];
-		var purposeList = []; // 목적 리스트
+		//var purposeList = []; // 목적 리스트
 		
         function deleteMarkers() {
             for (var i = 0; i < markerList.length; i++) {
                 markerList[i].setMap(null);
             }            
             markerList = [];
-            purposeList = [];
+            //purposeList = [];
         }
 
         // 지도생성 Begin
@@ -141,15 +141,24 @@ angular.module('starter.controllers')
                             
                             //목적 저장을 위한 코드
                             //목적은 public, private으로 구분.
-                            purposeList.push(cctv.purpose);
+                            //purposeList.push(cctv.purpose);
 
                             // 마커가 표시될 위치입니다 
                             var markerPosition  = new google.maps.LatLng(cctv.latitude, cctv.longitude); 
 
                             // 마커를 생성합니다
+                            var markerImage;
+                            if(cctv.source == "PUBLIC") {
+                                markerImage = soc.data.image.publicMarker;
+                            } else if(cctv.source == "PRIVATE") {
+                                markerImage = soc.data.image.privateMarker;
+                            } else {
+                                markerImage = soc.data.image.defaultMarker;
+                            }
+                            
                             var marker = new google.maps.Marker({
                                 position: markerPosition,
-                                icon: soc.data.image.defaultMarker,
+                                icon: markerImage,
                                 cctv: cctv, // 마커 자체에 서버에서 받은 cctv 데이터를 포함
                             });
                             
@@ -205,22 +214,17 @@ angular.module('starter.controllers')
             //민간 cctv의 필터링 여부
             $scope.privateCCTV = function() {
                 privateCCTVChecker++;
-                if (privateCCTVChecker % 2 == 0)
-                {
+                if (privateCCTVChecker % 2 == 0) {
                     $scope.isFilteringPrivateCCTV = true;
-                    //민간cctv는 필터링하고 보여준다.
-                    for (var i = 0; i < purposeList.length; i++) {
-                        if (purposeList[i] == "pirvate"){
-                            markerList[i].setMap(null);
-                        }
-                    }            
-                }
-                else
-                {
+                } else {
                     $scope.isFilteringPrivateCCTV = false;
-                    //민간cctv를 보여준다.
-                    for (var i = 0; i < purposeList.length; i++) {
-                        if (purposeList[i] == "pirvate"){
+                }
+
+                for (var i = 0; i < markerList.length; i++) {
+                    if (markerList[i].cctv.source == "PRIVATE") {
+                        if($scope.isFilteringPrivateCCTV == true) {
+                            markerList[i].setMap(null);
+                        } else {
                             markerList[i].setMap(map);
                         }
                     }
@@ -230,22 +234,17 @@ angular.module('starter.controllers')
             //공공 cctv의 필터링 여부
             $scope.publicCCTV = function() {
                 publicCCTVChecker++;
-                if (publicCCTVChecker % 2 == 0)
-                {
+                if (publicCCTVChecker % 2 == 0) {
                     $scope.isFilteringPublicCCTV = true;
-                    //공공cctv는 필터링하고 보여준다.
-                    for (var i = 0; i < purposeList.length; i++) {
-                        if (purposeList[i] == "public"){
-                            markerList[i].setMap(null);
-                        }
-                    }            
-                }
-                else
-                {
+                } else {
                     $scope.isFilteringPublicCCTV = false;
-                    //공공cctv를 보여준다.
-                    for (var i = 0; i < purposeList.length; i++) {
-                        if (purposeList[i] == "public"){
+                }
+                
+                for (var i = 0; i < markerList.length; i++) {
+                    if (markerList[i].cctv.source == "PUBLIC") {
+                        if($scope.isFilteringPublicCCTV == true) {
+                            markerList[i].setMap(null);
+                        } else {
                             markerList[i].setMap(map);
                         }
                     }
