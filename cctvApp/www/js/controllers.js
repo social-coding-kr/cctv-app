@@ -1,7 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, 
-$location, $cordovaToast, $ionicHistory, $http, oauthService, soc, cctvReportFactory) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, $http, oauthService, soc, cctvReportFactory) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -86,8 +85,6 @@ $location, $cordovaToast, $ionicHistory, $http, oauthService, soc, cctvReportFac
                       });
   }
   
-
-
   // 안드로이드 뒤로가기 버튼동작
   $rootScope.secondBackButton = false; // 두 번째 back button 클릭을 알려주는 변수
   $ionicPlatform.registerBackButtonAction(function() {

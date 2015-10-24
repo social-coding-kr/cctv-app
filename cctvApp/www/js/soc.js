@@ -42,7 +42,7 @@ angular.module('starter.controllers')
 
     // server
     obj.server = {};
-    obj.server.mainUrl = "http://147.46.215.152:8077/";
+    obj.server.mainUrl = "http://147.46.215.152:8099/";
 
     // server
     obj.getDefaultLocation = function() {
