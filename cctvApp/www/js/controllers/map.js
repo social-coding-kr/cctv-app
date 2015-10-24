@@ -41,7 +41,7 @@ angular.module('starter.controllers')
         $scope.isFilteringPrivateCCTV = false;
         $scope.isFilteringPublicCCTV = false;
 
-        //$scope.map = map; // centerOnMe 호출시에 사용한다.
+        $scope.map = map; // centerOnMe 호출시에 사용한다.
 		var markerList = [];
 		var purposeList = []; // 목적 리스트
 		
