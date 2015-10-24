@@ -293,10 +293,4 @@ angular.module('starter.controllers')
       soc.log("response :" + JSON.stringify(response));
     });
   }
-})
-
-.controller('reportCtrl', function($rootScope, $scope, $window, $cordovaFile, $http, soc, cctvReportFactory) {
-
-  $scope.report = cctvReportFactory;
-})
-;
+});

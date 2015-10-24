@@ -84,32 +84,63 @@
             <b>Time:</b> {{ responseTime }} <br>
         </div>
 
-        <!-- GPS Loading Complite -->
-        <div class="bar bar-subfooter" style="margin: 0px;" ng-show="cctvReportFactory.getStatus() == 'foundPosition'">
+        <!-- 등록/foundPosition -->
+        <div class="bar bar-subfooter" style="margin: 0px;" ng-show="report.getStatus() == 'foundPosition'">
             <div class="row" style="padding: 0px;">
                 <div class="col col-100 cctv-text-center" style="margin: 0px;">
                     <strong>현재 위치에 CCTV를 등록하시겠습니까?</strong>
                 </div>
             </div>
         </div>
-        <div class="bar bar-footer" ng-show="cctvReportFactory.getStatus() == 'foundPosition'" ng-controller="reportCtrl">
-                <div class="col col-50" style="padding: 0px;">
-                    <button class="button button-full button-positive" style="margin: 0px;" ng-click="cctvReportFactory.startReport()">등록</button>
-                </div>
-                <div class="col col-50" style="padding: 0px;">
-                    <button class="button button-full button-assertive" style="margin: 0px;" ng-click="cctvReportFactory.cancelReport()">취소</button>
-                </div>
+        <div class="bar bar-footer" ng-show="report.getStatus() == 'foundPosition'" ng-controller="reportCtrl">
+            <div class="col col-50" style="padding: 0px;">
+                <button class="button button-full button-positive" style="margin: 0px;" ng-click="report.startReport()">등록</button>
+            </div>
+            <div class="col col-50" style="padding: 0px;">
+                <button class="button button-full button-assertive" style="margin: 0px;" ng-click="report.cancelReport()">취소</button>
+            </div>
         </div>
 
-        <!-- GPS Loading -->
-        <div class="bar bar-footer" style="margin: 0px;" ng-show="cctvReportFactory.getStatus() == 'findPosition'">
+        <!-- 등록/findPosition -->
+        <div class="bar bar-footer" style="margin: 0px;" ng-show="report.getStatus() == 'findPosition'">
             <div class="row" style="padding: 0px;">
                 <div class="col col-100 cctv-text-center" style="margin: 0px;">
                     <strong>현재 위치를 탐색하는 중</strong>
                 </div>
             </div>
         </div>
+        
+<!-- 삭제대상 -->        
+        <!-- GPS Loading Complite -->
+        <div class="bar bar-subfooter" style="margin: 0px;" ng-show="reportClicked && isCenterOnMeLoadingComplite === true">
+            <div class="row" style="padding: 0px;">
+                <div class="col col-100 cctv-text-center" style="margin: 0px;">
+                    <strong>현재 위치에 CCTV를 등록하시겠습니까?</strong>
+                </div>
+            </div>
+        </div>
+        <div class="bar bar-footer" ng-show="reportClicked && isCenterOnMeLoadingComplite === true" ng-controller="generalReportCtrl">
+            <div class="row" style="padding: 0px;" ng-controller="mapToTakePictureViewCtrl">
+                <div class="col col-50" style="padding: 0px;">
+                    <button class="button button-full button-positive" style="margin: 0px;" ng-click="registerButton1Clicked()">등록</button>
+                </div>
+                <div class="col col-50" style="padding: 0px;">
+                    <button class="button button-full button-assertive" style="margin: 0px;" ng-click="cancellButton1Clicked()">취소</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GPS Loading -->
+        <div class="bar bar-footer" style="margin: 0px;" ng-show="reportClicked && isCenterOnMeLoadingComplite === false">
+            <div class="row" style="padding: 0px;">
+                <div class="col col-100 cctv-text-center" style="margin: 0px;">
+                    <strong>현재 위치를 탐색하는 중</strong>
+                </div>
+            </div>
+        </div>        
     </div>
+<!-- 삭제대상 -->
+
         <!--
         <div class="bar bar-footer item-input-inset" ng-show="reportClicked">
             <div class="row">

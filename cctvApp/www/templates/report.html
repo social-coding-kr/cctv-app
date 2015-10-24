@@ -31,8 +31,8 @@
     <div class="row">
       <div class="col">
         
-        <a class="button button-block button-dark button-outline" ng-show="report.boardImage==null"
-          ng-click="report.takeBoardPhoto()"
+        <a class="button button-block button-dark button-outline" ng-show="report.noticeImage==null"
+          ng-click="report.takenoticePhoto()"
           style="font-size:120%; font-weight: normal; line-height: 110%">
 
           <i class="icon button-icon ion-camera"></i>
@@ -40,16 +40,16 @@
 
         </a>
         
-        <div ng-show="report.boardImage">
-          <img style="width: 100%;" src="{{report.boardImage}}">
+        <div ng-show="report.noticeImage">
+          <img style="width: 100%;" src="{{report.noticeImage}}">
         </div>
         
       </div>        
       <div class="col">
         <a class="button button-block button-dark" 
-          ng-show="report.boardImage==null" 
-          ng-click="report.boardNoExist()"
-          ng-class="report.boardPhotoProcess?' ':'button-outline'"
+          ng-show="report.noticeImage==null" 
+          ng-click="report.noticeNoExist()"
+          ng-class="report.noticePhotoProcess?' ':'button-outline'"
           style="font-size:120%; font-weight: normal; line-height: 110%">
 
           <i class="icon button-icon ion-close-circled"></i>

@@ -53,6 +53,8 @@ $location, $cordovaToast, $ionicHistory, $http, oauthService, soc, cctvReportFac
     }, 1000);
   };
   
+  $rootScope.report = cctvReportFactory;
+  
   // 신고하기버튼 click에 대한 bool값
   $rootScope.reportClicked = false;
   $rootScope.nowReportClicked = function() {
@@ -84,9 +86,8 @@ $location, $cordovaToast, $ionicHistory, $http, oauthService, soc, cctvReportFac
                       });
   }
   
-  $scope.cctvReportFactory = cctvReportFactory;
-  cctvReportFactory.setPath("/app/report");
-  
+
+
   // 안드로이드 뒤로가기 버튼동작
   $rootScope.secondBackButton = false; // 두 번째 back button 클릭을 알려주는 변수
   $ionicPlatform.registerBackButtonAction(function() {

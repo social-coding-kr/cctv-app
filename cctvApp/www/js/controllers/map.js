@@ -8,11 +8,8 @@ angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $window, $http, soc,
     $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $interval, $ionicPlatform, $cordovaToast, $cordovaNetwork,
-                                $cordovaKeyboard, locationFactory, cctvReportFactory) {
+                                $cordovaKeyboard, locationFactory) {
 
-        $scope.cctvReportFactory = cctvReportFactory;
-        
-        $rootScope.centerOnMe = $scope.centerOnMe;
 
     //$ionicPlatform.ready(function() {
         $scope.search = {}; // 주소 검색에서 사용하는 변수
