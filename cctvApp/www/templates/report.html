@@ -2,19 +2,24 @@
   <ion-content>
     <ion-list>
 
-    <ion-item class="item-divider">cctv 사진
-    </ion-item>      
+    <ion-item class="item-divider">CCTV 사진</ion-item> 
     <div class="row">
       <div class="col">
-        <ion-item class="item" ng-show="cctvImage">
-          <img style="width: 100%;" src="{{cctvImage}}">
-          <i class="icon ion-checkmark"></i>
-        </ion-item>
-        <ion-item class="item cctv-text-center" ng-show="cctvImage==null" ng-click="takePicture()">
+
+        <a class="button button-block button-dark button-outline" ng-show="report.cctvImage==null"
+          ng-click="report.takeCctvPhoto()"
+          style="font-size:120%; font-weight: normal; line-height: 110%">
+          
           <i class="icon button-icon ion-camera"></i>
-          <h2>CCTV 사진을<br>촬영해 주세요</h2>
-        </ion-item>
+          <p>CCTV 사진을<br>촬영해주세요</p>
+        </a>
+        
+        <div ng-show="report.cctvImage">
+          <img style="width: 100%;" src="{{report.cctvImage}}">
+        </div>
+        
       </div>
+      
       <div class="col">
         <button class="button button-small">
           <i class="icon ion-help-circled"></i> 도움말 
@@ -22,28 +27,34 @@
       </div>
     </div>
     
-    <ion-item class="item-divider">안내판 사진</ion-item>    
+    <ion-item class="item-divider">안내판 사진</ion-item>
     <div class="row">
       <div class="col">
-        <ion-item class="item" ng-show="boardImage">
-          <img style="width: 100%;" src="{{cctvImage}}">
-          <i class="icon ion-checkmark"></i>
-        </ion-item>  
-        <ion-item class="item cctv-text-center" ng-show="boardImage==null" ng-click="takePicture()">
+        
+        <a class="button button-block button-dark button-outline" ng-show="report.boardImage==null"
+          ng-click="report.takeBoardPhoto()"
+          style="font-size:120%; font-weight: normal; line-height: 110%">
+
           <i class="icon button-icon ion-camera"></i>
-           <h2>안내판 사진을<br>촬영해 주세요</h2>
-        </ion-item>
+          <p>안내판 사진을<br>촬영해주세요</p>
+
+        </a>
+        
+        <div ng-show="report.boardImage">
+          <img style="width: 100%;" src="{{report.boardImage}}">
+        </div>
+        
       </div>        
       <div class="col">
-        <ion-item class="item cctv-text-center" ng-show="boardImage==null" ng-click="takePicture()">
+        <a class="button button-block button-dark" 
+          ng-show="report.boardImage==null" 
+          ng-click="report.boardNoExist()"
+          ng-class="report.boardPhotoProcess?' ':'button-outline'"
+          style="font-size:120%; font-weight: normal; line-height: 110%">
+
           <i class="icon button-icon ion-close-circled"></i>
-           <h2>주변에 안내판이<br>존재하지 않음</h2>
-        </ion-item>
-        <!--
-        <div class="button-bar">
-          <a class="button button-small button-assertive" ng-click="">안내판 없음</a>        
-        </div>
-        -->
+          <p>주변에 안내판이<br>존재하지 않음</p>
+        </a>
       </div>
     </div>
       <ion-item>
@@ -58,44 +69,10 @@
     
     </ion-list>
     <p></p>
-<!--    
-    <ion-list>
-      <ion-item class="item-divider">촬영된 CCTV(필수) </ion-item>
-      <ion-item class="item item-thumbnail-left">
-        <img style="width: 100%;" src="{{cctvImage}}">
-        {{cctvImageStatus}}
-      </ion-item>
 
-      <ion-item class="item-divider">세부정보</ion-item>
-      <ion-item>
-        <p>목적</p>
-        <h2 ng-repeat="p in purposeForReport" ng-show="p.checked">{{p.text}}</h2>
-      </ion-item>
-
-      <ion-item>
-        <p>주소</p>
-        <h2>{{currentAddress}}</h2>
-      </ion-item>
-
-      <ion-item class="item-divider">안내판 내용(선택)</ion-item>
-      <ion-item class="item item-thumbnail-left">
-        <img style="width: 50%;" src="{{cctvImage}}">
-        {{boardImageStatus}}
-      </ion-item>
-
-    <ion-list>  
-    -->
-    <!--
-    <div class="text-center">
-      <span class="cctv-app-font" style="font-size: 1.3em;">화면과 같이 등록됩니다.</span>
-    </div>-->
-    <div ng-if="false">
-    FILE CCTV=>[{{CCTV_IMAGE_BINARY_DATA}}]<br /> <br />
-    FILE NOTICE=>[{{NOTICE_IMAGE_BINARY_DATA}}]
-    </div>
     <div class="button-bar">
-      <a class="button button-positive" ng-click="registerButton2Clicked(); registerUpload();">등록</a>
-      <a class="button button-light" ng-click="cancellButton2Clicked()">취소</a>
+      <a class="button button-positive" ng-click="report.sendReport()">등록</a>
+      <a class="button button-light" ng-click="report.cancelReport()">취소</a>
     </div>
   </ion-content>
 </ion-view>
