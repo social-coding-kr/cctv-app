@@ -55,14 +55,12 @@ angular.module('starter.controllers')
 
         $rootScope.map = map; // centerOnMe 호출시에 사용한다.
 		var markerList = [];
-		//var purposeList = []; // 목적 리스트
-		
+
         function deleteMarkers() {
             for (var i = 0; i < markerList.length; i++) {
                 markerList[i].setMap(null);
             }            
             markerList = [];
-            //purposeList = [];
         }
 
         // 지도생성 Begin
@@ -138,11 +136,6 @@ angular.module('starter.controllers')
                             var cctv = res.data.cctvs[i];
                             //soc.log(JSON.stringify(cctv));
                             
-                            
-                            //목적 저장을 위한 코드
-                            //목적은 public, private으로 구분.
-                            //purposeList.push(cctv.purpose);
-
                             // 마커가 표시될 위치입니다 
                             var markerPosition  = new google.maps.LatLng(cctv.latitude, cctv.longitude); 
 
