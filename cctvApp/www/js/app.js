@@ -348,7 +348,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
-  
+/*  
   .state('app.mapTest', {
     url: '/mapTest',
     views: {
@@ -368,7 +368,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
-
+*/
   .state('app.single', {
     url: '/playlists/:playlistId',
     views: {
