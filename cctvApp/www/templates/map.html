@@ -44,7 +44,9 @@
 
         <!-- 위치찾기 버튼 -->
         <!-- 지도상의 다른 컨트롤들과 동일한 방식으로 변경 -->
-        <div class="watchPositionControl watchPositionFix" ng-click="watchLocation()" ng-class="{true : 'watchPositionActive' , false : ''}[watchLocationInterval !== undefined]">
+        <div class="watchPositionControl watchPositionFix" ng-click="watchLocation()" 
+            ng-class="{true : 'watchPositionActive' , false : ''}[watchLocationInterval !== undefined]"
+            ng-show="report.getStatus() == 'none'">
             <span><i class="icon ion-pinpoint" style="font-size : 23px;"></i></span>
         </div>
 
