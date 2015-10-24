@@ -103,6 +103,7 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
         },
 
         startReport: function() {
+
             $location.path(this.path);
             var currentCoord = this.lng + "," + this.lat;
             //alert(this.lat + ", " + this.lng);            
@@ -110,11 +111,12 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
         },
 
         endReport: function() {
-            this.clear();
+            this.clear();            
             $location.path(this.mapPath);
             $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
+
         },
 
         findPosition: function() {

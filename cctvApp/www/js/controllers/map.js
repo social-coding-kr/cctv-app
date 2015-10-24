@@ -11,7 +11,19 @@ angular.module('starter.controllers')
                                 $cordovaKeyboard, locationFactory) {
 
         $rootScope.centerOnMe = $scope.centerOnMe;
-
+        $scope.testButtonClick = function() {
+            google.maps.event.trigger(map, 'resize');
+        }
+        
+        $scope.$on("$ionicView.afterEnter", function(){
+            
+            soc.log("refresh");
+	        $timeout(function() {
+	            // 맵 타일 오딩 오류를 방지한다
+		        google.maps.event.trigger(map, 'resize');
+	        });
+        });
+        
     //$ionicPlatform.ready(function() {
         $scope.search = {}; // 주소 검색에서 사용하는 변수
 
@@ -41,7 +53,7 @@ angular.module('starter.controllers')
         $scope.isFilteringPrivateCCTV = false;
         $scope.isFilteringPublicCCTV = false;
 
-        $scope.map = map; // centerOnMe 호출시에 사용한다.
+        $rootScope.map = map; // centerOnMe 호출시에 사용한다.
 		var markerList = [];
 		var purposeList = []; // 목적 리스트
 		
@@ -514,6 +526,7 @@ angular.module('starter.controllers')
         };
 
         $scope.search.blur = function () {
+            if(!ionic.Platform.isWebView()) return;
             if (ionic.Platform.isAndroid() || ionic.Platform.isIOS() || ionic.Platform.isIPad())
             {
                 $cordovaKeyboard.close();
