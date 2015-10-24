@@ -15,6 +15,7 @@ function($q, soc, locationFactory, $ionicPopup, $location) {
             return this.status;  
         },
 
+
         findPosition: function() {
             var This = this;
             // 위치 탐색
