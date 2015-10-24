@@ -109,6 +109,19 @@ angular.module('starter.controllers')
 
                 // 서버측 API가 준비될때까지 ZoomLevel이 크면 요청을 하지 않는다			    
 			    if(map.getZoom() < 15) {
+
+			        
+			        if(markerList.length > 0) {
+			            var msg = "지도를 확대하면 CCTV 위치가 표시됩니다";
+			            if(ionic.Platform.isWebView()) {
+    			            $cordovaToast.show(msg, 'long', 'bottom')
+                                .then(null);
+    			        } else {
+	    		            alert(msg);
+		    	        }
+		    	        deleteMarkers();
+			        }
+			        
 			        return;
 			    }
 			    
