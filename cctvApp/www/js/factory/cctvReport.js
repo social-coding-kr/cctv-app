@@ -62,7 +62,7 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
     
     return {
         path: "/app/report",
-        cancelPath: "/app/map",
+        mapPath: "/app/map",
         status: "none",
         lat: null,
         lng: null,
@@ -102,10 +102,6 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
             return this.status;  
         },
 
-        setPath: function(locationPath) {
-            this.path = locationPath;
-        },
-
         startReport: function() {
             $location.path(this.path);
             var currentCoord = this.lng + "," + this.lat;
@@ -113,9 +109,9 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
             soc.getAdressFromPoint(currentCoord);
         },
 
-        cancelReport: function() {
+        endReport: function() {
             this.clear();
-            $location.path(this.cancelPath);
+            $location.path(this.mapPath);
             $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
@@ -152,7 +148,7 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
                         text: '거부',
                         type: 'button-default',
                         onTap: function(e) {
-                            This.clear();
+                            This.endReport();
                         }
                       }]
                       });
@@ -205,7 +201,7 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
             this.noticePhotoProcess = true;
         },
         sendReport: function() {
-            
+            var This = this;
             if(!this.cctvPhotoProcess) {
                 // TODO: alert 교체
                 alert("cctv 사진을 촬영하세요");
@@ -242,6 +238,9 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
                             // error
                         });                    
                 }
+                
+                This.endReport();
+                
                 soc.log("등록 성공 :" + formData);
                 soc.log("response :" + JSON.stringify(response));
             }).error(function(response) {
