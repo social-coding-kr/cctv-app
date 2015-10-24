@@ -121,7 +121,7 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
             var This = this;
             // 위치 탐색
             This.status = "findPosition";
-            locationFactory.getCurrentPosition(locationFactory.defaultOptions).then(
+            locationFactory.getCurrentPositionSmart(locationFactory.defaultOptions).then(
                 function(result) {
                     This.status = "foundPosition";
                     This.lat = result.coords.latitude;
@@ -130,7 +130,7 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
 
                 }, function(error) {
                     This.status = "failed";
-                    alert("실패");
+                    //alert("실패");
                 }
             );
         },
