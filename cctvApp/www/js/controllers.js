@@ -66,8 +66,6 @@ $location, $cordovaToast, $ionicHistory, $http, oauthService, soc, cctvReportFac
   
   //위치정보 제공 동의 팝업
   $scope.locationInfoConfirm = function() {
-    cctvReportFactory.startReport();
-    /*
     $ionicPopup.show({title :'<span class="cctv-app-font">위치정보 제공에 동의하십니까?</span>',
                       buttons: [{ 
                         text: '동의',
@@ -84,8 +82,10 @@ $location, $cordovaToast, $ionicHistory, $http, oauthService, soc, cctvReportFac
                         }
                       }]
                       });
-    */
   }
+  
+  $scope.cctvReportFactory = cctvReportFactory;
+  cctvReportFactory.setPath("/app/report");
   
   // 안드로이드 뒤로가기 버튼동작
   $rootScope.secondBackButton = false; // 두 번째 back button 클릭을 알려주는 변수

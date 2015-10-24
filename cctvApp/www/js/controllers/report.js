@@ -293,4 +293,16 @@ angular.module('starter.controllers')
       soc.log("response :" + JSON.stringify(response));
     });
   }
-});
+})
+
+.controller('reportCtrl', function($rootScope, $scope, $window, $cordovaFile, $http, soc, cctvReportFactory) {
+
+  $scope.cctvReportFactory = cctvReportFactory;
+  
+  // TODO: 등록을 처음 실행하면 무조건 도움말을 띄우도록 한다  
+
+  $scope.cctvImage = null;
+  $scope.boardImage = null;
+
+})
+;

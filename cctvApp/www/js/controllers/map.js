@@ -43,7 +43,8 @@ angular.module('starter.controllers')
         $scope.isFilteringPrivateCCTV = false;
         $scope.isFilteringPublicCCTV = false;
 
-        $scope.map = map; // centerOnMe 호출시에 사용한다.
+        $rootScope.map = map;
+        //$scope.map = map; // centerOnMe 호출시에 사용한다.
 		var markerList = [];
 		var purposeList = []; // 목적 리스트
 		
@@ -516,9 +517,11 @@ angular.module('starter.controllers')
         };
 
         $scope.search.blur = function () {
-            if (ionic.Platform.isAndroid() || ionic.Platform.isIOS() || ionic.Platform.isIPad())
-            {
-                $cordovaKeyboard.close();
+            if(ionic.Platform.isWebView()) {
+                if (ionic.Platform.isAndroid() || ionic.Platform.isIOS() || ionic.Platform.isIPad())
+                {
+                    $cordovaKeyboard.close();
+                }
             }
 
         };
