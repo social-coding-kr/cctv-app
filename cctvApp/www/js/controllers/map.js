@@ -12,7 +12,14 @@ angular.module('starter.controllers')
 
         $rootScope.centerOnMe = $scope.centerOnMe;
         $scope.testButtonClick = function() {
-            google.maps.event.trigger(map, 'resize');
+            // TODO: 나중에 다른곳으로 정리
+            /*if(soc.getFont() == "default") {
+                soc.setFont("jejugothic");
+            } else*/ if(soc.getFont() == "jejugothic") {
+                soc.setFont("nanumgothic");
+            } else {
+                soc.setFont("jejugothic");
+            }
         }
 
         $scope.$on("$ionicView.afterEnter", function(){

@@ -215,7 +215,37 @@ angular.module('starter.controllers')
     obj.MapTestOnDeselect = function(args) {
     }
     
+    
+    // TODO: 아래는 대충 만들어 둔것이고 나중에 정리
+    var fonts = {
+      //default: "",
+      jejugothic: "Jeju Gothic",
+      nanumgothic: "Nanum Gothic",
+    };          
+    var currentFontKey = "jejugothic";
+    
+    
+    var sheet;
+    obj.setFont = function(fontKey) {
+      obj.log("set Font: " + fontKey);
+      currentFontKey = fontKey;
+      
+      if(fontKey == "default") {
+        //document.removeChild(sheet);
+      } else {
+        var fontFileName = fontKey + ".css";
+        var fontName = fonts[fontKey];
 
+        sheet = document.createElement("style");
+        sheet.innerHTML  = "@import url(http://fonts.googleapis.com/earlyaccess/" + fontFileName + ");";
+        sheet.innerHTML += "html,body,input,button,textarea {font-family: '" + fontName + "'!important;}";
+        sheet.innerHTML += ".cctv-app-font {font-family: '" + fontName +"' !important;}";
+        document.body.appendChild(sheet);
+      }
+    }
+    obj.setFont("jejugothic");
+    obj.getFont = function() { return currentFontKey; }
+    
     return obj;
 })
 ;
