@@ -14,7 +14,7 @@ angular.module('starter.controllers')
         $scope.testButtonClick = function() {
             google.maps.event.trigger(map, 'resize');
         }
-        
+
         $scope.$on("$ionicView.afterEnter", function(){
             
             soc.log("refresh");
@@ -356,7 +356,7 @@ angular.module('starter.controllers')
             alertPopup.then();
         }
 
-        function showCurrentPosition(pos) {
+        function showCurrentPosition(pos, showMarker) {
             myLat = pos.coords.latitude;
             myLng = pos.coords.longitude;
             var accuracy = pos.coords.accuracy;
@@ -366,7 +366,16 @@ angular.module('starter.controllers')
             $scope.responseTime = time + "ms";
             
             $scope.map.setCenter(new google.maps.LatLng(myLat, myLng));                            
-            MyLocationMarker(accuracy, time);
+            if(showMarker) {
+                MyLocationMarker(accuracy, time);
+            }
+        }
+        $rootScope.showCurrentPosition = showCurrentPosition;
+        $rootScope.deleteCurrentPosition = function() {
+	        if($scope.currentPos.marker)
+	            $scope.currentPos.marker.setMap(null);
+            if($scope.currentPos.circle)		            
+	            $scope.currentPos.circle.setMap(null);
         }
 
 
@@ -421,7 +430,7 @@ angular.module('starter.controllers')
                     $scope.isCenterOnMeLoadingComplite = true;
                     //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
                     if (accuracy < 200) {
-                        showCurrentPosition(pos);
+                        showCurrentPosition(pos, true);
                     }
                     else {
                         LowLocationAccuracy(pos);

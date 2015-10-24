@@ -1,9 +1,9 @@
 'use strict';
 angular.module('starter.controllers')
 
-.factory('cctvReportFactory', ['$q', 'soc', 'locationFactory', '$ionicPopup', '$http',
+.factory('cctvReportFactory', ['$q', 'soc', '$rootScope', 'locationFactory', '$ionicPopup', '$http',
     '$location', '$cordovaCamera', '$cordovaToast', '$cordovaFile', '$ionicHistory',
-function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera,
+function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $cordovaCamera,
     $cordovaToast, $cordovaFile, $ionicHistory) {
 
     // TODO: 나중에 이 변수는 적절한 위치에서 가져온다
@@ -116,7 +116,7 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
             $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
-
+            $rootScope.deleteCurrentPosition();
         },
 
         findPosition: function() {
@@ -128,8 +128,9 @@ function($q, soc, locationFactory, $ionicPopup, $http, $location, $cordovaCamera
                     This.status = "foundPosition";
                     This.lat = result.coords.latitude;
                     This.lng = result.coords.longitude;
-                    alert("지도에 위치를 표시했다고 친다");
-
+                    //alert("지도에 위치를 표시했다고 친다");
+                    $rootScope.showCurrentPosition(result, true);
+                    
                 }, function(error) {
                     This.status = "failed";
                     //alert("실패");
