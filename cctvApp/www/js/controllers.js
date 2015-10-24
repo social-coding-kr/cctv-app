@@ -1,6 +1,7 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, $http, oauthService, soc) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, 
+$location, $cordovaToast, $ionicHistory, $http, oauthService, soc, cctvReportFactory) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -65,6 +66,8 @@ angular.module('starter.controllers', [])
   
   //위치정보 제공 동의 팝업
   $scope.locationInfoConfirm = function() {
+    cctvReportFactory.startReport();
+    /*
     $ionicPopup.show({title :'<span class="cctv-app-font">위치정보 제공에 동의하십니까?</span>',
                       buttons: [{ 
                         text: '동의',
@@ -81,6 +84,7 @@ angular.module('starter.controllers', [])
                         }
                       }]
                       });
+    */
   }
   
   // 안드로이드 뒤로가기 버튼동작

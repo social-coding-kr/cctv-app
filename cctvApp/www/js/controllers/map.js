@@ -8,8 +8,10 @@ angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $window, $http, soc,
     $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $interval, $ionicPlatform, $cordovaToast, $cordovaNetwork,
-                                $cordovaKeyboard, locationFactory) {
+                                $cordovaKeyboard, locationFactory, cctvReportFactory) {
 
+        $scope.cctvReportFactory = cctvReportFactory;
+        
         $rootScope.centerOnMe = $scope.centerOnMe;
 
     //$ionicPlatform.ready(function() {
