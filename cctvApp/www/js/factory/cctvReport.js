@@ -103,7 +103,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         },
 
         startReport: function() {
-
+            this.status = "startReporting";
             $location.path(this.path);
             var currentCoord = this.lng + "," + this.lat;
             //alert(this.lat + ", " + this.lng);            
