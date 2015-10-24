@@ -10,6 +10,7 @@ angular.module('starter.controllers')
     $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $interval, $ionicPlatform, $cordovaToast, $cordovaNetwork,
                                 $cordovaKeyboard, locationFactory) {
 
+        $rootScope.centerOnMe = $scope.centerOnMe;
 
     //$ionicPlatform.ready(function() {
         $scope.search = {}; // 주소 검색에서 사용하는 변수
@@ -40,7 +41,6 @@ angular.module('starter.controllers')
         $scope.isFilteringPrivateCCTV = false;
         $scope.isFilteringPublicCCTV = false;
 
-        $rootScope.map = map;
         //$scope.map = map; // centerOnMe 호출시에 사용한다.
 		var markerList = [];
 		var purposeList = []; // 목적 리스트
@@ -514,11 +514,9 @@ angular.module('starter.controllers')
         };
 
         $scope.search.blur = function () {
-            if(ionic.Platform.isWebView()) {
-                if (ionic.Platform.isAndroid() || ionic.Platform.isIOS() || ionic.Platform.isIPad())
-                {
-                    $cordovaKeyboard.close();
-                }
+            if (ionic.Platform.isAndroid() || ionic.Platform.isIOS() || ionic.Platform.isIPad())
+            {
+                $cordovaKeyboard.close();
             }
 
         };

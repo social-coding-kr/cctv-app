@@ -198,11 +198,10 @@ angular.module('starter.controllers')
 })
 
 // 등록확정화면에 사용하는 컨트롤러
-.controller('confirmReportCtrl', function($rootScope, $scope, $window, $cordovaFile, $http, soc, cctvReportFactory) {
-  $scope.cctvReportFactory = cctvReportFactory;
+.controller('confirmReportCtrl', function($rootScope, $scope, $window, $cordovaFile, $http, soc) {
   // 현재위치를 나타내는 변수들
-  var ex_lat = cctvReportFactory.lat;
-  var ex_lng = cctvReportFactory.lng;
+  var ex_lat = myLat;
+  var ex_lng = myLng;
 
   // 등록 확정시 post service로 보낼 변수들 갱신
   $rootScope.cctvReportingInfo = {latitude: ex_lat, 

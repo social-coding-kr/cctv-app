@@ -3,7 +3,7 @@
     <ion-list>
       <ion-item class="item-divider">촬영된 CCTV</ion-item>
       <ion-item class="item cctv-text-center">
-        <img style="width: 70%;" src="{{cctvReportFactory.cctvImage}}">
+        <img style="width: 100%;" src="{{lastCctvPhoto}}">
       </ion-item>
 
       <ion-item class="item-divider">세부정보</ion-item>
@@ -19,7 +19,7 @@
 
       <ion-item class="item-divider">안내판 내용</ion-item>
       <ion-item class="item cctv-text-center">
-        <img style="width: 70%;" src="{{cctvReportFactory.cctvImage}}">
+        <img style="width: 100%;" src="{{lastHangBoardPhoto}}">
       </ion-item>
 
     <ion-list>    
@@ -32,7 +32,7 @@
     </div>
     <div class="button-bar">
       <a class="button button-positive" ng-click="registerButton2Clicked(); registerUpload();">등록</a>
-      <a class="button button-light" ng-click="cancellButton2Clicked()">취소</a>      
+      <a class="button button-light" ng-click="cancellButton2Clicked()">취소</a>
     </div>
   </ion-content>
 </ion-view>
