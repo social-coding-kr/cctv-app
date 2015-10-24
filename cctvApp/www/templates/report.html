@@ -1,0 +1,78 @@
+<ion-view view-title="CCTV 등록">
+  <ion-content>
+    <ion-list>
+
+    <ion-item class="item-divider">CCTV 사진</ion-item> 
+    <div class="row">
+      <div class="col">
+
+        <a class="button button-block button-dark button-outline" ng-show="report.cctvImage==null"
+          ng-click="report.takeCctvPhoto()"
+          style="font-size:120%; font-weight: normal; line-height: 110%">
+          
+          <i class="icon button-icon ion-camera"></i>
+          <p>CCTV 사진을<br>촬영해주세요</p>
+        </a>
+        
+        <div ng-show="report.cctvImage">
+          <img style="width: 100%;" src="{{report.cctvImage}}">
+        </div>
+        
+      </div>
+      
+      <div class="col">
+        <button class="button button-small">
+          <i class="icon ion-help-circled"></i> 도움말 
+        </button>
+      </div>
+    </div>
+    
+    <ion-item class="item-divider">안내판 사진</ion-item>
+    <div class="row">
+      <div class="col">
+        
+        <a class="button button-block button-dark button-outline" ng-show="report.noticeImage==null"
+          ng-click="report.takeNoticePhoto()"
+          style="font-size:120%; font-weight: normal; line-height: 110%">
+
+          <i class="icon button-icon ion-camera"></i>
+          <p>안내판 사진을<br>촬영해주세요</p>
+
+        </a>
+        
+        <div ng-show="report.noticeImage">
+          <img style="width: 100%;" src="{{report.noticeImage}}">
+        </div>
+        
+      </div>        
+      <div class="col">
+        <a class="button button-block button-dark" 
+          ng-show="report.noticeImage==null" 
+          ng-click="report.noticeNoExist()"
+          ng-class="report.noticePhotoProcess?' ':'button-outline'"
+          style="font-size:120%; font-weight: normal; line-height: 110%">
+
+          <i class="icon button-icon ion-close-circled"></i>
+          <p>주변에 안내판이<br>존재하지 않음</p>
+        </a>
+      </div>
+    </div>
+      <ion-item>
+        <p>목적</p>
+        <h2 ng-repeat="p in purposeForReport" ng-show="p.checked">{{p.text}}</h2>
+      </ion-item>
+
+      <ion-item>
+        <p>주소</p>
+        <h2>{{currentAddress}}</h2>
+      </ion-item>
+    
+    </ion-list>
+    <p></p>
+
+    <div class="button-bar">
+      <a class="button button-positive" ng-click="report.sendReport()">등록</a>
+      <a class="button button-light" ng-click="report.endReport()">취소</a>
+    </div>
+  </ion-content>
+</ion-view>

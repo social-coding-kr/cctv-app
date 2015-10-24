@@ -84,6 +84,33 @@
             <b>Time:</b> {{ responseTime }} <br>
         </div>
 
+        <!-- 등록/foundPosition -->
+        <div class="bar bar-subfooter" style="margin: 0px;" ng-show="report.getStatus() == 'foundPosition'">
+            <div class="row" style="padding: 0px;">
+                <div class="col col-100 cctv-text-center" style="margin: 0px;">
+                    <strong>현재 위치에 CCTV를 등록하시겠습니까?</strong>
+                </div>
+            </div>
+        </div>
+        <div class="bar bar-footer" ng-show="report.getStatus() == 'foundPosition'">
+            <div class="col col-50" style="padding: 0px;">
+                <button class="button button-full button-positive" style="margin: 0px;" ng-click="report.startReport()">등록</button>
+            </div>
+            <div class="col col-50" style="padding: 0px;">
+                <button class="button button-full button-assertive" style="margin: 0px;" ng-click="report.endReport()">취소</button>
+            </div>
+        </div>
+
+        <!-- 등록/findPosition -->
+        <div class="bar bar-footer" style="margin: 0px;" ng-show="report.getStatus() == 'findPosition'">
+            <div class="row" style="padding: 0px;">
+                <div class="col col-100 cctv-text-center" style="margin: 0px;">
+                    <strong>현재 위치를 탐색하는 중</strong>
+                </div>
+            </div>
+        </div>
+        
+<!-- 삭제대상 -->
         <!-- GPS Loading Complite -->
         <div class="bar bar-subfooter" style="margin: 0px;" ng-show="reportClicked && isCenterOnMeLoadingComplite === true">
             <div class="row" style="padding: 0px;">
@@ -112,6 +139,8 @@
             </div>
         </div>
     </div>
+<!-- 삭제대상 -->
+
         <!--
         <div class="bar bar-footer item-input-inset" ng-show="reportClicked">
             <div class="row">

@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, $http, oauthService, soc) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $ionicPopup, $ionicPlatform, $location, $cordovaToast, $ionicHistory, $http, oauthService, soc, cctvReportFactory) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -51,6 +51,8 @@ angular.module('starter.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+  
+  $rootScope.report = cctvReportFactory;
   
   // 신고하기버튼 click에 대한 bool값
   $rootScope.reportClicked = false;
