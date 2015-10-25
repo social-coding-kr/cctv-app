@@ -6,9 +6,6 @@ angular.module('starter.controllers')
 function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $cordovaCamera,
     $cordovaToast, $cordovaFile, $ionicHistory) {
 
-    // TODO: 나중에 이 변수는 적절한 위치에서 가져온다
-    var userId = "TestingId_ClubSandwich";
-    
     function onError(error) {
         // TODO: 에러 처리 수정
         alert(error);
@@ -223,10 +220,9 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             formData.append('longitude', this.lng);
             
             // TODO: 목적 처리
-            formData.append('purpose', '기타');
+            //formData.append('purpose', '기타');
             formData.append('cctvImage', this.cctvImageBinary, "cctvImage.jpg");
             formData.append('noticeImage', this.noticeImageBinary, "noticeImage.jpg");
-            formData.append('userId', userId);
 
             $http.post(soc.server.mainUrl + "cctv", formData, {
                 transformRequest: angular.identity,
