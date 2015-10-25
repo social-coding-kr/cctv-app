@@ -245,7 +245,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     views: {
       'menuContent': {
         templateUrl: 'templates/cctvdetail.html',
-        controller: 'CCTVAPITestCtrl'
+        controller: 'MapCtrl'
       }
     }
   })

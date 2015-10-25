@@ -2,7 +2,7 @@
   <ion-header-bar class="bg-common-app-color">
     <h1 class="title">CCTV detail</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="closeDetail()">Close</button>
+      <button class="button button-clear" ng-click="closeCctvDetail()">Close</button>
     </div>
   </ion-header-bar>
   <ion-content>
@@ -10,6 +10,8 @@
     
       <ion-item class="item-thumbnail-left">
         <img src="https://pixabay.com/static/uploads/photo/2015/07/07/10/15/10-15-05-776_640.jpg">
+        <!--
+        <img src={{cctvSelected.cctv.cctvImage == 'null' ? "https://pixabay.com/static/uploads/photo/2015/07/07/10/15/10-15-05-776_640.jpg" : cctvSelected.cctv.cctvImage}}>
         <div class="detail_list">
           <table>
             <tr>
@@ -23,19 +25,27 @@
             </tr>
           </table>
         </div>
+        -->
       </ion-item>
       
       <ion-item class="item-divider">세부정보</ion-item>
+      
+      <ion-item>
+        <p>설치타입</p>
+        <h2>{{cctvSelected.cctv.source == 'PUBLIC' ? "공공기관cctv" : "사설cctv"}}</h2>
+      </ion-item>
+      
       <ion-item>
         <p>목적</p>
-        <h2>교통용</h2>
+        <h2>{{cctvSelected.cctv.purpose}}</h2>
       </ion-item>
 
       <ion-item>
         <p>주소</p>
-        <h2>너네집</h2>
+        <h2>{{cctvSelected.cctv.address}}</h2>
       </ion-item>
 
+      <!--
       <ion-item class="item-divider">안내판 내용</ion-item>
       <ion-item class="item-thumbnail-left">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png">
@@ -53,7 +63,7 @@
           </table>
         </div>
       </ion-item>
-
+      
       <ion-item class="item-divider">의견</ion-item>
       <ion-item>ㅇㅁㅇㄴㅁㅇ
       </ion-item>
@@ -61,6 +71,7 @@
       </ion-item>
       <ion-item>ㅇㅁㅇㄴㅁㅇ2
       </ion-item>
+      -->
 
     <ion-list>    
 

@@ -143,6 +143,16 @@
                 </div>
             </div>
         </div>
+        
+        <div class="bar bar-footer" style="margin: 0px;" ng-show="cctvSelected !== null">
+            <div class="row" style="padding: 0px;">
+                <div class="col col-100 cctv-text-center" style="margin: 0px;">
+                    <font align='left'><strong>{{cctvSelected.cctv.source == 'PUBLIC' ? '공공cctv' : '사설cctv'}}</strong></font>
+                    <strong>{{'설치목적 : ' + cctvSelected.cctv.purpose}}</strong>
+                    <button class="button button-assertive" style="margin: 0px;" ng-click="showCctvDetail()">세부정보</button>
+                </div>
+            </div>
+        </div>
     </div>
 <!-- 삭제대상 -->
 

@@ -8,7 +8,7 @@ angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $window, $http, soc,
     $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $interval, $ionicPlatform, $cordovaToast, $cordovaNetwork,
-                                $cordovaKeyboard, locationFactory) {
+                                $cordovaKeyboard, locationFactory, $ionicModal) {
 
         $rootScope.centerOnMe = $scope.centerOnMe;
         $scope.testButtonClick = function() {
@@ -68,6 +68,32 @@ angular.module('starter.controllers')
                 markerList[i].setMap(null);
             }            
             markerList = [];
+        }
+        
+        $scope.cctv_log_string='nothing';
+        $scope.cctvSelected=null;
+        $ionicModal.fromTemplateUrl('templates/cctvdetail.html', {
+            scope: $scope
+        }).then(function(modal) {
+            $scope.cctvDetailModal = modal;
+        });
+        function markerShowInfo(cctv) {
+            $scope.cctv_log_string=JSON.stringify(cctv);
+            soc.getCctvDetail(cctv.cctvId)
+            .then(
+                function(res) {
+                    $scope.cctv_log_string=JSON.stringify(res);
+                    $scope.cctvSelected = res.data;
+                }, function(err) {
+                    $scope.cctv_log_string=JSON.stringify(err);
+                }
+            );
+        }
+        $scope.showCctvDetail = function () {
+            $scope.cctvDetailModal.show();
+        }
+        $scope.closeCctvDetail = function () {
+            $scope.cctvDetailModal.hide();
         }
 
         // 지도생성 Begin
@@ -172,8 +198,13 @@ angular.module('starter.controllers')
                             var marker = new google.maps.Marker({
                                 position: markerPosition,
                                 icon: markerImage,
-                                cctv: cctv, // 마커 자체에 서버에서 받은 cctv 데이터를 포함
+                                cctv:cctv, // 마커 자체에 서버에서 받은 cctv 데이터를 포함
                             });
+                            
+                            marker.addListener('click', function() {
+                                markerShowInfo(this.cctv);
+                            });
+
                             
                             //soc.log(JSON.stringify(marker));
                             markerList.push(marker);                                                        
