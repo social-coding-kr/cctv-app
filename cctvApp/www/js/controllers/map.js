@@ -13,14 +13,12 @@ angular.module('starter.controllers')
         $rootScope.centerOnMe = $scope.centerOnMe;
         $scope.testButtonClick = function() {
             // TODO: 나중에 다른곳으로 정리
-            /*if(soc.getFont() == "default") {
-                soc.setFont("jejugothic");
-            } else*/ if(soc.getFont() == "jejugothic") {
+            if(soc.getFont() == "jejugothic") {
                 soc.setFont("nanumgothic");
             } else {
                 soc.setFont("jejugothic");
             }
-        }
+        };
 
         $scope.$on("$ionicView.afterEnter", function(){
             
@@ -31,7 +29,6 @@ angular.module('starter.controllers')
 	        });
         });
         
-    //$ionicPlatform.ready(function() {
         $scope.search = {}; // 주소 검색에서 사용하는 변수
 
         var defaultLatLng = soc.getDefaultLocation();
@@ -89,12 +86,14 @@ angular.module('starter.controllers')
                 }
             );
         }
+        
         $scope.showCctvDetail = function () {
             $scope.cctvDetailModal.show();
-        }
+        };
+        
         $scope.closeCctvDetail = function () {
             $scope.cctvDetailModal.hide();
-        }
+        };
 
         // 지도생성 Begin
         var mapGenerator = function(map) {
@@ -172,7 +171,6 @@ angular.module('starter.controllers')
 			        .then(function(res) {
 			            
                         // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
-                        //soc.log("PREV length: " + markerList.length);
 
                         deleteMarkers();
 
@@ -180,7 +178,6 @@ angular.module('starter.controllers')
                         
                         for(var i=0; i<cctvLength; i++) {
                             var cctv = res.data.cctvs[i];
-                            //soc.log(JSON.stringify(cctv));
                             
                             // 마커가 표시될 위치입니다 
                             var markerPosition  = new google.maps.LatLng(cctv.latitude, cctv.longitude); 
@@ -205,8 +202,6 @@ angular.module('starter.controllers')
                                 markerShowInfo(this.cctv);
                             });
 
-                            
-                            //soc.log(JSON.stringify(marker));
                             markerList.push(marker);                                                        
                         }
                         
@@ -242,19 +237,7 @@ angular.module('starter.controllers')
                     $scope.$apply();
                 }
             };
-            
-            /*
-            // 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
-            $scope.zoomIn = function() {
-                map.setLevel(map.getLevel() - 1);
-            };
 
-            // 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
-            $scope.zoomOut = function() {
-                map.setLevel(map.getLevel() + 1);
-            };
-            */
-            
             //민간 cctv의 필터링 여부
             $scope.privateCCTV = function() {
                 privateCCTVChecker++;
@@ -323,7 +306,6 @@ angular.module('starter.controllers')
 
             // 확대수준 변경 이벤트
             google.maps.event.addListener(map, 'zoom_changed', function() {
-                //soc.log('zoom changed!');
 
                 // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
                 // CCTV 목록을 재요청한다
@@ -427,7 +409,7 @@ angular.module('starter.controllers')
 	            $scope.currentPos.marker.setMap(null);
             if($scope.currentPos.circle)		            
 	            $scope.currentPos.circle.setMap(null);
-        }
+        };
 
 
         //내 위치를 잡아주는 함수
@@ -509,43 +491,8 @@ angular.module('starter.controllers')
             }
 
 
-        }
+        };
 
-        /*
-        $scope.watchLocation = function() {
-            
-            $scope.isCenterOnMeLoadingComplite = false;
-
-            var posOptions = {
-                timeout: soc.config.geoOptions.timeout,
-                enableHighAccuracy: soc.config.geoOptions.enableHighAccuracy,
-                maximumAge: 0,  // 현재위치를 캐시 저장하지 않는다
-            };
-            
-            $scope.lastEnableHighAccuracy = posOptions.enableHighAccuracy;
-            $scope.lastTimeout = posOptions.timeout;
-
-            if (!$scope.map) {
-                soc.log("scope.map: not found");
-                return;
-            }            
-            
-            if($scope.watch) {
-
-                locationFactory.clearWatch($scope.watch);
-                soc.log("watch end");
-                $scope.watch = null;
-
-            } else {
-                $scope.watch = locationFactory.watchPositionSmart(posOptions);
-            
-                $scope.watch.then(null, null, function(pos) {
-                    showCurrentPosition(pos);                    
-                });
-                
-            }            
-        }
-        */
 
         // 등록 확정화면에서 넘어올 때 현재 위치를 잡아주고 뒤로가기 버튼을 없애주는 함수
         $ionicHistory.nextViewOptions({
@@ -603,7 +550,6 @@ angular.module('starter.controllers')
                         $cordovaToast.show(searchErrorMsg, 'long', 'bottom')
                             .then(function(success) {
                                 // success
-                                //alert("Toast Success: ");
                             }, function(error) {
                                 // error
                                 soc.log("Toast Error: " + error);
@@ -614,9 +560,7 @@ angular.module('starter.controllers')
                 }
             });
 
-        }
+        };
         // 주소검색 End
 
     });
-
-
