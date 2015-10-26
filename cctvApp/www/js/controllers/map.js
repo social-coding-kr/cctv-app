@@ -43,11 +43,15 @@ angular.module('starter.controllers')
         
         var zoomHideHigh = 13;
         if(zoom <= zoomHideHigh) {
-            if(zoom == zoomHideHigh && zoom < prevZoom) {
-                if(ionic.Platform.isWebView()) {
-                    $cordovaToast.show("지도를 확대하면 CCTV가 표시됩니다", 'long', 'bottom');
-                }
-                $scope.cctvMap.hideMarkers();                
+            if(zoom == zoomHideHigh) {
+                $scope.cctvMap.hideMarkers(); 
+                if(zoom < prevZoom) {
+                    if(ionic.Platform.isWebView()) {
+                        $cordovaToast.show("지도를 확대하면 CCTV가 표시됩니다", 'long', 'bottom');
+                    } else {
+                        soc.log("지도확대");
+                    }
+                }              
             }
             return;
         } else {
@@ -76,6 +80,7 @@ angular.module('starter.controllers')
     };
     
     $scope.onMapClick = function(e) {
+        soc.log("ha");
         $scope.hideCctvInfo();
     };
 
@@ -191,7 +196,15 @@ angular.module('starter.controllers')
         },
     };
    
-   
+
+    $scope.showCctvDetail = function () {
+        $scope.cctvDetailModal.show();
+    };
+    
+    $scope.closeCctvDetail = function () {
+        $scope.cctvDetailModal.hide();
+    };
+
     $scope.initCctvSelect = function () {
         if ($scope.cctvSelected !== null) {
             $scope.cctvSelected = null;

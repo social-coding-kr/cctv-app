@@ -139,7 +139,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
-            $rootScope.deleteCurrentPosition();
+            //$rootScope.deleteCurrentPosition();
         },
 
         findPosition: function() {

@@ -165,7 +165,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
         controller: 'AppSplash'
       })
 */
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
@@ -187,15 +187,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
         'menuContent': {
           templateUrl: 'templates/map.html',
           controller: 'MapCtrl'
-        }
-      }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
         }
       }
     })
@@ -298,37 +289,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
-  
-
-  .state('app.takePicture', {
-    url: '/takePicture',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/takePicture.html', 
-        controller: 'takePictureCtrl'
-      }
-    }
-  })
-  
-  .state('app.slectPurpose', {
-    url: '/selectPurpose',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/selectPurpose.html', 
-        controller: 'selectPurposeCtrl'
-      }
-    }
-  })
-  
-  .state('app.confirmReport', {
-    url: '/confirmReport',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/confirmReport.html', 
-        controller: 'confirmReportCtrl'
-      }
-    }
-  })
 
   .state('app.report', {
     url: '/report',
@@ -348,36 +308,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
-/*  
-  .state('app.mapTest', {
-    url: '/mapTest',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/mapTest.html',
-        controller: 'MapTestCtrl'
-      }
-    }
-  })
 
-  .state('app.mapTest2', {
-    url: '/mapTest2',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/mapTest2.html',
-        controller: 'MapTest2Ctrl'
-      }
-    }
-  })
-*/
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  });
+  ;
 
   // if none of the above states are matched, use this as the fallback
   //$urlRouterProvider.otherwise('/appstart');

@@ -53,38 +53,7 @@ angular.module('starter.controllers', [])
   };
   
   $rootScope.report = cctvReportFactory;
-  
-  // 신고하기버튼 click에 대한 bool값
-  $rootScope.reportClicked = false;
-  $rootScope.nowReportClicked = function() {
-    $rootScope.reportClicked = true;
-    return $rootScope.reportClicked;
-  };
-  $rootScope.nowReportUnclicked = function() {
-    $rootScope.reportClicked = false;
-    return $rootScope.reportClicked;    
-  };
-  
-  //위치정보 제공 동의 팝업
-  $scope.locationInfoConfirm = function() {
-    $ionicPopup.show({title :'<span class="cctv-app-font">위치정보 제공에 동의하십니까?</span>',
-                      buttons: [{ 
-                        text: '동의',
-                        type: 'button-positive',
-                        onTap: function(e) {
-                          $rootScope.centerOnMe();
-                          $rootScope.reportClicked = true;
-                        }
-                      }, {
-                        text: '거부',
-                        type: 'button-default',
-                        onTap: function(e) {
-                          $rootScope.reportClicked = false;
-                        }
-                      }]
-                      });
-  }
-  
+
   // 안드로이드 뒤로가기 버튼동작
   $rootScope.secondBackButton = false; // 두 번째 back button 클릭을 알려주는 변수
   $ionicPlatform.registerBackButtonAction(function() {
@@ -110,15 +79,6 @@ angular.module('starter.controllers', [])
         $timeout(function(){$rootScope.secondBackButton = false;}, 2000);
       }
     } 
-    // 신고화면에서 back button controll
-    else if($location.url() === '/app/takePicture') { // takePicture.html에서 클릭 시
-      // alert('등록화면값 true 지도화면으로 이동');
-      $rootScope.cancellButtonClicked();
-    } 
-    // backButtonTest에서의 컨트롤
-    else if($location.url() === '/app/backButtonTest') {
-      alert('back button clicked');
-    }
     // default controll
     else {
       // alert($ionicHistory.backTitle()); // 전 페이지를 alert message로 알려줌(디버깅 용도)
@@ -132,20 +92,6 @@ angular.module('starter.controllers', [])
       }
     }
   }, 101);
-})
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
 ;

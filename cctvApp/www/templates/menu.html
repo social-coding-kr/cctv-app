@@ -30,23 +30,23 @@
 
       <div class="row">
         <div class="col cctv-menu-box-shadow" style="background-color: white;">
-          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#/app/map" ng-click="nowReportUnclicked()">
-            <i class="icon ion-university"></i>
-              <span>CCTV 지도</span>
+          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#/app/map">
+            <i class="icon ion-map"></i>
+              <span>CCTV 위치확인</span>
           </button>
-          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#/app/map" ng-click="locationInfoConfirm()">
-            <i class="icon ion-speakerphone"></i>
-            <span>CCTV 위치신고</span>
+          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#/app/map" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
+            <i class="icon ion-location"></i>
+            <span>CCTV 위치등록</span>
           </button>
-          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#/app/cctvlaw" ng-click="">
+          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#/app/cctvlaw">
             <i class="icon ion-university"></i>
             <span>CCTV 관련법</span>
           </button>
-          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#" ng-click="">
+          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#">
             <i class="icon ion-android-wifi"></i>
             <span>로그인</span>
           </button>
-          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;"  href="#/app/config" ng-click="nowReportUnclicked()">
+          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;"  href="#/app/config">
             <i class="icon ion-gear-b"></i>
             <span>설정</span>
           </button>
@@ -60,20 +60,6 @@
               <div class="item item-divider">
                 <span>개발자용</span>
               </div>
-              <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
-                <i class="icon ion-camera"></i>
-                신고 테스트
-              </ion-item>
-              <!--
-              <ion-item menu-close class="item item-icon-left" href="#/app/mapTest2">
-                <i class="icon ion-map"></i>
-                GoogleMap Test
-              </ion-item>
-              <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
-                <i class="icon ion-map"></i>
-                Home
-              </ion-item>
-              -->
               <ion-item menu-close ng-click="login()">
                 Login
               </ion-item>
@@ -97,9 +83,6 @@
               </ion-item>
               <ion-item menu-close href="#/app/oauthApiTest" ng-show="soc.config.isDevelModeVisible">
                 Oauth API Test
-              </ion-item>
-              <ion-item menu-close href="#/app/map" ng-click="locationInfoConfirm()">
-                신고용
               </ion-item>
               <ion-item menu-close href="#/app/backButtonTest" ng-show="soc.config.isDevelModeVisible">
                 backButtonTest
