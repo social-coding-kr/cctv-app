@@ -1,14 +1,14 @@
-<ion-modal-view view-title="CCTV 세부정보">
+<ion-modal-view view-title="CCTV 세부정보" >
   <ion-header-bar class="bg-common-app-color">
-    <h1 class="title">CCTV detail</h1>
+    <h1 class="title" style="color: white;">CCTV detail</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="closeCctvDetail()">Close</button>
+      <button class="button button-clear button-light" ng-click="closeCctvDetail()"><i class="icon ion-android-cancel" style="color: white;"></i></button>
     </div>
   </ion-header-bar>
   <ion-content>
     <ion-list>   
     
-      <ion-item class="item-thumbnail-left">
+      <ion-item class="item-thumbnail-center">
         <img src="https://pixabay.com/static/uploads/photo/2015/07/07/10/15/10-15-05-776_640.jpg">
         <!--
         <img src={{cctvSelected.cctv.cctvImage == 'null' ? "https://pixabay.com/static/uploads/photo/2015/07/07/10/15/10-15-05-776_640.jpg" : cctvSelected.cctv.cctvImage}}>
@@ -32,17 +32,17 @@
       
       <ion-item>
         <p>설치타입</p>
-        <h2>{{cctvSelected.cctv.source == 'PUBLIC' ? "공공기관cctv" : "사설cctv"}}</h2>
+        &nbsp;&nbsp;<h2 class="cctv-app-font">{{cctvSelected.cctv.source == 'PUBLIC' ? "공공기관 CCTV" : "사설 CCTV"}}</h2>
       </ion-item>
       
       <ion-item>
         <p>목적</p>
-        <h2>{{cctvSelected.cctv.purpose}}</h2>
+        &nbsp;&nbsp;<h2 class="cctv-app-font">{{cctvSelected.cctv.purpose}}</h2>
       </ion-item>
 
       <ion-item>
         <p>주소</p>
-        <h2>{{cctvSelected.cctv.address}}</h2>
+        &nbsp;&nbsp;<h2 class="cctv-app-font">{{cctvSelected.cctv.address}}</h2>
       </ion-item>
 
       <!--

@@ -563,4 +563,11 @@ angular.module('starter.controllers')
         };
         // 주소검색 End
 
+        $scope.initCctvSelect = function () {
+          if ($scope.cctvSelected !== null)
+          {
+              $scope.cctvSelected = null;
+          }
+        };
+
     });
