@@ -210,7 +210,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             locationFactory.watchPositionSmart(locationFactory.defaultOptions).then(
                 null, 
                 function(error) { 
-                    if(This.onWatchEnd) { This.onWatchEnd(); } 
+                    This.endWatchPosition();
+                    if(This.onWatchEnd) { This.onWatchEnd(); }
                     soc.log(error); 
                 },
                 function(position) {
@@ -230,13 +231,16 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
                         This.currentPositionMark.setCenter(latlng);
                     }
                     This.map.setCenter(latlng);
-                    
+                    This.map.setHeading(position.coords.heading);
+                    soc.log(JSON.stringify(position));
                 });
         },
         
         endWatchPosition: function() {
-            if(this.onWatchEnd) this.onWatchEnd();
             locationFactory.clearWatch();
+            if(this.currentPositionMark) this.currentPositionMark.setMap(null);
+            if(this.onWatchEnd) this.onWatchEnd();
+            
         }
     };
 }    
