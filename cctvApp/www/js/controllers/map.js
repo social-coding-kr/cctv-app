@@ -8,566 +8,203 @@ angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $window, $http, soc,
     $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $interval, $ionicPlatform, $cordovaToast, $cordovaNetwork,
-                                $cordovaKeyboard, locationFactory, $ionicModal) {
-
-        $rootScope.centerOnMe = $scope.centerOnMe;
-        $scope.testButtonClick = function() {
-            // TODO: 나중에 다른곳으로 정리
-            if(soc.getFont() == "jejugothic") {
-                soc.setFont("nanumgothic");
-            } else {
-                soc.setFont("jejugothic");
-            }
-        };
-
-        $scope.$on("$ionicView.afterEnter", function(){
-            
-            soc.log("refresh");
-	        $timeout(function() {
-	            // 맵 타일 오딩 오류를 방지한다
-		        google.maps.event.trigger(map, 'resize');
-	        });
-        });
-        
-        $scope.search = {}; // 주소 검색에서 사용하는 변수
-
-        var defaultLatLng = soc.getDefaultLocation();
-
-
-        var mapContainer = document.getElementById('map');
-        var mapOption = {
-            center: new google.maps.LatLng(defaultLatLng.lat, defaultLatLng.lon),
-            zoom: 16,
-            maxZoom: 19,
-            minZoom: 9,    // 서울시 전체가 들어오는 레벨임
-            // 아래는 Control 옵션
-            disableDefaultUI: true,            
-            zoomControl: true,
-            scaleControl: true,
-            streetViewControl: true,
-            mapTypeControl: true,
-        };
-
-        var map = new google.maps.Map(mapContainer, mapOption);
-        var geocoder = new google.maps.Geocoder();
-        
-        //처음에는 공공 및 민간 모두 보여준다.
-        var publicCCTVChecker = 1;
-        var privateCCTVChecker = 1;
-        $scope.isFilteringPrivateCCTV = false;
-        $scope.isFilteringPublicCCTV = false;
-
-        $rootScope.map = map; // centerOnMe 호출시에 사용한다.
-		var markerList = [];
-
-        function deleteMarkers() {
-            for (var i = 0; i < markerList.length; i++) {
-                markerList[i].setMap(null);
-            }            
-            markerList = [];
-        }
-        
-        $scope.cctv_log_string='nothing';
-        $scope.cctvSelected=null;
-        $ionicModal.fromTemplateUrl('templates/cctvdetail.html', {
-            scope: $scope
-        }).then(function(modal) {
-            $scope.cctvDetailModal = modal;
-        });
-        function markerShowInfo(cctv) {
-            $scope.cctv_log_string=JSON.stringify(cctv);
-            soc.getCctvDetail(cctv.cctvId)
-            .then(
-                function(res) {
-                    $scope.cctv_log_string=JSON.stringify(res);
-                    $scope.cctvSelected = res.data;
-                }, function(err) {
-                    $scope.cctv_log_string=JSON.stringify(err);
-                }
-            );
-        }
-        
-        $scope.showCctvDetail = function () {
-            $scope.cctvDetailModal.show();
-        };
-        
-        $scope.closeCctvDetail = function () {
-            $scope.cctvDetailModal.hide();
-        };
-
-        // 지도생성 Begin
-        var mapGenerator = function(map) {
-
-            $scope.lastRequestCenterLat = null;
-            $scope.lastRequestCenterLng = null;
-
-            $scope.refreshMapInfo = function() {
-                $scope.mapInfoCenter = map.getCenter().toString();
-                var bounds = map.getBounds();
-                $scope.mapInfoSW = bounds.getSouthWest().toString();
-                $scope.mapInfoNE = bounds.getNorthEast().toString();
-                $scope.mapInfoZoomLevel = map.getZoom();
-            };
-
-            $scope.requestInfoCount = 0;
-            $scope.requestCctvs = function() {
-
-                $scope.requestInfoCount += 1;
-			    var bounds = map.getBounds();
-
-                // ----------------------
-
-                var northEast   = bounds.getNorthEast();
-                var southWest   = bounds.getSouthWest();
-                var center      = map.getCenter();
-
-                var centerLng   = center.lng();                
-                var centerLat   = center.lat();
-
-                var east    = northEast.lng();
-		        var north   = northEast.lat();
-			    var west    = southWest.lng();
-			    var south   = southWest.lat();
-			    
-			    var width   = east - west;
-			    var height  = north - south;
-
-                // 서버측 API가 준비될때까지 ZoomLevel이 크면 요청을 하지 않는다			    
-			    if(map.getZoom() < 15) {
-
-			        
-			        if(markerList.length > 0) {
-			            var msg = "지도를 확대하면 CCTV 위치가 표시됩니다";
-			            if(ionic.Platform.isWebView()) {
-    			            $cordovaToast.show(msg, 'long', 'bottom')
-                                .then(null);
-    			        } else {
-	    		            alert(msg);
-		    	        }
-		    	        deleteMarkers();
-			        }
-			        
-			        return;
-			    }
-			    
-			    // 실제 요청 Parameter
-			    // 화면에 보이는 2배 요청
-			    var params = {
-			        east:   (centerLng + width  + 0.000005).toFixed(6),
-			        west:   (centerLng - width  - 0.000005).toFixed(6),			        
-			        north:  (centerLat + height + 0.000005).toFixed(6),
-			        south:  (centerLat - height - 0.000005).toFixed(6)
-			    };
-
-			    // 실제 요청할때는 이 범위보다 2배(?) 큰범위를 요청한다
-			    $scope.requestInfoSW = "(" + params.south + ", " + params.west + ")";
-			    $scope.requestInfoNE = "(" + params.north + ", " + params.east + ")";
-
-                $scope.requestInfoCenter = map.getCenter().toString();
-			    $scope.lastRequestCenterLat = map.getCenter().lat();     // 이 변수는 다른곳에서 사용한다
-			    $scope.lastRequestCenterLng = map.getCenter().lng();     // 이 변수는 다른곳에서 사용한다
-
-			    soc.getCctvs(params)
-			        .then(function(res) {
-			            
-                        // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
-
-                        deleteMarkers();
-
-                        var cctvLength = res.data.cctvs.length;
-                        
-                        for(var i=0; i<cctvLength; i++) {
-                            var cctv = res.data.cctvs[i];
-                            
-                            // 마커가 표시될 위치입니다 
-                            var markerPosition  = new google.maps.LatLng(cctv.latitude, cctv.longitude); 
-
-                            // 마커를 생성합니다
-                            var markerImage;
-                            if(cctv.source == "PUBLIC") {
-                                markerImage = soc.data.image.publicMarker;
-                            } else if(cctv.source == "PRIVATE") {
-                                markerImage = soc.data.image.privateMarker;
-                            } else {
-                                markerImage = soc.data.image.defaultMarker;
-                            }
-                            
-                            var marker = new google.maps.Marker({
-                                position: markerPosition,
-                                icon: markerImage,
-                                cctv:cctv, // 마커 자체에 서버에서 받은 cctv 데이터를 포함
-                            });
-                            
-                            marker.addListener('click', function() {
-                                markerShowInfo(this.cctv);
-                            });
-
-                            markerList.push(marker);                                                        
-                        }
-                        
-                        for(i=0; i<markerList.length; i++) {
-                                markerList[i].setMap(map);
-                        }
-
-			            $scope.responseInfoCount = cctvLength;
-                        
-                    }, function(err) {
-                        soc.log("ERROR: " + JSON.stringify(err));
-                    }
-                );
-            };
-
-
-            // 함수 이름은 나중에 수정하자
-            var updateInfo = function(isForce) {
-                // 직전에 서버에 요청했던 Bounds 값과 비교하여
-                // 일정 수준이상 차이가 나면 재요청 한다
-                // 이부분은 적절 값에 대한 결정 필요
-                if(soc.config.isDevelModeVisible) {
-                    $scope.refreshMapInfo();
-                    $scope.$apply();
-                }
-                
-                var bounds = map.getBounds();
-                var lastCenter = new google.maps.LatLng($scope.lastRequestCenterLat, $scope.lastRequestCenterLng);
-                if(bounds.contains(lastCenter) == false || isForce) {
-                    // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
-                    // 재요청하는 것으로 처리함
-                    $scope.requestCctvs();
-                    $scope.$apply();
-                }
-            };
-
-            //민간 cctv의 필터링 여부
-            $scope.privateCCTV = function() {
-                privateCCTVChecker++;
-                if (privateCCTVChecker % 2 == 0) {
-                    $scope.isFilteringPrivateCCTV = true;
-                } else {
-                    $scope.isFilteringPrivateCCTV = false;
-                }
-
-                for (var i = 0; i < markerList.length; i++) {
-                    if (markerList[i].cctv.source == "PRIVATE") {
-                        if($scope.isFilteringPrivateCCTV == true) {
-                            markerList[i].setMap(null);
-                        } else {
-                            markerList[i].setMap(map);
-                        }
-                    }
-                }
-            };
-
-            //공공 cctv의 필터링 여부
-            $scope.publicCCTV = function() {
-                publicCCTVChecker++;
-                if (publicCCTVChecker % 2 == 0) {
-                    $scope.isFilteringPublicCCTV = true;
-                } else {
-                    $scope.isFilteringPublicCCTV = false;
-                }
-                
-                for (var i = 0; i < markerList.length; i++) {
-                    if (markerList[i].cctv.source == "PUBLIC") {
-                        if($scope.isFilteringPublicCCTV == true) {
-                            markerList[i].setMap(null);
-                        } else {
-                            markerList[i].setMap(map);
-                        }
-                    }
-                }
-            };
-            
-            // 중심좌표 이동 이벤트
-            google.maps.event.addListener(map, 'center_changed', function() {
-                // 중심좌표 이동되는 동안 계속 호출된다
-
-                if(soc.config.isDevelModeVisible) {
-                    $scope.refreshMapInfo();
-                    if(!$scope.$$phase) {
-                        $scope.$apply();
-                    }
-                }
-                
-                var bounds = map.getBounds();
-                var lastCenter = new google.maps.LatLng($scope.lastRequestCenterLat, $scope.lastRequestCenterLng);
-                if(bounds.contains(lastCenter) == false) {
-                    // 여기서는 우선 이전에 요청했던 Center 값이 화면 밖으로 벗어나면
-                    // 재요청하는 것으로 처리함
-                    $scope.requestCctvs();
-                    if(soc.config.isDevelModeVisible) {                    
-                        if(!$scope.$$phase) {
-                            $scope.$apply();
-                        }
-                    }
-                }
-                
-            });
-
-            // 확대수준 변경 이벤트
-            google.maps.event.addListener(map, 'zoom_changed', function() {
-
-                // zoomLevel을 확인해서 일정 크기 구간을 벗어나면
-                // CCTV 목록을 재요청한다
-                $scope.requestCctvs();
-                $scope.refreshMapInfo();
-                $scope.$apply();
-                updateInfo(true);
-            });
-
-
-            // google map 에서 loading 을 기다리는 이벤트
-            // 맵이 완전히 로딩된 후 해야할 작업은 여기서 처리한다
-            google.maps.event.addListenerOnce(map, 'idle', function() {
-                soc.log("googleMap Loaded!!!"); 
-                function doMapLoadDefault() {
-                	$scope.refreshMapInfo();
-	        	    $scope.requestCctvs();
-                }
-                locationFactory.getCurrentPosition(locationFactory.defaultOptions).then(
-                    showCurrentPosition,
-                    doMapLoadDefault);
-                    
-                
-            });
-
-            $scope.locationAccu = "위치찾기 시 정확도와 관련된 값이 표시됩니다.";
-            $scope.responseTime = "위치찾기 시 응답시간과 관련된 값이 표시됩니다.";
-        };
-        // 지도생성 End
-
-        mapGenerator(map);
-        
-        $scope.currentPos = {};
-        //내 위치에 마크를 설정하고, 개발자 정보에서 위치정보를 갱신해 주는 함수.
-        function MyLocationMarker(Accuracy, Time) {
-
-            if($scope.currentPos.marker)
-                $scope.currentPos.marker.setMap(null);
-            if($scope.currentPos.circle)                
-                $scope.currentPos.circle.setMap(null);
-            
-            var points = new google.maps.LatLng(myLat, myLng);
-            $scope.currentPos.marker = new google.maps.Marker({
-                position: points
-            });
-            $scope.currentPos.marker.setMap(map);
-            
-
-            if (soc.config.isDevelModeVisible == true) //개발자 정보 옵션이 켜져 있을 경우,
-            {
-                $scope.currentPos.circle = new google.maps.Circle({
-                    center: new google.maps.LatLng(myLat, myLng), // 원의 중심좌표 입니다 
-                    radius: Accuracy, // 미터 단위의 원의 반지름입니다 
-                    strokeWeight: 3, // 선의 두께입니다 
-                    strokeColor: '#75B8FA', // 선의 색깔입니다
-                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                    fillColor: '#CFE7FF', // 채우기 색깔입니다
-                    fillOpacity: 0.4 // 채우기 불투명도 입니다   
-                });
-
-                // 지도에 원을 표시합니다 
-                $scope.currentPos.circle.setMap(map);
-            }
-        }
-
-
-
-        //정확도가 일정 범위를 넘어가면 자신의 위치를 보여주는 것이 아니라 기기 작동을 멈추고 띄우는 토스트.
-        function LowLocationAccuracy(pos) {
-            var accuracy = pos.coords.accuracy;
-            var time = pos.coords.accuracy;                
-            
-            $scope.locationAccu = "이 지점을 기준으로 반경 " + accuracy.toFixed(8) + "미터 안에 있습니다.";
-            $scope.responseTime = time + "ms";
-
-            var alertPopup = $ionicPopup.alert({
-                title: '<span class="cctv-app-font">위치 정확도가 매우 낮습니다.</span>',
-                template: 'GPS가 이용가능한 위치로 이동하거나, 위치찾기 버튼을 다시 한 번 눌러 주세요.'
-            });
-            $rootScope.reportClicked = false;
-            alertPopup.then();
-        }
-
-        function showCurrentPosition(pos, showMarker) {
-            myLat = pos.coords.latitude;
-            myLng = pos.coords.longitude;
-            var accuracy = pos.coords.accuracy;
-            var time = pos.coords.accuracy;                
-            
-            $scope.locationAccu = "이 지점을 기준으로 반경 " + accuracy.toFixed(8) + "미터 안에 있습니다.";
-            $scope.responseTime = time + "ms";
-            
-            $scope.map.setCenter(new google.maps.LatLng(myLat, myLng));                            
-            if(showMarker) {
-                MyLocationMarker(accuracy, time);
-            }
-        }
-        $rootScope.showCurrentPosition = showCurrentPosition;
-        $rootScope.deleteCurrentPosition = function() {
-	        if($scope.currentPos.marker)
-	            $scope.currentPos.marker.setMap(null);
-            if($scope.currentPos.circle)		            
-	            $scope.currentPos.circle.setMap(null);
-        };
-
-
-        //내 위치를 잡아주는 함수
-        $rootScope.centerOnMe = function (isViewLoading)
-        {
-            $scope.isCenterOnMeLoadingComplite = false;
-            isViewLoading = (isViewLoading === undefined)? true : isViewLoading;
-            //내 위치를 잡아주는 함수
-
-            var posOptions = {
-                timeout: soc.config.geoOptions.timeout,
-                enableHighAccuracy: soc.config.geoOptions.enableHighAccuracy,
-                maximumAge: 0,  // 현재위치를 캐시 저장하지 않는다
-            };
-
-            $scope.lastEnableHighAccuracy = posOptions.enableHighAccuracy;
-            $scope.lastTimeout = posOptions.timeout;
-
-            if (!$scope.map) {
-                soc.log("scope.map: not found");
-                return;
-            }
-
-
-
-            if (isViewLoading === true)
-            {
-                $scope.loading = $ionicLoading.show({
-                    content: 'Getting current location...',
-                    showBackdrop: false,
-                    showDelay: 100,
-                });
-            }
-
-            locationFactory
-                .getCurrentPositionSmart(posOptions)
-                .then(function(pos) {
-                    if (isViewLoading === true)
-                    {
-                        $ionicLoading.hide();
-                    }
-
-
-                    myLat = pos.coords.latitude;
-                    myLng = pos.coords.longitude;
-                    var accuracy = pos.coords.accuracy;
-                    var time = pos.coords.accuracy;
-
-                    $scope.locationAccu = "이 지점을 기준으로 반경 " + accuracy.toFixed(8) + "미터 안에 있습니다.";
-                    $scope.responseTime = time + "ms";
-                    $scope.isCenterOnMeLoadingComplite = true;
-                    //정확도가 일정 기준 이내에 들어야 올바른 결과값을 출력한다.
-                    if (accuracy < 200) {
-                        showCurrentPosition(pos, true);
-                    }
-                    else {
-                        LowLocationAccuracy(pos);
-                    }
-                }, function(error) {
-                    if (isViewLoading === true)
-                    {
-                        $ionicLoading.hide();
-                    }
-                    $scope.isCenterOnMeLoadingComplite = false;
-                });
-        };
-
-        $scope.watchLocation = function ()
-        {
-            $scope.centerOnMe(false);
-            if ($scope.watchLocationInterval === undefined)
-            {
-                $scope.watchLocationInterval = $interval(function () {$scope.centerOnMe(false)}, 1000);
-            }
-            else
-            {
-                $interval.cancel($scope.watchLocationInterval);
-                $scope.watchLocationInterval = undefined;
-            }
-
-
-        };
-
-
-        // 등록 확정화면에서 넘어올 때 현재 위치를 잡아주고 뒤로가기 버튼을 없애주는 함수
+                                $cordovaKeyboard, locationFactory, $ionicModal, cctvMapFactory) {
+    
+    $rootScope.AnotherPageToMap = function() {
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
+    };
+    
+    $scope.cctvMap = cctvMapFactory;
+    var mapContainer = document.getElementById('map');
+    
+    $scope.testButtonClick = function() {
+        requestCctvs();
+    };
 
-        $rootScope.AnotherPageToMap = function() {
-            if ($rootScope.reportClicked === false) {
-                $ionicHistory.nextViewOptions({
-                    disableBack: true
-                });
-            }
-            else {
-                // do nothing
-            }
-        };
-
-        $rootScope.AnotherPageToMap();
+    $scope.cctvMap.createMap(mapContainer);
+    
+    $scope.$on("$ionicView.afterEnter", function(){
+        $scope.cctvMap.refreshMap();    
+    });
+    
+    var lastRequestCenter = null;
+    
+    $scope.onMapLoaded = function() {
+        soc.log("map Loaded");
+        // cctv 목록 요청한다
+        requestCctvs();
+    }
+    
+    $scope.onMapZoomChanged = function(zoom, prevZoom) {
+        //soc.log("zoom: " + zoom + ", prevZoom: " + prevZoom);
+        //cctv 목록 요청한다
         
-        $scope.search.keyEvent = function(event) {
+        var zoomHideHigh = 13;
+        if(zoom <= zoomHideHigh) {
+            if(zoom == zoomHideHigh && zoom < prevZoom) {
+                if(ionic.Platform.isWebView()) {
+                    $cordovaToast.show("지도를 확대하면 CCTV가 표시됩니다", 'long', 'bottom');
+                }
+                $scope.cctvMap.hideMarkers();                
+            }
+            return;
+        } else {
+            $scope.cctvMap.showMarkers();
+        }
+        requestCctvs();
+    };
+    
+    $scope.onMapCenterChanged = function(center, prevCenter) {
+        //soc.log("center: " + center + ", prevCenter: " + prevCenter);
+        // cctv 목록 요청한다
+        var needRequest = false;
+        
+        if(lastRequestCenter == null) {
+            needRequest = true;
+        } else {
+            if($scope.cctvMap.map.getBounds().contains(lastRequestCenter) == false) {
+                needRequest = true;
+            }
+        }
+        
+        if(needRequest == true) {
+            lastRequestCenter = center;
+            requestCctvs();
+        }
+    };
+    
+    $scope.onMapClick = function(e) {
+        $scope.hideCctvInfo();
+    };
+
+    $scope.hideCctvInfo = function() {
+        $scope.cctvSelected = null;
+        $scope.$apply();
+    }
+    
+    
+    function requestCctvs() {
+        var params = calculateRequestBounds();            
+
+        soc.getCctvs(params).then(
+            function(response) { $scope.cctvMap.setCctvs(response); },
+            function(response) { lastRequestCenter = null; soc.log(response); }
+        );
+    };
+
+    function calculateRequestBounds() {
+        var center  = $scope.cctvMap.map.getCenter();
+        var bounds  = $scope.cctvMap.map.getBounds();
+        
+        var northEast   = bounds.getNorthEast();
+        var southWest   = bounds.getSouthWest();
+        
+        var centerLng   = center.lng();                
+        var centerLat   = center.lat();
+            
+        var east    = northEast.lng();
+	    var north   = northEast.lat();
+		var west    = southWest.lng();
+		var south   = southWest.lat();
+		
+		var width   = east - west;
+		var height  = north - south;
+		    
+		return {
+		    east:   (centerLng + width  + 0.000005).toFixed(6),
+		    west:   (centerLng - width  - 0.000005).toFixed(6),			        
+		    north:  (centerLat + height + 0.000005).toFixed(6),
+		    south:  (centerLat - height - 0.000005).toFixed(6)
+		};
+    };
+    
+    // 위치 추적 취소는 드래그이벤트 or 다른 메뉴 버튼 서치버튼 터치시
+    $scope.watch = {
+        running: false,
+        toggle: function() {
+            if($scope.watch.running) {
+                $scope.cctvMap.endWatchPosition();
+            } else {
+                $scope.cctvMap.startWatchPosition();
+            }
+        },  
+        onWatchStart: function() {
+            $scope.watch.running = true;
+        },
+        onWatchEnd: function() {
+            $scope.watch.running = false;
+        },
+    };
+    
+    $scope.cctv_log_string='nothing';
+    $scope.cctvSelected=null;
+    $ionicModal.fromTemplateUrl('templates/cctvdetail.html', {
+        scope: $scope
+    }).then(function(modal) {
+        $scope.cctvDetailModal = modal;
+    });    
+    
+    $scope.onMarkerClick = function(cctv) {
+        soc.getCctvDetail(cctv.cctvId).then(
+            function(res) {
+                $scope.cctvSelected = res.data;
+            }, function(err) {
+                soc.log(JSON.stringify(err));
+            }
+        );
+    }    
+    
+    // 주소검색
+    $scope.search = {
+        keyEvent: function(event) {
             $scope.onUsingSearch = true;
             if(event.keyCode == 13) {
                 // EnterKey 입력되었을때 주소 검색을 실행한다
                 // 웹에서는 엔터키, 모바일에서는 소프트키보드의 돋보기키에 해당한다
                 // 모바일에서 돋보기키를 클릭했을때 소프트키보드가 닫혀야 함
                 document.activeElement.blur();  // ActiveElement인 소프트키보드를 닫는다
-                $scope.searchAddress();
+                $scope.search.moveAddress();
                 $scope.search.blur();
             }
-        };
-
-        $scope.search.blur = function () {
-            if(!ionic.Platform.isWebView()) return;
-            if (ionic.Platform.isAndroid() || ionic.Platform.isIOS() || ionic.Platform.isIPad())
-            {
+        },
+        blur: function () {
+            if(ionic.Platform.isWebView()) {
                 $cordovaKeyboard.close();
             }
-
-        };
-
-        // 주소검색 Begin
-        $scope.searchAddress = function() {
-            soc.log($scope.search.address);
-
+        },
+        moveAddress: function() {
+            var geocoder = $scope.cctvMap.geocoder;
             geocoder.geocode({
-                'address': $scope.search.address
+               'address': $scope.search.address,
             }, function(results, status) {
-
-                if (status === google.maps.GeocoderStatus.OK) {
-                    map.setCenter(results[0].geometry.location);
-                }
-                else {
+                if(status === google.maps.GeocoderStatus.OK) {
+                    $scope.cctvMap.map.setCenter(results[0].geometry.location);
+                } else {
                     var searchErrorMsg = "검색결과가 없습니다";
-                    if ($window.plugins != undefined) {
-                        $cordovaToast.show(searchErrorMsg, 'long', 'bottom')
-                            .then(function(success) {
-                                // success
-                            }, function(error) {
-                                // error
-                                soc.log("Toast Error: " + error);
-                            });
-                    } else {
-                        alert(searchErrorMsg);
+                    if (ionic.Platform.isWebView()) {
+                        $cordovaToast.show(searchErrorMsg, 'long', 'bottom');
                     }
                 }
             });
+        },
+    };
+   
+   
+    $scope.initCctvSelect = function () {
+        if ($scope.cctvSelected !== null) {
+            $scope.cctvSelected = null;
+        }
+    };   
+    
+    $scope.cctvMap.onMapCenterChanged   = $scope.onMapCenterChanged;
+    $scope.cctvMap.onMapZoomChanged     = $scope.onMapZoomChanged;
+    $scope.cctvMap.onMapLoaded          = $scope.onMapLoaded;
+    $scope.cctvMap.onMapClick           = $scope.onMapClick;
+    $scope.cctvMap.onWatchStart         = $scope.watch.onWatchStart;
+    $scope.cctvMap.onWatchEnd           = $scope.watch.onWatchEnd;
+    $scope.cctvMap.onMarkerClick        = $scope.onMarkerClick;
 
-        };
-        // 주소검색 End
+});
 
-        $scope.initCctvSelect = function () {
-          if ($scope.cctvSelected !== null)
-          {
-              $scope.cctvSelected = null;
-          }
-        };
-
-    });

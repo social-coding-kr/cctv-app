@@ -18,7 +18,7 @@
                     ng-keypress="search.keyEvent($event)" id="searchInputBox" ng-click="search.address = ''">
             </label>
             &nbsp;
-            <a class="button button-icon ion-ios-navigate" style="color: white;" ng-show="search.address.length > 0" ng-click="searchAddress()"></a>
+            <a class="button button-icon ion-ios-navigate" style="color: white;" ng-show="search.address.length > 0" ng-click="search.moveAddress()"></a>
         </ion-nav-buttons>
     </ion-nav-bar>
 
@@ -44,12 +44,19 @@
 
         <!-- 위치찾기 버튼 -->
         <!-- 지도상의 다른 컨트롤들과 동일한 방식으로 변경 -->
+        <!--
         <div class="watchPositionControl watchPositionFix" ng-click="watchLocation()" 
             ng-class="{true : 'watchPositionActive' , false : ''}[watchLocationInterval !== undefined]"
             ng-show="report.getStatus() == 'none'">
             <span><i class="icon ion-pinpoint" style="font-size : 23px;"></i></span>
         </div>
-
+        -->
+        <div class="watchPositionControl watchPositionFix" ng-click="watch.toggle()" 
+            ng-class="{true : 'watchPositionActive' , false : ''}[watch.running]"
+            ng-show="report.getStatus() == 'none'">
+            <span><i class="icon ion-pinpoint" style="font-size : 23px;"></i></span>
+        </div>
+        
         <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
         <!--<div class="custom_zoomcontrol radius_border"> 
             <span ng-click="zoomIn()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>
@@ -58,10 +65,14 @@
         <!-- 확대/축소 컨트롤은 우선 구글지도 기본 버튼을 사용 -->
         
         <!-- 공공, 민간 필터링 div 입니다 -->
-        <div class="filterControl publicFilterPositionFix" ng-class="{true : '' , false : 'filterPublicInActive'}[isFilteringPublicCCTV]" ng-click="publicCCTV()">
+        <div class="filterControl publicFilterPositionFix" 
+            ng-class="{true : '' , false : 'filterPublicInActive'}[cctvMap.filterHide.PUBLIC]" 
+            ng-click="cctvMap.toggleFilter('PUBLIC')">
             공공
         </div>
-        <div class="filterControl privateFilterPositionFix" ng-class="{true : '' , false : 'filterPrivateInActive'}[isFilteringPrivateCCTV]" ng-click="privateCCTV()">
+        <div class="filterControl privateFilterPositionFix" 
+            ng-class="{true : '' , false : 'filterPrivateInActive'}[cctvMap.filterHide.PRIVATE]" 
+            ng-click="cctvMap.toggleFilter('PRIVATE')">
             민간
         </div>
 

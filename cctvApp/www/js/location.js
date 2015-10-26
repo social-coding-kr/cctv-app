@@ -5,7 +5,7 @@ angular.module('starter.controllers')
     '$cordovaDialogs', '$ionicPopup', '$rootScope', 'soc',
 function($q, $cordovaDiagnostic, $cordovaGeolocation, $cordovaDialogs, $ionicPopup, $rootScope, soc) {
     
-
+    var watch = null;
     function confirmLocationSetting() {
         // 위치정보를 사용할 수 없습니다 (켤래요?)
         $cordovaDialogs.confirm('내 위치정보를 사용하려면 단말기의 설정에서 위치서비스 사용을 허용해 주세요.', '위치서비스 사용', ['설정하기','취소'])
@@ -104,23 +104,14 @@ function($q, $cordovaDiagnostic, $cordovaGeolocation, $cordovaDialogs, $ionicPop
     }
 
     function realWatchPosition(id, options) {
-        var watchID = $cordovaGeolocation.watchPosition(options).then(
+        watch = $cordovaGeolocation.watchPosition(options);
+        watch.then(
             null,
             function(error) {
                 onLocationFailed(id, error);
             }, function(result) {
                 onWatchLocationSuccess(id, result);
             });
-                
-            id.q.promise.cancel = function () {
-                navigator.geolocation.clearWatch(watchID);
-            };                
-                
-        id.q.promise.clearWatch = function (watchid) {
-            $cordovaGeolocation.clearWatch(watchid || watchID);
-        };
-        
-        id.q.promise.watchID = watchID;
     }
 
     function watchPositionProcess(id, options) {
@@ -147,6 +138,7 @@ function($q, $cordovaDiagnostic, $cordovaGeolocation, $cordovaDialogs, $ionicPop
     }
     
     return {
+        watch: null,
         defaultOptions: {
             timeout: soc.config.geoOptions.timeout,
             enableHighAccuracy: soc.config.geoOptions.enableHighAccuracy,
@@ -170,23 +162,33 @@ function($q, $cordovaDiagnostic, $cordovaGeolocation, $cordovaDialogs, $ionicPop
             return q.promise;
         },
         watchPositionSmart: function(options) {
+            if(watch) return;
+            
             // 위치추적 시도시 위치서비스가 꺼져있으면 위치서비스 켜기 팝업을 띄운다
             var q = $q.defer();
             var id = InternalData(q, true);
             watchPositionProcess(id, options);
+            soc.log("ON watch: " + JSON.stringify(watch));               
             
             return q.promise;    
         },
         watchPosition: function(options) {
+            if(watch) return;
+            
             // 위치추적 시도시 위치서비스가 꺼져있으면 그냥 실패만 리턴한다
             var q = $q.defer();
             var id = InternalData(q, false);
-            watchPositionProcess(id, options);
+            watch = watchPositionProcess(id, options);
+            soc.log("ON watch: " + JSON.stringify(watch));            
             
             return q.promise;    
         }, 
-        clearWatch: function (watchID) {
-            return $cordovaGeolocation.clearWatch(watchID);
+        clearWatch: function () {
+            if(watch==null) return;
+
+            soc.log("OFF watch: " + JSON.stringify(watch));            
+            watch.clearWatch();
+            watch = null;
         },
     }
 }    

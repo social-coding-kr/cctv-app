@@ -2,13 +2,39 @@
 angular.module('starter.controllers')
 
 .factory('cctvReportFactory', ['$q', 'soc', '$rootScope', 'locationFactory', '$ionicPopup', '$http',
-    '$location', '$cordovaCamera', '$cordovaToast', '$cordovaFile', '$ionicHistory',
+    '$location', '$cordovaCamera', '$cordovaToast', '$cordovaFile', '$ionicHistory', 'cctvMapFactory',
 function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $cordovaCamera,
-    $cordovaToast, $cordovaFile, $ionicHistory) {
+    $cordovaToast, $cordovaFile, $ionicHistory, cctvMapFactory) {
 
     function onError(error) {
         // TODO: 에러 처리 수정
         alert(error);
+    }
+    
+    // 손좀 봐야됨
+    function showCurrentPosition(pos, showMarker) {
+        /*
+        var myLat = pos.coords.latitude;
+        var myLng = pos.coords.longitude;
+        var accuracy = pos.coords.accuracy;
+        var time = pos.coords.accuracy;                
+        
+
+        cctvMapFactory.map.setCenter(new google.maps.LatLng(myLat, myLng));                            
+        if(showMarker) {
+            MyLocationMarker(accuracy, time);
+        }
+        */
+    };
+    
+    function MyLocationMarker(Accuracy, Time) {
+        /*
+        var points = new google.maps.LatLng(myLat, myLng);
+        $scope.currentPos.marker = new google.maps.Marker({
+            position: points
+        });
+        $scope.currentPos.marker.setMap(map);
+        */
     }
     
     function getBlobImage(filepath) {
@@ -126,7 +152,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                     This.lat = result.coords.latitude;
                     This.lng = result.coords.longitude;
                     //alert("지도에 위치를 표시했다고 친다");
-                    $rootScope.showCurrentPosition(result, true);
+                    showCurrentPosition(result, true);
                     
                 }, function(error) {
                     This.status = "failed";
