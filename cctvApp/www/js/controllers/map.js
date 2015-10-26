@@ -20,7 +20,7 @@ angular.module('starter.controllers')
     var mapContainer = document.getElementById('map');
     
     $scope.testButtonClick = function() {
-        requestCctvs();
+        $scope.cctvMap.refreshMap();
     };
 
     $scope.cctvMap.createMap(mapContainer);
@@ -82,11 +82,18 @@ angular.module('starter.controllers')
     $scope.onMapClick = function(e) {
         soc.log("ha");
         $scope.hideCctvInfo();
+        $scope.$apply();
     };
+
+    $scope.showCctvInfo = function(detail) {
+        soc.log(detail);
+        $scope.cctvSelected = detail;
+        $scope.cctvMap.refreshMap();
+    }
 
     $scope.hideCctvInfo = function() {
         $scope.cctvSelected = null;
-        $scope.$apply();
+        $scope.cctvMap.refreshMap();
     }
     
     
@@ -144,7 +151,7 @@ angular.module('starter.controllers')
     };
     
     $scope.cctv_log_string='nothing';
-    $scope.cctvSelected=null;
+    $scope.hideCctvInfo();
     $ionicModal.fromTemplateUrl('templates/cctvdetail.html', {
         scope: $scope
     }).then(function(modal) {
@@ -154,7 +161,9 @@ angular.module('starter.controllers')
     $scope.onMarkerClick = function(cctv) {
         soc.getCctvDetail(cctv.cctvId).then(
             function(res) {
-                $scope.cctvSelected = res.data;
+                soc.log(JSON.stringify(res));
+                //$scope.cctvSelected = res.data;
+                $scope.showCctvInfo(res.data);
             }, function(err) {
                 soc.log(JSON.stringify(err));
             }
@@ -204,13 +213,13 @@ angular.module('starter.controllers')
     $scope.closeCctvDetail = function () {
         $scope.cctvDetailModal.hide();
     };
-
+/*
     $scope.initCctvSelect = function () {
         if ($scope.cctvSelected !== null) {
             $scope.cctvSelected = null;
         }
     };   
-    
+*/    
     $scope.cctvMap.onMapCenterChanged   = $scope.onMapCenterChanged;
     $scope.cctvMap.onMapZoomChanged     = $scope.onMapZoomChanged;
     $scope.cctvMap.onMapLoaded          = $scope.onMapLoaded;

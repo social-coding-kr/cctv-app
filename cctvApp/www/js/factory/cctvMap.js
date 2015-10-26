@@ -26,9 +26,10 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         // 아래는 Control 옵션
         disableDefaultUI: true,
         zoomControl: true,
+        /*
         zoomControlOptions: {
             position: google.maps.ControlPosition.RIGHT_CENTER,
-        },
+        },*/
         scaleControl: true,
         streetViewControl: true,
         mapTypeControl: true,
@@ -199,7 +200,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             if(this.mapLoaded == false) return;
             $timeout(function() {
                 maps.event.trigger(This.map, 'resize'); // 맵타일을 못불러오는 오류를 방지한다
-            });
+            }, 50);
         },
         
         startWatchPosition: function() {
