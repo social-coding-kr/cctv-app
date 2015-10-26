@@ -6,37 +6,9 @@ angular.module('starter.controllers')
 function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $cordovaCamera,
     $cordovaToast, $cordovaFile, $ionicHistory, cctvMapFactory) {
 
-    function onError(error) {
-        // TODO: 에러 처리 수정
-        alert(error);
-    }
-    
-    // 손좀 봐야됨
-    function showCurrentPosition(pos, showMarker) {
-        /*
-        var myLat = pos.coords.latitude;
-        var myLng = pos.coords.longitude;
-        var accuracy = pos.coords.accuracy;
-        var time = pos.coords.accuracy;                
-        
 
-        cctvMapFactory.map.setCenter(new google.maps.LatLng(myLat, myLng));                            
-        if(showMarker) {
-            MyLocationMarker(accuracy, time);
-        }
-        */
-    };
-    
-    function MyLocationMarker(Accuracy, Time) {
-        /*
-        var points = new google.maps.LatLng(myLat, myLng);
-        $scope.currentPos.marker = new google.maps.Marker({
-            position: points
-        });
-        $scope.currentPos.marker.setMap(map);
-        */
-    }
-    
+
+
     function getBlobImage(filepath) {
         var q = $q.defer();
         var blobImage = null;
@@ -95,6 +67,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         noticeImageBinary: null,
         cctvPhotoProcess: false,
         noticePhotoProcess: false,
+        
+        reportMarker: null,
 
         clear: function() {
             //this.path 는 초기화 금지
@@ -131,6 +105,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             var currentCoord = this.lng + "," + this.lat;
             //alert(this.lat + ", " + this.lng);            
             soc.getAdressFromPoint(currentCoord);
+            
+            this.hideCurrentPosition();
         },
 
         endReport: function() {
@@ -142,6 +118,18 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             //$rootScope.deleteCurrentPosition();
         },
 
+        showCurrentPosition: function(pos) {
+            var latlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+            cctvMapFactory.map.setCenter(latlng);                            
+        
+            this.reportMarker = new google.maps.Marker({
+                position: latlng
+            });
+            this.reportMarker.setMap(cctvMapFactory.map);
+        },
+        hideCurrentPosition: function() {
+            if(this.reportMarker) this.reportMarker.setMap(null);
+        },
         findPosition: function() {
             var This = this;
             // 위치 탐색
@@ -152,7 +140,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                     This.lat = result.coords.latitude;
                     This.lng = result.coords.longitude;
                     //alert("지도에 위치를 표시했다고 친다");
-                    showCurrentPosition(result, true);
+                    This.showCurrentPosition(result);
                     
                 }, function(error) {
                     This.status = "failed";
