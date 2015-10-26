@@ -31,19 +31,19 @@
       <div class="row">
         <div class="col">
           <ion-list>
-            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
+            <ion-item menu-close class="item item-icon-left" href="#/app/map">
               <i class="icon ion-university"></i>
               <span>CCTV 지도</span>
             </ion-item>
-            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="locationInfoConfirm()">
+            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
               <i class="icon ion-speakerphone"></i>
               <span>CCTV 위치신고</span>
             </ion-item>
-            <ion-item menu-close class="item item-icon-left" href="#/app/cctvlaw" ng-click="">
+            <ion-item menu-close class="item item-icon-left" href="#/app/cctvlaw">
               <i class="icon ion-university"></i>
               <span>CCTV 관련법</span>
             </ion-item>
-            <ion-item menu-close class="item item-icon-left" href="#" ng-click="">
+            <ion-item menu-close class="item item-icon-left" href="#">
               <i class="icon ion-android-wifi"></i>
               <span>로그인</span>
             </ion-item>
@@ -66,20 +66,6 @@
               <div class="item item-divider">
                 <span>개발자용</span>
               </div>
-              <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
-                <i class="icon ion-camera"></i>
-                신고 테스트
-              </ion-item>
-              <!--
-              <ion-item menu-close class="item item-icon-left" href="#/app/mapTest2">
-                <i class="icon ion-map"></i>
-                GoogleMap Test
-              </ion-item>              
-              <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
-                <i class="icon ion-map"></i>
-                Home
-              </ion-item>
-              -->
               <ion-item menu-close ng-click="login()">
                 Login
               </ion-item>
@@ -104,28 +90,9 @@
               <ion-item menu-close href="#/app/oauthApiTest" ng-show="soc.config.isDevelModeVisible">
                 Oauth API Test
               </ion-item>
-              <ion-item menu-close href="#/app/map" ng-click="locationInfoConfirm()">
-                신고용
-              </ion-item>
               <ion-item menu-close href="#/app/backButtonTest" ng-show="soc.config.isDevelModeVisible">
                 backButtonTest
               </ion-item>
-              <!--
-              <ion-item menu-close class="item item-icon-left" href="#/app/mapTest">
-                <i class="icon ion-map"></i>
-                지도Test
-              </ion-item>
-              <ion-item menu-close class="item item-icon-left" href="#/app/config">
-                <i class="icon ion-gear-a"></i>
-                설정
-              </ion-item>
-        
-              <div class="button-bar">
-                <button class="button button-stable button-block button-small">방범용</button>
-                <button class="button button-stable button-block button-small">교통용</button>
-                <button class="button button-calm button-block button-small">몰라용</button>
-              </div>
-              -->
             </ion-list>
         </div>
       </div>
