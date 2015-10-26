@@ -7,8 +7,6 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
     $cordovaToast, $cordovaFile, $ionicHistory, cctvMapFactory) {
 
 
-
-
     function getBlobImage(filepath) {
         var q = $q.defer();
         var blobImage = null;
@@ -29,16 +27,6 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             }, function(error) {
                 q.reject(error);
             });        
-            /*
-            var reader = new FileReader();
-            reader.onloadend = function(e) {
-                blobImage = new Blob([reader.result], {type: "image/jpeg"});
-                q.resolve(blobImage);
-            };
-            var filePath = "file://" + filepath;
-            alert(window.cordova.file.applicationDirectory);
-            reader.readAsArrayBuffer(filePath);
-            */
         } else {
             var fullPath = filepath;
             var fileName = fullPath.replace(/^.*[\\\/]/, '');
@@ -79,6 +67,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             this.noticeImage = null;
             this.cctvPhotoProcess = false;
             this.noticePhotoProcess = false;
+            this.reportMarker= null;
 
             if(ionic.Platform.isWebView()) {
                 this.cameraOptions= {
@@ -106,10 +95,10 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             //alert(this.lat + ", " + this.lng);            
             soc.getAdressFromPoint(currentCoord);
             
-            this.hideCurrentPosition();
         },
 
         endReport: function() {
+            this.hideCurrentPosition();            
             this.clear();            
             $location.path(this.mapPath);
             $ionicHistory.nextViewOptions({
@@ -128,6 +117,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             this.reportMarker.setMap(cctvMapFactory.map);
         },
         hideCurrentPosition: function() {
+            soc.log("hide");
+            soc.log(this.reportMarker);
             if(this.reportMarker) this.reportMarker.setMap(null);
         },
         findPosition: function() {
@@ -139,7 +130,6 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                     This.status = "foundPosition";
                     This.lat = result.coords.latitude;
                     This.lng = result.coords.longitude;
-                    //alert("지도에 위치를 표시했다고 친다");
                     This.showCurrentPosition(result);
                     
                 }, function(error) {
