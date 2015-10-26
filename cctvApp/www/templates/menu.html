@@ -18,7 +18,7 @@
   </ion-side-menu-content>
 
   <!-- Side Menu Contents start -->
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" class="bg-common-app-color">
     <ion-content>
       <!-- login area -->
       <div class="row">
@@ -29,33 +29,27 @@
       <!-- misc area -->
 
       <div class="row">
-        <div class="col">
-          <ion-list>
-            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
-              <i class="icon ion-university"></i>
+        <div class="col cctv-menu-box-shadow" style="background-color: white;">
+          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#/app/map" ng-click="nowReportUnclicked()">
+            <i class="icon ion-university"></i>
               <span>CCTV 지도</span>
-            </ion-item>
-            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="locationInfoConfirm()">
-              <i class="icon ion-speakerphone"></i>
-              <span>CCTV 위치신고</span>
-            </ion-item>
-            <ion-item menu-close class="item item-icon-left" href="#/app/cctvlaw" ng-click="">
-              <i class="icon ion-university"></i>
-              <span>CCTV 관련법</span>
-            </ion-item>
-            <ion-item menu-close class="item item-icon-left" href="#" ng-click="">
-              <i class="icon ion-android-wifi"></i>
-              <span>로그인</span>
-            </ion-item>
-            <div class="item item-divider">
-              <span>&nbsp;</span>
-            </div>
-            <ion-item menu-close class="item item-icon-left" href="#/app/config" ng-click="nowReportUnclicked()">
-              <i class="icon ion-gear-b"></i>
-              <span>설정</span>
-            </ion-item>
-
-          </ion-list>
+          </button>
+          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#/app/map" ng-click="locationInfoConfirm()">
+            <i class="icon ion-speakerphone"></i>
+            <span>CCTV 위치신고</span>
+          </button>
+          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#/app/cctvlaw" ng-click="">
+            <i class="icon ion-university"></i>
+            <span>CCTV 관련법</span>
+          </button>
+          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;" href="#" ng-click="">
+            <i class="icon ion-android-wifi"></i>
+            <span>로그인</span>
+          </button>
+          <button menu-close  class="button button-full button-clear button-dark cctv-text-left" style="padding-left: 30px;"  href="#/app/config" ng-click="nowReportUnclicked()">
+            <i class="icon ion-gear-b"></i>
+            <span>설정</span>
+          </button>
         </div>
       </div>
       <!-- debug menu -->
@@ -69,12 +63,12 @@
               <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
                 <i class="icon ion-camera"></i>
                 신고 테스트
-              </ion-item>              
+              </ion-item>
               <!--
               <ion-item menu-close class="item item-icon-left" href="#/app/mapTest2">
                 <i class="icon ion-map"></i>
                 GoogleMap Test
-              </ion-item>              
+              </ion-item>
               <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
                 <i class="icon ion-map"></i>
                 Home
@@ -119,7 +113,7 @@
                 <i class="icon ion-gear-a"></i>
                 설정
               </ion-item>
-        
+
               <div class="button-bar">
                 <button class="button button-stable button-block button-small">방범용</button>
                 <button class="button button-stable button-block button-small">교통용</button>

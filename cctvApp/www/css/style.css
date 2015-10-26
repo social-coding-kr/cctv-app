@@ -80,3 +80,12 @@ textarea#devel_log {
 .bg-input-box-highlight {
 	background-color : #CAFFFC;
 }
+
+.cctv-menu-item {
+	border: 0px;
+	background-color : #15cfce !important;
+}
+
+.cctv-menu-box-shadow {
+	box-shadow: 3px 3px 8px 10px gray inset;
+}
