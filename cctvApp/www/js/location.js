@@ -2,13 +2,13 @@
 angular.module('starter.controllers')
 
 .factory('locationFactory', ['$q', '$cordovaDiagnostic', '$cordovaGeolocation',
-    '$cordovaDialogs', '$ionicPopup', '$rootScope', 'soc',
-function($q, $cordovaDiagnostic, $cordovaGeolocation, $cordovaDialogs, $ionicPopup, $rootScope, soc) {
+    '$cordovaDialogs', '$ionicPopup', '$rootScope', 'soc', '$cordovaToast',
+function($q, $cordovaDiagnostic, $cordovaGeolocation, $cordovaDialogs, $ionicPopup, $rootScope, soc, $cordovaToast) {
     
     var watch = null;
     function confirmLocationSetting() {
         // 위치정보를 사용할 수 없습니다 (켤래요?)
-        $cordovaDialogs.confirm('내 위치정보를 사용하려면 단말기의 설정에서 위치서비스 사용을 허용해 주세요.', '위치서비스 사용', ['설정하기','취소'])
+        $cordovaDialogs.confirm('내 위치정보 사용을 위해 단말기 설정에서 위치서비스 사용을 허용한 후 다시 시도해주세요.', '위치서비스 사용', ['설정하기','취소'])
             .then(function(buttonIndex) {
             // no button = 0, 'OK' = 1, 'Cancel' = 2
             var btnIndex = buttonIndex;
@@ -46,15 +46,18 @@ function($q, $cordovaDiagnostic, $cordovaGeolocation, $cordovaDialogs, $ionicPop
             case error.UNKNOWN_ERROR:
                 alertOptions = {
                     title: '위치찾기 실패',
-                    template: '알려지지 않은 이유',
+                    template: '알수없는 이유로 위치정보를 가져오는데 실패하였습니다',
                 };
                 break;
         }
 
-        var alertPopup = $ionicPopup.alert(alertOptions);
+        if(ionic.Platform.isWebView()) {
+            $cordovaToast.show(alertOptions.template, 'long', 'bottom');
+        } else {
+            var alertPopup = $ionicPopup.alert(alertOptions);
+            alertPopup.then();
+        }
 
-        $rootScope.reportClicked = false;
-        alertPopup.then();
     }
     
     function onLocationSuccess(id, result) {
