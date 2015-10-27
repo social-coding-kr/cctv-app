@@ -41,7 +41,8 @@ angular.module('starter.controllers')
         $scope.onMapZoomChanged = function(zoom, prevZoom) {
             //soc.log("zoom: " + zoom + ", prevZoom: " + prevZoom);
             //cctv 목록 요청한다
-
+            soc.log(zoom + ", " + prevZoom);
+            
             var zoomHideHigh = 13;
             if (zoom <= zoomHideHigh) {
                 if (zoom == zoomHideHigh) {
@@ -55,12 +56,10 @@ angular.module('starter.controllers')
                         }
                     }
                 }
-                return;
-            }
-            else {
+            } else {
                 $scope.cctvMap.showMarkers();
+                requestCctvs();                
             }
-            requestCctvs();
         };
 
         $scope.onMapCenterChanged = function(center, prevCenter) {
