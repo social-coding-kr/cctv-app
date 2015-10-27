@@ -17,6 +17,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         geocoder: null,
         mapLoaded: false,
 
+        cctvHideHighZoom: 13,
         filterHide: {
             PUBLIC: false,
             PRIVATE: false,
@@ -188,10 +189,16 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             var isHide = (this.filterHide[cctv.source] == true);
             var onMap = cctv.marker.getMap();
             
-            if(isHide) {
-                if(onMap) cctv.marker.setMap(null);
+            if(this.map.getZoom() <= this.cctvHideHighZoom) {
+                cctv.marker.setMap(null);
+                
             } else {
-                if(!onMap) cctv.marker.setMap(this.map);
+            
+                if(isHide) {
+                    if(onMap) cctv.marker.setMap(null);
+                } else {
+                    if(!onMap) cctv.marker.setMap(this.map);
+                }
             }
         },
         hideMarkers: function() {

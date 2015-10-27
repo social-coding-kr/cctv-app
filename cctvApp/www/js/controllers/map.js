@@ -37,15 +37,16 @@ angular.module('starter.controllers')
             // cctv 목록 요청한다
             requestCctvs();
         }
-
+        
+        var zoomHideHigh = 13;
         $scope.onMapZoomChanged = function(zoom, prevZoom) {
             //soc.log("zoom: " + zoom + ", prevZoom: " + prevZoom);
             //cctv 목록 요청한다
             soc.log(zoom + ", " + prevZoom);
             
-            var zoomHideHigh = 13;
-            if (zoom <= zoomHideHigh) {
-                if (zoom == zoomHideHigh) {
+
+            if(zoom < zoomHideHigh) {
+                if (zoom == zoomHideHigh || zoom == zoomHideHigh-1) {
                     $scope.cctvMap.hideMarkers();
                     if (zoom < prevZoom) {
                         if (ionic.Platform.isWebView()) {
@@ -58,8 +59,9 @@ angular.module('starter.controllers')
                 }
             } else {
                 $scope.cctvMap.showMarkers();
-                requestCctvs();                
+                requestCctvs();                            
             }
+            $scope.cctvMap.refreshMap();
         };
 
         $scope.onMapCenterChanged = function(center, prevCenter) {
@@ -101,6 +103,10 @@ angular.module('starter.controllers')
 
 
         function requestCctvs() {
+            soc.log("request In");
+            if ($scope.cctvMap.map.getZoom() <= zoomHideHigh) return;
+            
+            soc.log("request Start");
             var params = calculateRequestBounds();
 
             soc.getCctvs(params).then(
