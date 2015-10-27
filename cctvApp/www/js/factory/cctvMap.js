@@ -185,10 +185,13 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             }
         },
         refreshMarker: function(cctv) {
-            if(this.filterHide[cctv.source] == true) {
-                cctv.marker.setMap(null);
+            var isHide = (this.filterHide[cctv.source] == true);
+            var onMap = cctv.marker.getMap();
+            
+            if(isHide) {
+                if(onMap) cctv.marker.setMap(null);
             } else {
-                cctv.marker.setMap(this.map);
+                if(!onMap) cctv.marker.setMap(this.map);
             }
         },
         hideMarkers: function() {
