@@ -33,7 +33,15 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         onMarkerClick: null,
 
         cctvList: null,
-        currentPositionMark: null,
+        currentPositionMark: new google.maps.Circle({
+                            center: new google.maps.LatLng(defaultLocation.latitude, defaultLocation.longitude),
+                            radius: 10,
+                            strokeWeight: 3,
+                            strokeColor: '#EE0000',
+                            strokeOpacity: 0.5,
+                            fillColor: '#CC0000',
+                            fillOpacity: 0.9
+                        }),
 
         last: {
             zoom: null,  
@@ -218,20 +226,9 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
                 },
                 function(position) {
                     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    if(This.currentPositionMark == null) {
-                        This.currentPositionMark = new google.maps.Circle({
-                            center: latlng,
-                            radius: 10,
-                            strokeWeight: 3,
-                            strokeColor: '#EE0000',
-                            strokeOpacity: 0.5,
-                            fillColor: '#CC0000',
-                            fillOpacity: 0.9
-                        });
-                        This.currentPositionMark.setMap(This.map);
-                    } else {
-                        This.currentPositionMark.setCenter(latlng);
-                    }
+                    This.currentPositionMark.setMap(null);
+                    This.currentPositionMark.setMap(This.map);
+                    This.currentPositionMark.setCenter(latlng);
                     This.map.setCenter(latlng);
                     This.map.setHeading(position.coords.heading);
                     soc.log(JSON.stringify(position));
