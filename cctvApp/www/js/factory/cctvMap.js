@@ -2,40 +2,16 @@
 angular.module('starter.controllers')
 
 .factory('cctvMapFactory', ['$q', 'soc', '$rootScope', 'locationFactory', '$ionicPopup', '$http',
-    '$location', '$cordovaToast', '$timeout',
+    '$location', '$cordovaToast', '$timeout', '$ionicPlatform',
 function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
-    $cordovaToast, $timeout) {
+    $cordovaToast, $timeout, $ionicPlatform) {
 
-    var maps = google.maps;
-
-    function onError(error) {
-        // TODO: 에러 처리 수정
-        alert(error);
-    }
-    
+    var maps;
     var defaultLocation = {
         latitude: 37.5665,
         longitude: 126.97864
     };
-    
-    var mapOptions = {
-        center: new maps.LatLng(defaultLocation.latitude, defaultLocation.longitude),
-        zoom: 16,
-        maxZoom: 19,
-        minZoom: 9, // 서울시 전체가 들어오는 레벨임
-        // 아래는 Control 옵션
-        disableDefaultUI: true,
-        zoomControl: true,
-        /*
-        zoomControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_CENTER,
-        },*/
-        scaleControl: true,
-        streetViewControl: true,
-        mapTypeControl: true,
-    };    
-    
-    
+
     return {
         map: null,
         geocoder: null,
@@ -50,6 +26,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         onMapZoomChanged: null,
         onMapCenterChanged: null,
         onMapDragStart: null,
+        onMapDragEnd: null,
         onMapClick: null,
         onWatchStart: null,
         onWatchEnd: null,
@@ -64,11 +41,31 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             bounds: null,
         },
         
+        mapOptions: {
+            center: new google.maps.LatLng(defaultLocation.latitude, defaultLocation.longitude),
+            zoom: 16,
+            maxZoom: 19,
+            minZoom: 9, // 서울시 전체가 들어오는 레벨임
+            // 아래는 Control 옵션
+            disableDefaultUI: true,
+            zoomControl: true,
+            /*
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_CENTER,
+            },*/
+            scaleControl: true,
+            streetViewControl: true,
+            mapTypeControl: true,
+        },
+        
         clear: function() {
         },
+        
         createMap: function(container) {
+            maps = google.maps;
+            
             var This = this;
-            this.map = new maps.Map(container, mapOptions);
+            this.map = new maps.Map(container, this.mapOptions);
             this.geocoder = new maps.Geocoder();
 
             maps.event.addListenerOnce(this.map, 'idle', function() { 
@@ -99,6 +96,11 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             maps.event.addListener(this.map, 'dragstart', function() {
                 This.endWatchPosition();
                 if(This.onMapDragStart) This.onMapDragStart();
+            });
+
+            maps.event.addListener(this.map, 'dragend', function() {
+                This.endWatchPosition();
+                if(This.onMapDragEnd) This.onMapDragEnd();
             });
             
             maps.event.addListener(this.map, 'click', function(e) {
@@ -243,5 +245,6 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             
         }
     };
+
 }    
 ]);
