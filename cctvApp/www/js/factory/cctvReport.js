@@ -141,6 +141,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         prepareReport: function() {
             this.clear();
             var This = this;
+            
+            cctvMapFactory.endWatchPosition();
             $ionicPopup.show({title :'<span class="cctv-app-font">위치정보 제공에 동의하십니까?</span>',
                       buttons: [{ 
                         text: '동의',
