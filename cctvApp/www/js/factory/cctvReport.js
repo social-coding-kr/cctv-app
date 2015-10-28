@@ -110,7 +110,14 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                 });
             //$rootScope.deleteCurrentPosition();
         },
-
+        
+        cancelReport: function() {
+            soc.log("cancel");
+            if(ionic.Platform.isWebView()) {      
+                $cordovaToast.show('CCTV 위치 등록이 취소되었습니다', 'long', 'bottom');
+            }
+            this.endReport();
+        },
         showCurrentPosition: function(pos) {
             var latlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
             cctvMapFactory.map.setCenter(latlng);                            
