@@ -131,6 +131,15 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             // 동일한 cctvId의 위치는 바뀌지 않는다고 가정한다
             // 기존 리스트에 이미 존재하는 마커를 새 리스트에 가지고 온다
             
+            if(response === null) {
+                var values = this.cctvList.values();
+                for(var i in values) {
+                    values[i].marker.setMap(null);
+                }
+                delete this.cctvList;
+                return;
+            }
+            
             var cctvs = response.data.cctvs;
             var cctvList = new hashMap();
             
@@ -169,7 +178,16 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
                 
 
             }
-            // 마커 setMap(null) 을 하지 안아도 되는지 확인 필요
+            
+            var values = this.cctvList.values();
+            for(var i in values) {
+                var cctv = values[i];
+                if(!cctvList.containsKey(cctv.cctvId)) {
+                    //soc.log(cctv.cctvId);
+                    cctv.marker.setMap(null);
+                }
+            }
+            
             delete this.cctvList;
             this.cctvList = cctvList;
             
