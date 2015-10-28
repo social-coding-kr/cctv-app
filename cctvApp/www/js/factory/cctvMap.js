@@ -137,6 +137,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
                     values[i].marker.setMap(null);
                 }
                 delete this.cctvList;
+                this.cctvList = new hashMap();
                 return;
             }
             
