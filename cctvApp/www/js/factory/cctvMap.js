@@ -132,9 +132,9 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             // 기존 리스트에 이미 존재하는 마커를 새 리스트에 가지고 온다
             
             if(response === null) {
-                var values = this.cctvList.values();
-                for(var i in values) {
-                    values[i].marker.setMap(null);
+                var markers = this.cctvList.values();
+                for(var i in markers) {
+                    markers[i].setMap(null);
                 }
                 delete this.cctvList;
                 this.cctvList = new hashMap();
@@ -147,11 +147,12 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             for(var i in cctvs) {
                 
                 var cctv = cctvs[i];
-                var oldCctv = this.cctvList.get(cctv.cctvId);
+                var oldMarker = this.cctvList.get(cctv.cctvId);
                 
-                if(oldCctv) {
+                var marker;
+                if(oldMarker) {
                     // 맵에 이미 존재하면 기존 마커를 가져온다
-                    cctv.marker = oldCctv.marker;
+                    marker = oldMarker;
                 } else {
                     // 맵에 없으면 마커를 새로 생성한다
                     var markerIcon;
@@ -162,30 +163,33 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
                     } else {
                         markerIcon = soc.data.image.defaultMarker;
                     }
-                    
-                    cctv.marker = new maps.Marker({
+                    //soc.log(this.cctv.cctvId);
+                    var marker = new maps.Marker({
                        position: new maps.LatLng(cctv.latitude, cctv.longitude),
-                       icon: markerIcon
+                       icon: markerIcon,
+                       cctv: cctv,
                     });
                     
-                    cctv.marker.addListener('click', function() {
-                        if(This.onMarkerClick) This.onMarkerClick(cctv);
+                    //soc.log(cctv.cctvId);
+                    
+                    marker.addListener('click', function() {
+                        if(This.onMarkerClick) This.onMarkerClick(this.cctv);
                     });
                     
                     // 마커의 클릭 이벤트 설정
                 }
                 
-                cctvList.put(cctv.cctvId, cctv);
+                cctvList.put(cctv.cctvId, marker);
                 
 
             }
             
-            var values = this.cctvList.values();
-            for(var i in values) {
-                var cctv = values[i];
-                if(!cctvList.containsKey(cctv.cctvId)) {
+            var markers = this.cctvList.values();
+            for(var i in markers) {
+                var marker = markers[i];
+                if(!cctvList.containsKey(marker.cctv.cctvId)) {
                     //soc.log(cctv.cctvId);
-                    cctv.marker.setMap(null);
+                    marker.setMap(null);
                 }
             }
             
@@ -197,41 +201,39 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             soc.log(cctvList.size());
         },
         refreshMarkers: function() {
-            var values = this.cctvList.values();
+            var cctvIds = this.cctvList.keys();
             // 설정값에 따른 마커 표시여부
-            for(var i in values) {
-                var cctv = values[i];
-                this.refreshMarker(cctv);
+            for(var i in cctvIds) {
+                this.refreshMarker(cctvIds[i]);
             }
         },
-        refreshMarker: function(cctv) {
-            var isHide = (this.filterHide[cctv.source] == true);
-            var onMap = cctv.marker.getMap();
+        refreshMarker: function(cctvId) {
+            var marker = this.cctvList.get(cctvId);
+            var isHide = (this.filterHide[marker.cctv.source] == true);
+            var onMap = marker.getMap();
             
             if(this.map.getZoom() <= this.cctvHideHighZoom) {
-                cctv.marker.setMap(null);
+                marker.setMap(null);
                 
             } else {
             
                 if(isHide) {
-                    if(onMap) cctv.marker.setMap(null);
+                    if(onMap) marker.setMap(null);
                 } else {
-                    if(!onMap) cctv.marker.setMap(this.map);
+                    if(!onMap) marker.setMap(this.map);
                 }
             }
         },
         hideMarkers: function() {
-            var values = this.cctvList.values();
-            for(var i in values) {
-                var cctv = values[i];
-                cctv.marker.setMap(null);
+            var markers = this.cctvList.values();
+            for(var i in markers) {
+                markers[i].setMap(null);
             }
         }, 
         showMarkers: function() {
-            var values = this.cctvList.values();
-            for(var i in values) {
-                var cctv = values[i];
-                cctv.marker.setMap(this.map);
+            var markers = this.cctvList.values();
+            for(var i in markers) {
+                markers[i].setMap(this.map);
             }
         },
         refreshMap: function() {
