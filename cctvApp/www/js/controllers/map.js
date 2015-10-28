@@ -229,8 +229,10 @@ angular.module('starter.controllers')
                 }
             },
             moveAddress: function() {
-                if (! $scope.search.address > 0){ return; }
+                if (! $scope.search.address > 0) { return; }
                 cctvMapFactory.endWatchPosition();
+                $scope.cctvSelected = null;
+                
                 var geocoder = $scope.cctvMap.geocoder;
                 geocoder.geocode({
                     'address': $scope.search.address,
