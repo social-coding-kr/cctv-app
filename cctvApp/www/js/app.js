@@ -40,7 +40,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
     $window.document.addEventListener("deviceready", function () {
       $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
-        navigator.notification.alert('인터넷과의 연결이 끊어져 서비스 이용이 불가능합니다. 통신상태를 확인해주세요.');
+        navigator.notification.alert('인터넷과의 연결이 끊어졌습니다. 통신 상태를 확인해주세요');
       });
     }, false);
 
