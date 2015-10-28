@@ -14,6 +14,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       if(navigator.splashscreen)
         navigator.splashscreen.hide();
 
+      $rootScope.app = { net : { status : true}};
+
       if(ionic.Platform.isWebView()) {
         var isOnline = $cordovaNetwork.isOnline();
         var isOffline = $cordovaNetwork.isOffline();
@@ -21,9 +23,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
         if (isOnline === false || isOffline === true)
         {
           alert('인터넷과의 연결이 끊어져 서비스 이용이 불가능합니다. 통신상태를 확인해주세요.');
-          navigator.app.clearCache();
-          navigator.app.clearHistory();
-          navigator.app.exitApp();
+
         }
       }
     }, 500);
@@ -44,13 +44,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
     document.addEventListener("deviceready", function () {
 
-
-
       $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
         alert('인터넷과의 연결이 끊어져 서비스 이용이 불가능합니다. 통신상태를 확인해주세요.');
-        navigator.app.clearCache();
-        navigator.app.clearHistory();
-        navigator.app.exitApp();
       });
     }, false);
 

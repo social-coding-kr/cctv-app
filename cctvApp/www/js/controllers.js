@@ -58,27 +58,34 @@ angular.module('starter.controllers', [])
   $rootScope.secondBackButton = false; // 두 번째 back button 클릭을 알려주는 변수
   $ionicPlatform.registerBackButtonAction(function() {
     if($location.url() === '/app/map') { // 홈 화면일 경우
-      // 토스트로 종료를 예고할 경우
-      if($rootScope.secondBackButton === true) { // 두 번째 back button 클릭일 경우
-        navigator.app.clearCache();
-        navigator.app.clearHistory();
-        navigator.app.exitApp();
-      } else {  
-        // 종료 토스트 알려줌
+    
+      if(cctvReportFactory.getStatus() !== "none") {
+        cctvReportFactory.cancelReport();
+      } else {
+        // 토스트로 종료를 예고할 경우
+        if($rootScope.secondBackButton === true) { // 두 번째 back button 클릭일 경우
+          navigator.app.clearCache();
+          navigator.app.clearHistory();
+          navigator.app.exitApp();
+        } else {  
+          // 종료 토스트 알려줌
 
-
-        $cordovaToast
-        .show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 'long', 'bottom')
-        .then(function(success) {
-          // success
-        }, function (error) {
-        // error
-        });
-        // 다음 touch가 두 번째 back button 클릭이 됨
-        $rootScope.secondBackButton = true;
-        $timeout(function(){$rootScope.secondBackButton = false;}, 2000);
+          $cordovaToast
+          .show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 'long', 'bottom')
+          .then(function(success) {
+            // success
+          }, function (error) {
+          // error
+          });
+          // 다음 touch가 두 번째 back button 클릭이 됨
+          $rootScope.secondBackButton = true;
+          $timeout(function(){$rootScope.secondBackButton = false;}, 2000);
+        
+        }
       }
-    } 
+    } else if($location.url() === '/app/report') {
+      cctvReportFactory.cancelReport();
+    }
     // default controll
     else {
       // alert($ionicHistory.backTitle()); // 전 페이지를 alert message로 알려줌(디버깅 용도)
