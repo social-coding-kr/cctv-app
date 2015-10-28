@@ -6,6 +6,9 @@ angular.module('starter.controllers')
 function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $cordovaCamera,
     $cordovaToast, $cordovaFile, $ionicHistory, cctvMapFactory) {
 
+    function OnError(error) {
+        soc.log(error);
+    }
 
     function getBlobImage(filepath) {
         var q = $q.defer();
