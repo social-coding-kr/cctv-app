@@ -87,13 +87,14 @@ angular.module('starter.controllers')
         };
 
         $scope.onMapClick = function(e) {
-            soc.log("ha");
             $scope.hideCctvInfo();
             $scope.$apply();
         };
 
-        $scope.showCctvInfo = function(detail) {
-            soc.log(detail);
+        $scope.showCctvInfo = function(cctv, detail) {
+            //cctv.detail = detail;
+            //soc.log("[[cctv]] : " + JSON.stringify(cctv.cctvId) + ", " + JSON.stringify(cctv.source));
+            //soc.log("[[detail]]" + JSON.stringify(detail));
             $scope.cctvSelected = detail;
             $scope.cctvMap.refreshMap();
         }
@@ -189,7 +190,7 @@ angular.module('starter.controllers')
                 function(res) {
                     soc.log(JSON.stringify(res));
                     //$scope.cctvSelected = res.data;
-                    $scope.showCctvInfo(res.data);
+                    $scope.showCctvInfo(cctv, res.data);
                 },
                 function(err) {
                     soc.log(JSON.stringify(err));
