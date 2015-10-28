@@ -223,10 +223,9 @@ angular.module('starter.controllers')
     // TODO: 아래는 대충 만들어 둔것이고 나중에 정리
     var fonts = {
       //default: "",
-      jejugothic: "Jeju Gothic",
       nanumgothic: "Nanum Gothic",
     };          
-    var currentFontKey = "jejugothic";
+    var currentFontKey = "nanumgothic";
     
     
     var sheet;
@@ -247,7 +246,7 @@ angular.module('starter.controllers')
         document.body.appendChild(sheet);
       }
     }
-    obj.setFont("jejugothic");
+    obj.setFont("nanumgothic");
     obj.getFont = function() { return currentFontKey; }
     
     return obj;
