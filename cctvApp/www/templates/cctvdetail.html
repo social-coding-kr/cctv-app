@@ -5,7 +5,7 @@
       <button class="button button-clear button-light" ng-click="closeCctvDetail()"><i class="icon ion-android-cancel" style="color: white;"></i></button>
     </div>
   </ion-header-bar>
-  <ion-content>
+  <ion-content has-bouncing="true">
     <div ng-if="cctvSelected.cctv.source == 'PUBLIC'">
       <ion-list>
         <!--
@@ -16,47 +16,47 @@
         -->
         <ion-item class="item-divider">세부정보</ion-item>
 
-        <ion-item class="item-text-wrap">
+        <ion-item class="item-text-wrap cctv-detail-item">
           <p>출처</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.source == 'PUBLIC' ? "공공기관 CCTV" : "사설 CCTV"}} ({{ cctvSelected.cctv.borough }})</h2>
         </ion-item>
 
-        <ion-item class="item-text-wrap">
-          <p>목적</p>
-          <h2 class="cctv-app-font">{{cctvSelected.cctv.purpose ? cctvSelected.cctv.purpose : detail.noDataText }}</h2>
-        </ion-item>
-
-        <ion-item class="item-text-wrap">
+        <ion-item class="item-text-wrap cctv-detail-item">
           <p>주소</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.address}}</h2>
         </ion-item>
 
-        <ion-item class="item-text-wrap">
-          <p>department</p>
-          <h2 class="cctv-app-font">{{cctvSelected.cctv.department ? cctvSelected.cctv.department : detail.noDataText }}</h2>
+        <ion-item class="item-text-wrap cctv-detail-item">
+          <p>목적</p>
+          <h2 class="cctv-app-font">{{cctvSelected.cctv.purpose ? cctvSelected.cctv.purpose : detail.noDataText }}</h2>
         </ion-item>
-
-        <ion-item class="item-text-wrap">
+        
+        <ion-item class="item-text-wrap cctv-detail-item">
           <p>촬영범위</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.range ? cctvSelected.cctv.range : detail.noDataText }}</h2>
         </ion-item>
-
-        <ion-item class="item-text-wrap">
+        
+        <ion-item class="item-text-wrap cctv-detail-item">
           <p>해상도</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.pixel ? cctvSelected.cctv.pixel : detail.noDataText }}</h2>
         </ion-item>
 
-        <ion-item class="item-text-wrap">
+        <ion-item class="item-text-wrap cctv-detail-item">
           <p>형태</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.form ? cctvSelected.cctv.form : detail.noDataText }}</h2>
         </ion-item>
 
-        <ion-item class="item-text-wrap">
-          <p>installedAt</p>
+        <ion-item class="item-text-wrap cctv-detail-item">
+          <p>설치년도</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.installedAt ? cctvSelected.cctv.installedAt : detail.noDataText }}</h2>
         </ion-item>
+
+        <ion-item class="item-text-wrap cctv-detail-item">
+          <p>관리부서</p>
+          <h2 class="cctv-app-font">{{cctvSelected.cctv.department ? cctvSelected.cctv.department : detail.noDataText }}</h2>
+        </ion-item>
         
-        <ion-item class="item-text-wrap">
+        <ion-item class="item-text-wrap cctv-detail-item">
           <p></p>
           <h2 class="cctv-app-font"></h2>
         </ion-item>
@@ -73,17 +73,17 @@
         </ion-item>
         <ion-item class="item-divider">세부정보</ion-item>
 
-        <ion-item class="item-text-wrap">
+        <ion-item class="item-text-wrap cctv-detail-item">
           <p>출처</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.source == 'PUBLIC' ? "공공기관 CCTV" : "사설 CCTV"}}</h2>
         </ion-item>
 
-        <ion-item class="item-text-wrap">
+        <ion-item class="item-text-wrap cctv-detail-item">
           <p>목적</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.purpose}}</h2>
         </ion-item>
 
-        <ion-item class="item-text-wrap">
+        <ion-item class="item-text-wrap cctv-detail-item">
           <p>주소</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.address}}</h2>
         </ion-item>

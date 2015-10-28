@@ -86,3 +86,7 @@
 .cctv-map-searchbar-active {
     color : white !important;
 }
+
+.cctv-detail-item {
+    padding: 10px 15px 10px 15px !important;
+}
