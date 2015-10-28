@@ -8,7 +8,7 @@ angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $window, $http, soc,
     $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $interval, $ionicPlatform, 
-    $cordovaToast, $cordovaNetwork, $cordovaKeyboard, locationFactory, $ionicModal, cctvMapFactory) {
+    $cordovaToast, $cordovaNetwork, $cordovaKeyboard, locationFactory, $ionicModal, cctvMapFactory, cctvReportFactory) {
 
     $ionicPlatform.ready(function() {
         $rootScope.AnotherPageToMap = function() {
@@ -156,6 +156,11 @@ angular.module('starter.controllers')
         $scope.watch = {
             running: false,
             toggle: function() {
+                
+                if(cctvReportFactory.getStatus() == "findPosition" || cctvReportFactory.getStatus() == "foundPosition") {
+                    return;
+                }
+                
                 if ($scope.watch.running) {
                     $scope.cctvMap.endWatchPosition();
                 }
