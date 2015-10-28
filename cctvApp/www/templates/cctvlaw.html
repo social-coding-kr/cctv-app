@@ -1,7 +1,7 @@
 <ion-view title="CCTV 관련법" data-ng-init="init()">
-    <ion-content padding="true" class="has-header">
+    <ion-content padding="true" class="has-header" >
         <ul class="list">
-            <li class="item item-divider" ng-click="LAW_SWITCH_01 = !LAW_SWITCH_01">
+            <li class="item item-divider item-text-wrap" ng-click="LAW_SWITCH_01 = !LAW_SWITCH_01">
                 <span ><strong>•개인정보 보호법 제25조(영상정보처리기기의 설치·운영 제한) </strong></span><br />
 
             </li>
@@ -24,15 +24,17 @@
                     </div>
                 </div>
             </li>
-            <li class="item item-divider" ng-click="LAW_SWITCH_02 = !LAW_SWITCH_02">
+            <li class="item item-divider item-text-wrap" ng-click="LAW_SWITCH_02 = !LAW_SWITCH_02">
                 <span ><strong>•개인정보 보호법 제72조(벌칙) </strong></span><br />
 
             </li>
             <li class="item item-text-wrap" ng-show="LAW_SWITCH_02 === true">
                 다음 각 호의 어느 하나에 해당하는 자는 3년 이하의 징역 또는 3천만원 이하의 벌금에 처한다.<br />
                 1. 제25조제5항을 위반하여 영상정보처리기기의 설치 목적과 다른 목적으로 영상정보처리기기를 임의로 조작하거나 다른 곳을 비추는 자 또는 녹음기능을 사용한 자<br />
+                2. 제59조제1호를 위반하여 거짓이나 그 밖의 부정한 수단이나 방법으로 개인정보를 취득하거나 개인정보 처리에 관한 동의를 받는 행위를 한 자 및 그 사정을 알면서도 영리 또는 부정한 목적으로 개인정보를 제공받은 자<br />
+                3. 제60조를 위반하여 직무상 알게 된 비밀을 누설하거나 직무상 목적 외에 이용한 자 <br />
             </li>
-            <li class="item item-divider" ng-click="LAW_SWITCH_03 = !LAW_SWITCH_03">
+            <li class="item item-divider item-text-wrap" ng-click="LAW_SWITCH_03 = !LAW_SWITCH_03">
                 <span ><strong>•개인정보 보호법 시행령 제25조(영상정보처리기기 운영ㆍ관리 방침)</strong></span><br />
 
             </li>
@@ -51,7 +53,7 @@
                 ② 제1항에 따라 마련한 영상정보처리기기 운영ㆍ관리 방침의 공개에 관하여는 제31조제2항 및 제3항을 준용한다. 이 경우 "개인정보처리자"는 "영상정보처리기기운영자"로, "법 제30조제2항"은 "법 제25조제7항"으로, "개인정보 처리방침"은 "영상정보처리기기 관리ㆍ운영 방침"으로 본다.<br />
 
             </li>
-            <li class="item item-divider" ng-click="LAW_SWITCH_04 = !LAW_SWITCH_04">
+            <li class="item item-divider item-text-wrap" ng-click="LAW_SWITCH_04 = !LAW_SWITCH_04">
                 <span ><strong>•개인정보 보호법 시행령 제26조(공공기관의 영상정보처리기기 설치ㆍ운영 사무의 위탁)</strong></span><br />
 
             </li>
@@ -66,14 +68,16 @@
                 </div>
                 ② 제1항에 따라 사무를 위탁한 경우에는 제24조제1항부터 제3항까지의 규정에 따른 안내판 등에 위탁받는 자의 명칭 및 연락처를 포함시켜야 한다.<br />
             </li>
-            <li class="item item-divider" ng-click="LAW_SWITCH_04 = !LAW_SWITCH_04">
+            <li class="item item-divider item-text-wrap" ng-click="LAW_SWITCH_05 = !LAW_SWITCH_05">
                 <span ><strong>•개인정보 보호법 시행령 제27조(영상정보처리기기 설치ㆍ운영 지침)</strong></span><br />
 
             </li>
-            <li class="item item-text-wrap" ng-show="LAW_SWITCH_04 === true">
-                행정자치부장관은 법 및 이 영에서 규정한 사항 외에 영상정보처리기기의 설치ㆍ운영에 관한 기준, 설치ㆍ운영 사무의 위탁 등에 관하여 법 제12조제1항에 따른 표준 개인정보 보호지침을 정하여 영상정보처리기기운영자에게 그 준수를 권장할 수 있다.  <개정 2013.3.23, 2014.11.19>
+            <li class="item item-text-wrap" ng-show="LAW_SWITCH_05 === true">
+                행정자치부장관은 법 및 이 영에서 규정한 사항 외에 영상정보처리기기의 설치ㆍ운영에 관한 기준, 설치ㆍ운영 사무의 위탁 등에 관하여 법 제12조제1항에 따른 표준 개인정보 보호지침을 정하여 영상정보처리기기운영자에게 그 준수를 권장할 수 있다.  &lt;개정 2013.3.23, 2014.11.19&gt;
             </li>
-            <li style="height:100px;">&nbsp;</li>
+            <li class="item item-text-wrap" style="height: 500px;">
+                &nbsp;
+            </li>
         </ul>
     </ion-content>
 </ion-view>
