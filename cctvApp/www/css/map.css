@@ -70,7 +70,7 @@
 /* DAUM MAP API END */
 
 .cctv-map-searchbar {
-    border: 3px double white !important;
+    border: 3px solid white !important;
     padding-left: 10px !important;
     padding-right: 10px !important;
     background: #B5EFEF  !important;
