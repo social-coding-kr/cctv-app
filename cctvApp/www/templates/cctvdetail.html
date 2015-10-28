@@ -1,6 +1,6 @@
 <ion-modal-view view-title="CCTV 세부정보">
   <ion-header-bar class="bg-common-app-color">
-    <h1 class="title" style="color: white;">CCTV detail</h1>
+    <h1 class="title" style="color: white;">CCTV 상세정보 확인</h1>
     <div class="buttons">
       <button class="button button-clear button-light" ng-click="closeCctvDetail()"><i class="icon ion-android-cancel" style="color: white;"></i></button>
     </div>
@@ -25,7 +25,7 @@
         <ion-item>
           <p>목적</p>
           &nbsp;&nbsp;
-          <h2 class="cctv-app-font">{{cctvSelected.cctv.purpose}}</h2>
+          <h2 class="cctv-app-font">{{cctvSelected.cctv.purpose ? cctvSelected.cctv.purpose : detail.noDataText }}</h2>
         </ion-item>
 
         <ion-item>

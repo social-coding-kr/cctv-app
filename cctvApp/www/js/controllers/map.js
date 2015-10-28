@@ -20,6 +20,10 @@ angular.module('starter.controllers')
         $scope.cctvMap = cctvMapFactory;
         var mapContainer = document.getElementById('map');
 
+        $scope.detail = {
+            noDataText: "해당기관에서 데이터가 제공되지 않습니다",
+        };
+
         $scope.testButtonClick = function() {
             $scope.cctvMap.refreshMap();
         };
