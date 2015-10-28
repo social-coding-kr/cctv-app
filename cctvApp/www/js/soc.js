@@ -178,6 +178,22 @@ angular.module('starter.controllers')
       },
     };
 
+    obj.stored = {
+      get: function(key) { 
+        var value = $localStorage.get("stored." + key); 
+        
+        if(value === undefined) 
+          return undefined;
+        else 
+          return JSON.parse(value); 
+      },
+      set: function(key, value) { 
+        return $localStorage.set("stored." + key, JSON.stringify(value)); 
+        
+      },
+    }; 
+    
+
     // config
     obj.config = {};
     obj.config.isDevelOptionEnabled = true;
@@ -210,6 +226,7 @@ angular.module('starter.controllers')
     obj.config.geoOptions.onChangeEnableHighAccuracy = function() {
       $localStorage.set('geoOptions.enableHighAccuracy', obj.config.geoOptions.enableHighAccuracy);
     }
+
     
     // config
     

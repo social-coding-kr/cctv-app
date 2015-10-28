@@ -28,7 +28,7 @@ angular.module('starter.controllers')
             $scope.cctvMap.refreshMap();
         };
 
-        $scope.cctvMap.createMap(mapContainer);
+        $scope.cctvMap.createMap(mapContainer, soc.stored.get("lastPosition"));
 
         $scope.$on("$ionicView.afterEnter", function() {
             $scope.cctvMap.refreshMap();
@@ -88,6 +88,9 @@ angular.module('starter.controllers')
                 lastRequestCenter = center;
                 requestCctvs();
             }
+            
+            //soc.log("lastPosition: " +  JSON.stringify(center.lng()) + ", " + JSON.stringify(prevCenter));
+            soc.stored.set("lastPosition", { lng: center.lng(), lat: center.lat() } );
         };
 
         $scope.onMapClick = function(e) {

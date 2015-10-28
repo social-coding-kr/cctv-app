@@ -70,8 +70,15 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         clear: function() {
         },
         
-        createMap: function(container) {
+        createMap: function(container, position) {
             maps = google.maps;
+            
+            soc.log(position);
+            soc.log(JSON.stringify(position));
+            if(position) {
+                if(position.lng && position.lat)
+                this.mapOptions.center = new maps.LatLng(position.lat, position.lng);
+            }
             
             var This = this;
             this.map = new maps.Map(container, this.mapOptions);
