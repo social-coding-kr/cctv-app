@@ -61,6 +61,7 @@ angular.module('starter.controllers', [])
     
       if(cctvReportFactory.getStatus() !== "none") {
         cctvReportFactory.cancelReport();
+        $scope.$apply();
       } else {
         // 토스트로 종료를 예고할 경우
         if($rootScope.secondBackButton === true) { // 두 번째 back button 클릭일 경우
@@ -85,6 +86,7 @@ angular.module('starter.controllers', [])
       }
     } else if($location.url() === '/app/report') {
       cctvReportFactory.cancelReport();
+      $scope.$apply();
     }
     // default controll
     else {
