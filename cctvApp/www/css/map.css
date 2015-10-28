@@ -69,3 +69,20 @@
 
 /* DAUM MAP API END */
 
+.cctv-map-searchbar {
+    border: 3px double white !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    background: #B5EFEF  !important;
+    border-radius: 50px  !important;
+    height: 20px !important;
+    width: 100% !important;
+}
+
+.cctv-map-searchbar-inactive {
+    color : #15eceb !important;
+}
+
+.cctv-map-searchbar-active {
+    color : white !important;
+}

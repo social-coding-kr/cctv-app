@@ -9,20 +9,18 @@
     <ion-nav-bar class="bg-common-app-color">
         <ion-nav-buttons side="left">
             <button menu-toggle="left" class="button button-icon icon ion-navicon" style="color: white;"></button>
+            <!-- Putting a return between the buttons causes them to be stacked on Android 4.4.2 -->
         </ion-nav-buttons>
         <ion-nav-buttons side="primary">
-            <!-- Putting a return between the buttons causes them to be stacked on Android 4.4.2 -->
-            <label class="item-input" style="width: 100%;">
-                <i class="icon ion-search placeholder-icon" style="color: #c2f3ff" ng-hide="search.address.length > 0"></i>
-                <i class="icon ion-search placeholder-icon" style="color: white;" ng-show="search.address.length > 0"></i>
-
+            <label class="item-input">
                 <!-- input type="search" -->
                 <!-- ng-model: input 에서 ng-model은 객체안의 객체가 아니면 작동하지 않음 -->
-                <input type="search" placeholder="Search" style="color : white;" ng-model="search.address" ng-keypress="search.keyEvent($event)" id="searchInputBox" ng-click="search.address = ''">
+                <input type="search" placeholder="주소 검색" class="cctv-map-searchbar" ng-model="search.address" ng-keypress="search.keyEvent($event)" id="searchInputBox" ng-click="search.address = ''">
             </label>
-            &nbsp;
-            <a class="button button-icon ion-ios-navigate" style="color: white;" ng-show="search.address.length > 0" ng-click="search.moveAddress()"></a>
+            <a class="button button-icon ion-search" ng-class="{true : 'cctv-map-searchbar-active', false: 'cctv-map-searchbar-inactive'}[search.address.length > 0]" ng-click="search.moveAddress()"></a>
         </ion-nav-buttons>
+
+
     </ion-nav-bar>
 
     <ion-content scroll="false" id="contentArea" ng-click="search.blur(); initCctvSelect();">

@@ -211,12 +211,16 @@ angular.module('starter.controllers')
                     $scope.search.blur();
                 }
             },
+            checkAddress : function () {
+                $scope.isSearchBarActive = $scope.search.address.length >0? true : false;
+            },
             blur: function() {
                 if (ionic.Platform.isWebView()) {
                     $cordovaKeyboard.close();
                 }
             },
             moveAddress: function() {
+                if (! $scope.search.address > 0){ return; }
                 cctvMapFactory.endWatchPosition();
                 var geocoder = $scope.cctvMap.geocoder;
                 geocoder.geocode({
