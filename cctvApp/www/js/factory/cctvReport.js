@@ -215,7 +215,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         },
         prepareReport: function() {
             var This = this;
-            
+            /*
             if(window.WebKitBlobBuilder !== undefined) {
                 $cordovaDialogs.confirm('해당 기기에서는 제공되지 않는 기능입니다 ', 'CCTV 위치 등록', ['확인'])
                 .then(function(buttonIndex) {
@@ -224,7 +224,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                 This.endReport();                
                 return;
             }
-
+            */
             this.clear();
             
             
@@ -309,50 +309,144 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                 return;
             }
 
-            if(!this.noticePhotoProcess) {
+            if (!this.noticePhotoProcess) {
                 // TODO: alert 교체
                 alert("안내판 사진을 촬영하세요");
                 return;
             }
-            
-            
-            var formData = new FormData();
+
+            //-----------------------------------------------------------
+            // BlobBuilder를 사용하는 구형 웹뷰를 위한 폼데이터 생성 코드
+            //-----------------------------------------------------------
+            var
+            // Android native browser uploads blobs as 0 bytes, so we need a test for that
+                needsFormDataShim = (function() {
+                    var bCheck = ~navigator.userAgent.indexOf('Android') && ~navigator.vendor.indexOf('Google') && !~navigator.userAgent.indexOf('Chrome');
+
+                    return bCheck && navigator.userAgent.match(/AppleWebKit\/(\d+)/).pop() <= 534;
+                })(),
+
+                // Test for constructing of blobs using new Blob()
+                blobConstruct = !!(function() {
+                    try {
+                        return new Blob();
+                    }
+                    catch (e) {}
+                })(),
+
+                // Fallback to BlobBuilder (deprecated)
+                XBlob = blobConstruct ? window.Blob : function(parts, opts) {
+                    var bb = new(window.BlobBuilder || window.WebKitBlobBuilder || window.MSBlobBuilder);
+                    parts.forEach(function(p) {
+                        bb.append(p);
+                    });
+
+                    return bb.getBlob(opts ? opts.type : undefined);
+                };
+
+            function FormDataShim() {
+                var
+                // Store a reference to this
+                    o = this,
+
+                    // Data to be sent
+                    parts = [],
+
+                    // Boundary parameter for separating the multipart values
+                    boundary = Array(21).join('-') + (+new Date() * (1e16 * Math.random())).toString(36),
+
+                    // Store the current XHR send method so we can safely override it
+                    oldSend = XMLHttpRequest.prototype.send;
+                this.getParts = function() {
+                    return parts.toString();
+                };
+                this.append = function(name, value, filename) {
+                    parts.push('--' + boundary + '\r\nContent-Disposition: form-data; name="' + name + '"');
+
+                    if (value instanceof Blob) {
+                        parts.push('; filename="' + (filename || 'blob') + '"\r\nContent-Type: ' + value.type + '\r\n\r\n');
+                        parts.push(value);
+                    }
+                    else {
+                        parts.push('\r\n\r\n' + value);
+                    }
+                    parts.push('\r\n');
+                };
+
+                XMLHttpRequest.prototype.send = function(val) {
+                    var fr,
+                        data,
+                        oXHR = this;
+
+                    if (val === o) {
+                        // Append the final boundary string
+                        parts.push('--' + boundary + '--\r\n');
+                        soc.log(parts.toString());
+                        // Create the blob
+                        data = new XBlob(parts);
+
+                        // Set up and read the blob into an array to be sent
+                        fr = new FileReader();
+                        fr.onload = function() {
+                            oldSend.call(oXHR, fr.result);
+                        };
+                        fr.onerror = function(err) {
+                            throw err;
+                        };
+                        fr.readAsArrayBuffer(data);
+
+                        // Set the multipart content type and boudary
+                        this.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+                        XMLHttpRequest.prototype.send = oldSend;
+                    }
+                    else {
+                        oldSend.call(this, val);
+                    }
+                };
+            }
+            //-----------------------------------------------------------
+
+            var formData = needsFormDataShim ? new FormDataShim() : new FormData();
+
             formData.append('latitude', this.lat);
             formData.append('longitude', this.lng);
-            
-            // TODO: 목적 처리
-            //formData.append('purpose', '기타');
+
+
+
+            //soc.log("8. Blob.size:" + This.cctvImageBinary.size + ", Blob.type: " + This.cctvImageBinary.type);
             formData.append('cctvImage', this.cctvImageBinary, "cctvImage.jpg");
             formData.append('noticeImage', this.noticeImageBinary, "noticeImage.jpg");
 
+
             $http.post(soc.server.mainUrl + "cctv", formData, {
-                transformRequest: angular.identity,
-                headers: { 'Content-Type': undefined }
-            }).success(function(response) {
-                if(ionic.Platform.isWebView()) {
-                    $cordovaToast
-                        .show('성공적으로 등록되었습니다', 'long', 'bottom')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });                    
-                }
-                
-                This.endReport();
-                
-                soc.log("등록 성공 :" + formData);
-                soc.log("response :" + JSON.stringify(response));
-            }).error(function(response) {
-                if(ionic.Platform.isWebView()) {                
-                    
-                    // TODO: 응답 에러 값에 따라 다른 처리를 해야한다
-                    $cordovaToast.show('등록 실패: ' + response, 'long', 'bottom')
-                        .then(function(success) {
-                            // success
-                        }, 
-                        function (error) {
-                            // error
+                    transformRequest: angular.identity,
+                    headers: {
+                        'Content-Type': undefined
+                    }
+                }).success(function(response) {
+                    if (ionic.Platform.isWebView()) {
+                        $cordovaToast
+                            .show('성공적으로 등록되었습니다', 'long', 'bottom')
+                            .then(function(success) {
+                                // success
+                            }, function(error) {
+                                // error
+                            });
+                    }
+
+                    This.endReport();
+
+                    soc.log("등록 성공 :" + formData);
+                    soc.log("response :" + JSON.stringify(response));
+                }).error(function(response) {
+                        if (ionic.Platform.isWebView()) {
+
+                            // TODO: 응답 에러 값에 따라 다른 처리를 해야한다
+                            $cordovaToast.show('등록 실패: ' + response, 'long', 'bottom')
+                                .then(function(success) {
+                                        // success
+                                    },
+                                    function(error) {     // error
                         });                    
                 }
                 
