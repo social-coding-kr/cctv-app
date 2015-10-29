@@ -165,7 +165,8 @@ angular.module('starter.controllers')
             running: false,
             toggle: function() {
                 
-                if(cctvReportFactory.getStatus() == "findPosition" || cctvReportFactory.getStatus() == "foundPosition") {
+                if(cctvReportFactory.getStatus() == cctvReportFactory.statusFindPosition 
+                || cctvReportFactory.getStatus() == cctvReportFactory.statusFoundPosition) {
                     return;
                 }
                 
@@ -227,10 +228,10 @@ angular.module('starter.controllers')
             checkAddress : function () {
                 $scope.isSearchBarActive = $scope.search.address.length >0? true : false;
             },
-            blur: function() {
+            blur: function() {/*
                 if (ionic.Platform.isWebView()) {
                     $cordovaKeyboard.close();
-                }
+                }*/
             },
             moveAddress: function() {
                 if (! $scope.search.address > 0) { return; }

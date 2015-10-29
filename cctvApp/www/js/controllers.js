@@ -59,7 +59,7 @@ angular.module('starter.controllers', [])
   $ionicPlatform.registerBackButtonAction(function() {
     if($location.url() === '/app/map') { // 홈 화면일 경우
     
-      if(cctvReportFactory.getStatus() !== "none") {
+      if(cctvReportFactory.getStatus() !== cctvReportFactory.statusNone) {
         cctvReportFactory.cancelReport();
         $scope.$apply();
       } else {

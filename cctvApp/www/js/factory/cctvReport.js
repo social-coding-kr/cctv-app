@@ -56,6 +56,11 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         path: "/app/report",
         mapPath: "/app/map",
         status: "none",
+        statusNone: "none",
+        statusFindPosition: "findPosition",
+        statusFoundPosition: "foundPosition",
+        statusStartReporting: "startReporting",
+        statusFailed: "failed",
         lat: null,
         lng: null,
         cctvImage: null,
@@ -69,7 +74,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
 
         clear: function() {
             //this.path 는 초기화 금지
-            this.status = "none";
+            this.status = this.statusNone;
             this.lat = null;
             this.lng = null;
             this.cctvImage = null;
@@ -98,7 +103,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         },
 
         startReport: function() {
-            this.status = "startReporting";
+            this.status = this.statusStartReporting;
             $location.path(this.path);
             var currentCoord = this.lng + "," + this.lat;
             //alert(this.lat + ", " + this.lng);            
@@ -107,12 +112,15 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         },
 
         endReport: function() {
-            this.hideCurrentPosition();            
+            this.hideCurrentPosition();
+            
             this.clear();            
             $location.path(this.mapPath);
             $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
+                
+            cctvMapFactory.refreshMap();
             //$rootScope.deleteCurrentPosition();
         },
         
@@ -140,16 +148,16 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         findPosition: function() {
             var This = this;
             // 위치 탐색
-            This.status = "findPosition";
+            This.status = This.statusFindPosition;
             locationFactory.getCurrentPositionSmart(locationFactory.defaultOptions).then(
                 function(result) {
-                    This.status = "foundPosition";
+                    This.status = This.statusFoundPosition;
                     This.lat = result.coords.latitude;
                     This.lng = result.coords.longitude;
                     This.showCurrentPosition(result);
                     
                 }, function(error) {
-                    This.status = "failed";
+                    This.status = This.statusFailed;
                     //alert("실패");
                 }
             );
