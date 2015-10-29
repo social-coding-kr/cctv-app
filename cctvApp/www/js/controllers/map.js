@@ -48,7 +48,7 @@ angular.module('starter.controllers')
             //soc.log("zoom: " + zoom + ", prevZoom: " + prevZoom);
             //cctv 목록 요청한다
             //soc.log(zoom + ", " + prevZoom);
-            
+            if(zoom == prevZoom) return;
 
             if(zoom <= zoomHideHigh) {
                 $scope.cctvMap.setCctvs(null);
