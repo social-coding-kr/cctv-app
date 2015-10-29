@@ -92,7 +92,7 @@ function($q, $cordovaDiagnostic, $cordovaGeolocation, $cordovaDialogs, $ionicPop
     }
     
     function getCurrentPositionProcess(id, options) {
-        if(ionic.Platform.isWebView() && ionic.Platform.isAndroid()) {
+        if(ionic.Platform.isWebView() && ionic.Platform.isAndroid() && window.cordova.plugins.diagnostic) {
             $cordovaDiagnostic.isLocationEnabled().then(
                 function(enable) {
                     if(enable) realGetCurrentPosition(id, options);
@@ -118,7 +118,7 @@ function($q, $cordovaDiagnostic, $cordovaGeolocation, $cordovaDialogs, $ionicPop
     }
 
     function watchPositionProcess(id, options) {
-        if(ionic.Platform.isWebView() && ionic.Platform.isAndroid()) {
+        if(ionic.Platform.isWebView() && ionic.Platform.isAndroid() && window.cordova.plugins.diagnostic) {
             $cordovaDiagnostic.isLocationEnabled().then(
                 function(enable) {
                     if(enable) realWatchPosition(id, options);
