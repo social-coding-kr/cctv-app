@@ -8,13 +8,6 @@
   <ion-content has-bouncing="true">
     <div ng-if="cctvSelected.cctv.source == 'PUBLIC'">
       <ion-list>
-        <!--
-        <ion-item class="item-thumbnail-center">
-
-          <img src="https://pixabay.com/static/uploads/photo/2015/07/07/10/15/10-15-05-776_640.jpg">
-        </ion-item>
-        -->
-        <ion-item class="item-divider">세부정보</ion-item>
 
         <ion-item class="item-text-wrap cctv-detail-item">
           <p>출처</p>
@@ -62,27 +55,52 @@
 
     <div ng-if="cctvSelected.cctv.source == 'PRIVATE'">
       <ion-list>
-        <ion-item class="item-thumbnail-center">
-
-          <img ng-src="{{cctvSelected.cctv.cctvImage}}">
-        </ion-item>
-        <ion-item class="item-divider">세부정보</ion-item>
-
+        
         <ion-item class="item-text-wrap cctv-detail-item">
           <p>출처</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.source == 'PUBLIC' ? "공공기관 CCTV" : "사설 CCTV"}}</h2>
         </ion-item>
 
-        <ion-item class="item-text-wrap cctv-detail-item">
-          <p>목적</p>
-          <h2 class="cctv-app-font">{{cctvSelected.cctv.purpose}}</h2>
-        </ion-item>
 
         <ion-item class="item-text-wrap cctv-detail-item">
           <p>주소</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.address}}</h2>
         </ion-item>
 
+        <ion-item class="item-thumbnail-left">
+            <img ng-src="{{cctvSelected.cctv.cctvImage}}" ng-click="">
+            <p>출처</p>
+            <h2>사용자 등록</h2>
+        </ion-item>
+
+        <ion-item class="item-thumbnail-left">
+            <img ng-src="{{cctvSelected.cctv.noticeImage}}">
+            <p>CCTV 안내판</p>
+            <h2></h2>
+        </ion-item>
+
+        <ion-item class="item-thumbnail-center">
+          <img ng-src="{{cctvSelected.cctv.cctvImage}}">
+        </ion-item>
+
+        <ion-item class="item-thumbnail-center">
+          <img ng-src="{{cctvSelected.cctv.noticeImage}}">
+        </ion-item>
+        
+        <ion-item class="item-divider">CCTV</ion-item>
+        <ion-item class="item-thumbnail-center">
+          <div class="cctv-detail-image-thumb">
+            <img ng-src="{{cctvSelected.cctv.cctvImage}}">
+          </div>
+        </ion-item>
+
+        <ion-item class="item-divider">안내판</ion-item>
+        <ion-item class="item-thumbnail-center">
+          <div class="cctv-detail-image-thumb">
+            <img ng-src="{{cctvSelected.cctv.noticeImage}}">
+          </div>
+        </ion-item>
+        
       </ion-list>
     </div>    
   </ion-content>

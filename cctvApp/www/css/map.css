@@ -90,3 +90,10 @@
 .cctv-detail-item {
     padding: 10px 15px 10px 15px !important;
 }
+
+
+div.cctv-detail-image-thumb {
+    height: 100px;
+    width: 100px;
+}
+
