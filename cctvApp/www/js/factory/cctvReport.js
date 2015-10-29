@@ -413,9 +413,6 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             formData.append('latitude', this.lat);
             formData.append('longitude', this.lng);
 
-
-
-            //soc.log("8. Blob.size:" + This.cctvImageBinary.size + ", Blob.type: " + This.cctvImageBinary.type);
             formData.append('cctvImage', this.cctvImageBinary, "cctvImage.jpg");
             formData.append('noticeImage', this.noticeImageBinary, "noticeImage.jpg");
 
