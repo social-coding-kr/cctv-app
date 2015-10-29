@@ -110,7 +110,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         statusNone: "none",
         statusFindPosition: "findPosition",
         statusFoundPosition: "foundPosition",
-        statusStartReporting: "startReporting",
+        statusStartReport: "startReport",
+        statusSendReport: "sendReport",
         statusFailed: "failed",
         lat: null,
         lng: null,
@@ -154,7 +155,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         },
 
         startReport: function() {
-            this.status = this.statusStartReporting;
+            this.status = this.statusStartReport;
             $location.path(this.path);
             var currentCoord = this.lng + "," + this.lat;
             //alert(this.lat + ", " + this.lng);            
@@ -254,7 +255,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                     function(imageURI) {
                         This.cctvImage = imageURI;
                         This.cctvPhotoProcess = true;
-                        cctvImageFactory.refreshThumbImage();
+                        //cctvImageFactory.refreshThumbImage();
                         This.makeCctvImageBinary();
                     }, function(error) {
                         soc.log(error);
@@ -262,8 +263,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             } else {
                 this.cctvImage = 'img/cctvExample.jpg';
                 this.cctvPhotoProcess = true;
-                cctvImageFactory.refreshThumbImage();
-                //this.makeCctvImageBinary();
+                //cctvImageFactory.refreshThumbImage();
             }
         }, 
         makeCctvImageBinary: function() {
@@ -281,7 +281,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                     function(imageURI) {
                         This.noticeImage = imageURI;
                         This.noticePhotoProcess = true;
-                        cctvImageFactory.refreshThumbImage();
+                        //cctvImageFactory.refreshThumbImage();
                         This.makeNoticeImageBinary();
                     }, function(error) {
                         soc.log(error);
@@ -289,7 +289,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             } else {
                 this.noticeImage = 'img/noticeExample.jpg';
                 this.cctvNoticeProcess = true;
-                cctvImageFactory.refreshThumbImage();
+                //cctvImageFactory.refreshThumbImage();
             }
         }, 
         makeNoticeImageBinary: function() {
@@ -301,6 +301,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             getBlobImage(this.noticeImage).then(onSuccessBlob, onError);
         },
         noticeNoExist: function() {
+            this.noticeImage = null;
+            this.noticeImageBinary = null;
             this.noticePhotoProcess = true;
         },
         sendReport: function() {
@@ -316,6 +318,13 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                 alert("안내판 사진을 촬영하세요");
                 return;
             }
+            
+            if(this.status == this.statusSendReport) {
+                // 여러번 누르기 방지
+                return;
+            }
+            
+            this.status = this.statusSendReport;
 
             //-----------------------------------------------------------
             // BlobBuilder를 사용하는 구형 웹뷰를 위한 폼데이터 생성 코드
