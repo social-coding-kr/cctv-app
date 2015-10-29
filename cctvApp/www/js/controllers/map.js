@@ -8,7 +8,8 @@ angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $window, $http, soc,
     $cordovaGeolocation, $ionicHistory, $ionicPopup, $timeout, $interval, $ionicPlatform, 
-    $cordovaToast, $cordovaNetwork, $cordovaKeyboard, locationFactory, $ionicModal, cctvMapFactory, cctvReportFactory) {
+    $cordovaToast, $cordovaNetwork, $cordovaKeyboard, locationFactory, $ionicModal, 
+    cctvMapFactory, cctvReportFactory, cctvImageFactory) {
 
     $ionicPlatform.ready(function() {
         $rootScope.AnotherPageToMap = function() {
@@ -256,10 +257,12 @@ angular.module('starter.controllers')
         $scope.$on('modal.shown', function() {
             console.log('Modal is shown!');
             if ($scope.cctvDetailModal.isShown()) {
-                var divs = document.getElementsByClassName('cctv-detail-image-thumb');
+                cctvImageFactory.refreshThumbImage();
+            /*
+                var divs = document.getElementsByClassName('cctv-image-thumb');
                 //var divs = document.querySelectorAll('image-thumb');
 
-                soc.log(JSON.stringify(divs));
+                //soc.log(JSON.stringify(divs));
 
 
                 for (var i = 0; i < divs.length; i++) {
@@ -282,7 +285,7 @@ angular.module('starter.controllers')
                         var marginTop = -Math.round((imgHeightActual - imgHeightToBe) / 2)
                         img.style.cssText = 'width: 100%; height: auto; margin-top: ' + marginTop + 'px;';
                     }
-                }
+                }*/
             }
         });
         

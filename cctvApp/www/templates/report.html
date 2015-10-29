@@ -14,8 +14,20 @@
           <p>CCTV 사진을<br>촬영해주세요</p>
         </a>
         
-        <div ng-show="report.cctvImage">
-          <img style="width: 100%;" src="{{report.cctvImage}}">
+        <div ng-show="report.cctvImage" class="cctv-image-thumb card">
+          <div class="item item-image">
+            <img src="{{report.cctvImage}}">
+          </div>
+        </div>
+        
+        <div class="list card">
+          <div class="item item-image cctv-image-thumb2">
+            <img src="{{report.cctvImage}}">
+          </div>
+          <a class="item item-icon-left assertive" href="#">
+            <i class="icon ion-music-note"></i>
+            cctv 사진
+          </a>
         </div>
         
       </div>
@@ -40,8 +52,8 @@
 
         </a>
         
-        <div ng-show="report.noticeImage">
-          <img style="width: 100%;" src="{{report.noticeImage}}">
+        <div ng-show="report.noticeImage" class="cctv-image-thumb card">
+          <img src="{{report.noticeImage}}">
         </div>
         
       </div>        

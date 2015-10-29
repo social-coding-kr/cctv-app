@@ -91,9 +91,12 @@
     padding: 10px 15px 10px 15px !important;
 }
 
-
-div.cctv-detail-image-thumb {
-    height: 100px;
-    width: 100px;
+div.cctv-image-thumb {
+    height: 160px;
+    width: 160px;
 }
 
+div.cctv-image-thumb2 {
+    height: 160px;
+    width: 160px;
+}

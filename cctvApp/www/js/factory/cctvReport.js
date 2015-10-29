@@ -3,12 +3,17 @@ angular.module('starter.controllers')
 
 .factory('cctvReportFactory', ['$q', 'soc', '$rootScope', 'locationFactory', '$ionicPopup', '$http',
     '$location', '$cordovaCamera', '$cordovaToast', '$cordovaFile', '$ionicHistory', 'cctvMapFactory',
+    'cctvImageFactory',
 function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $cordovaCamera,
-    $cordovaToast, $cordovaFile, $ionicHistory, cctvMapFactory) {
+    $cordovaToast, $cordovaFile, $ionicHistory, cctvMapFactory, cctvImageFactory) {
 
     function onError(error) {
-        //soc.log(error);
-        $cordovaToast.show(error, 'long', 'bottom');
+        if(ionic.Platform.isWebView()) {
+             $cordovaToast.show(error, 'long', 'bottom');
+        } else {
+            alert(error);
+        }
+       
     }
 
     function getBlobImage(filepath) {
@@ -177,6 +182,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                     function(imageURI) {
                         This.cctvImage = imageURI;
                         This.cctvPhotoProcess = true;
+                        cctvImageFactory.refreshThumbImage();
                         This.makeCctvImageBinary();
                     }, function(error) {
                         soc.log(error);
@@ -184,7 +190,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             } else {
                 this.cctvImage = 'img/cctvExample.jpg';
                 this.cctvPhotoProcess = true;
-                this.makeCctvImageBinary();
+                cctvImageFactory.refreshThumbImage();
+                //this.makeCctvImageBinary();
             }
         }, 
         makeCctvImageBinary: function() {
@@ -197,14 +204,21 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         },
         takeNoticePhoto: function() {
             var This = this;
-            $cordovaCamera.getPicture(this.cameraOptions).then(
-                function(imageURI) {
-                    This.noticeImage = imageURI;
-                    This.noticePhotoProcess = true;
-                    This.makeNoticeImageBinary();
-                }, function(error) {
-                    soc.log(error);
-                });
+            if(ionic.Platform.isWebView()) {
+                $cordovaCamera.getPicture(this.cameraOptions).then(
+                    function(imageURI) {
+                        This.noticeImage = imageURI;
+                        This.noticePhotoProcess = true;
+                        cctvImageFactory.refreshThumbImage();
+                        This.makeNoticeImageBinary();
+                    }, function(error) {
+                        soc.log(error);
+                    });
+            } else {
+                this.noticeImage = 'img/noticeExample.jpg';
+                this.cctvNoticeProcess = true;
+                cctvImageFactory.refreshThumbImage();
+            }
         }, 
         makeNoticeImageBinary: function() {
             var This = this;
