@@ -14,6 +14,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       if(navigator.splashscreen)
         navigator.splashscreen.hide();
 
+        if(window.cordova) {
+          soc.log("cordova.diagnostic: " + (window.cordova.plugins.diagnostic == undefined));
+        } else {
+          soc.log("cordova.diagnostic: " + "null");    
+        }
+
       $rootScope.app = { net : { status : true}};
 
       if(ionic.Platform.isWebView()) {
