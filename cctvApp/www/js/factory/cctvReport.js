@@ -3,9 +3,9 @@ angular.module('starter.controllers')
 
 .factory('cctvReportFactory', ['$q', 'soc', '$rootScope', 'locationFactory', '$ionicPopup', '$http',
     '$location', '$cordovaCamera', '$cordovaToast', '$cordovaFile', '$ionicHistory', 'cctvMapFactory',
-    'cctvImageFactory',
+    'cctvImageFactory', '$cordovaDialogs',
 function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $cordovaCamera,
-    $cordovaToast, $cordovaFile, $ionicHistory, cctvMapFactory, cctvImageFactory) {
+    $cordovaToast, $cordovaFile, $ionicHistory, cctvMapFactory, cctvImageFactory, $cordovaDialogs) {
 
     function onError(error) {
         if(ionic.Platform.isWebView()) {
@@ -20,7 +20,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         var q = $q.defer();
         var blobImage = null;
         
-        //if(false) {
+        
+        
         if(!ionic.Platform.isWebView()) {
             window.webkitResolveLocalFileSystemURL(filepath, function(fileEntry) {
                 fileEntry.file(function(file) {
@@ -37,18 +38,68 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                 q.reject(error);
             });        
         } else {
+            // 대부분의 디바이스
             var fullPath = filepath;
             var fileName = fullPath.replace(/^.*[\\\/]/, '');
             var filePath = fullPath.split('/' + fileName)[0];
             
+            soc.log("window.BlobBuilder: " + window.BlobBuilder);
+            soc.log("window.WebKitBlobBuilder: " + window.WebKitBlobBuilder);
+            soc.log("window.MozBlobBuilder: " + window.MozBlobBuilder);
+            soc.log("window.MSBlobBuilder: " + window.MSBlobBuilder);
+            
             $cordovaFile.readAsArrayBuffer(filePath, fileName).then(
                 function(result) {
-                    blobImage = new Blob([result], {type: "image/jpeg"});
+
+                    soc.log("readAsArrayBuffer: " + result +", " + result.byteLength);
+                    
+                    /* 바이너리 헤더 확인을 위한 코드
+                    var dataView = new DataView(result);
+                    var textlog = "";
+                    for(var i=0; i<16; i++) {
+                        var hex = dataView.getUint8(i);  
+                        soc.log(hex);
+                        textlog += hex.toString(16) + " ";
+                    }
+                    soc.log(textlog + "///");
+                    */
+                    
+                    try {
+                        blobImage = new Blob([result], {type: "image/jpeg"});
+                        soc.log("1. Blob.size:" + blobImage.size + ", Blob.type: " + blobImage.type);
+                    } catch(e) {
+                        // 아래는 웹뷰가 다른 경우를 위한 코드이나 현재 정상작동 확인은 안됨
+                        window.BlobBuilder = window.BlobBuilder ||
+                            window.WebKitBlobBuilder ||
+                            window.MozBlobBuilder ||
+                            window.MSBlobBuilder;
+                        
+                        if (e.name == 'TypeError' && window.BlobBuilder) {
+                            soc.log("TypeError: " + e.message);
+                            //var dataView = new DataView(result);
+                            var bb = new BlobBuilder();
+                            bb.append(result);
+                            blobImage = bb.getBlob("image/jpeg");
+                            soc.log("case 2");
+                            soc.log("2. Blob.size:" + blobImage.size + ", Blob.type: " + blobImage.type);
+                        }
+                        else if (e.name == "InvalidStateError") {
+                            // InvalidStateError (tested on FF13 WinXP)
+                            blobImage = new Blob([result.buffer], {type: {type: "image/jpeg"}});
+                            soc.log("case 3");
+                        }
+                        else {
+                            // We're screwed, blob constructor unsupported entirely   
+                            soc.log("Errore");
+                        }
+                    }
+                    soc.log("3. Blob.size:" + blobImage.size + ", Blob.type: " + blobImage.type);
                     q.resolve(blobImage);    
                 }, function(error) {
                     q.reject(error);
-                });
-        }
+
+                });                        
+        }                
         return q.promise;
     }
     
@@ -142,7 +193,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         },
         hideCurrentPosition: function() {
             soc.log("hide");
-            soc.log(this.reportMarker);
+            //soc.log(this.reportMarker);
             if(this.reportMarker) this.reportMarker.setMap(null);
         },
         findPosition: function() {
@@ -163,8 +214,19 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             );
         },
         prepareReport: function() {
-            this.clear();
             var This = this;
+            
+            if(window.WebKitBlobBuilder !== undefined) {
+                $cordovaDialogs.confirm('해당 기기에서는 제공되지 않는 기능입니다 ', 'CCTV 위치 등록', ['확인'])
+                .then(function(buttonIndex) {
+
+                });
+                This.endReport();                
+                return;
+            }
+
+            this.clear();
+            
             
             cctvMapFactory.endWatchPosition();
             $ionicPopup.show({title :'<span class="cctv-app-font">위치정보 제공에 동의하십니까?</span>',
