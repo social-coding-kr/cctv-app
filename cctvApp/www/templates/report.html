@@ -5,7 +5,7 @@
     <ion-item class="item-divider">CCTV 사진</ion-item> 
     <div class="row">
       <div class="col">
-
+        <!--
         <a class="button button-block button-dark button-outline" ng-show="report.cctvImage==null"
           ng-click="report.takeCctvPhoto()"
           style="font-size:120%; font-weight: normal; line-height: 110%">
@@ -19,30 +19,46 @@
             <img src="{{report.cctvImage}}">
           </div>
         </div>
-        
+        -->
         <div class="list card">
-          <div class="item item-image cctv-image-thumb2">
-            <img src="{{report.cctvImage}}">
+          <div class="item item-image cctv-image-thumb">
+            <img ng-show="report.cctvImage" src="{{report.cctvImage}}">
+            <div ng-show="report.cctvImage==null" class="item-text-wrap cctv-text-center">
+              CCTV 사진을<br>촬영해주세요
+            </div>
           </div>
-          <a class="item item-icon-left assertive" href="#">
-            <i class="icon ion-music-note"></i>
-            cctv 사진
+          <a class="item cctv-text-center positive" ng-click="report.takeCctvPhoto()">
+            <i class="icon button-icon ion-camera"></i>
           </a>
         </div>
-        
       </div>
       
       <div class="col">
+        <!--
         <button class="button button-small">
           <i class="icon ion-help-circled"></i> 도움말 
         </button>
+        -->
       </div>
     </div>
     
     <ion-item class="item-divider">안내판 사진</ion-item>
     <div class="row">
       <div class="col">
-        
+
+        <div class="list card">
+          <div class="item item-image cctv-image-thumb">
+            <img ng-show="report.noticeImage" src="{{report.noticeImage}}">
+            <div ng-show="report.noticeImage==null" class="item-text-wrap cctv-text-center" ng-class="report.noticePhotoProcess&&!report.noticeImage?'button-outline':''">
+              CCTV 근처<br>안내판을<br>촬영해주세요
+            </div>
+          </div>
+          <a class="item cctv-text-center positive" ng-click="report.takeNoticePhoto()">
+            <i class="icon button-icon ion-camera"></i>
+          </a>
+        </div>        
+
+<!--        
         <a class="button button-block button-dark button-outline" ng-show="report.noticeImage==null"
           ng-click="report.takeNoticePhoto()"
           style="font-size:120%; font-weight: normal; line-height: 110%">
@@ -55,9 +71,19 @@
         <div ng-show="report.noticeImage" class="cctv-image-thumb card">
           <img src="{{report.noticeImage}}">
         </div>
-        
+-->        
       </div>        
       <div class="col">
+        <div class="list card">
+          <div class="item-text-wrap cctv-text-center cctv-image-thumb" ng-class="report.noticeImage?'button-outline':''">
+            CCTV 근처에<br>안내판이<br>없습니다
+          </div>
+          <a class="item cctv-text-center" ng-click="report.noticeNoExist()" ng-class="report.noticeImage?'assertive':'assertive'">
+            <i class="icon button-icon ion-close-circled"></i>
+          </a>
+        </div>        
+
+<!--        
         <a class="button button-block button-dark" 
           ng-show="report.noticeImage==null" 
           ng-click="report.noticeNoExist()"
@@ -67,13 +93,15 @@
           <i class="icon button-icon ion-close-circled"></i>
           <p>주변에 안내판이<br>존재하지 않음</p>
         </a>
+-->        
       </div>
     </div>
+    <!--
       <ion-item>
         <p>목적</p>
         <h2 ng-repeat="p in purposeForReport" ng-show="p.checked">{{p.text}}</h2>
       </ion-item>
-
+    -->
       <ion-item>
         <p>주소</p>
         <h2>{{currentAddress}}</h2>
