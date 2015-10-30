@@ -219,9 +219,9 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             var This = this;
             
             if(this.status == this.statusFindPosition
-            || this.status == this.statusFoundPosition
-            || this.status == this.statusStartPosition) return; //여러번 누르는 문제 방지
+            || this.status == this.statusFoundPosition) return; //여러번 누르는 문제 방지
             
+
             /*
             if(window.WebKitBlobBuilder !== undefined) {
                 $cordovaDialogs.confirm('해당 기기에서는 제공되지 않는 기능입니다 ', 'CCTV 위치 등록', ['확인'])
