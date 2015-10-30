@@ -14,6 +14,7 @@ angular.module('starter.controllers')
     $ionicPlatform.ready(function() {
 
         $scope.cctvMap = cctvMapFactory;
+        $scope.cctvImageFactory = cctvImageFactory;
         var mapContainer = document.getElementById('map');
 
         $scope.detail = {
@@ -192,10 +193,13 @@ angular.module('starter.controllers')
                 //cctvImageFactory.refreshThumbImage();
             }
         });
-        
+        var imageResizedCctvId = null;
         $scope.showCctvDetail = function() {
             $scope.cctvDetailModal.show();
-            cctvImageFactory.refreshInfoImage();
+            if (imageResizedCctvId != $scope.cctvSelected.cctv.cctvId) {
+                cctvImageFactory.refreshInfoImage();
+                imageResizedCctvId = $scope.cctvSelected.cctv.cctvId;
+            }
         };
 
         $scope.closeCctvDetail = function() {

@@ -100,20 +100,26 @@
             <img ng-src="{{cctvSelected.cctv.noticeImage}}">
           </div>
         </ion-item>
-        -->
-        <ion-item class="item-divider">CCTV/안내판</ion-item>
-        <ion-item class="item item-image">
-          <div class="info-image">
-            <img ng-src="{{cctvSelected.cctv.cctvImage}}">
-          </div>
-          <div class="info-image">
-            <img ng-src="{{cctvSelected.cctv.noticeImage}}">
-          </div>
-        </ion-item>
         
+        <ion-item class="item-divider">CCTV/안내판</ion-item>
+        -->
         <ion-item class="item item-image">
-          <div class="info-image">
-            <img ng-src="{{cctvSelected.cctv.noticeImage}}">
+          <div class="list card">
+            <div class="item item-divider" ng-show="cctvImageFactory.widthImages == 0">
+              <h2>CCTV/안내판</h2>
+            </div>
+            <div class="item item-divider" ng-show="cctvImageFactory.widthImages != 0">
+              <h2>CCTV</h2>
+            </div>
+            <div class="info-image">
+              <img ng-src="{{cctvSelected.cctv.cctvImage}}">
+            </div>
+            <div class="item item-divider" ng-show="cctvImageFactory.widthImages != 0">
+              <h2>안내판</h2>
+            </div>
+            <div class="info-image">
+              <img ng-src="{{cctvSelected.cctv.noticeImage}}">
+            </div>
           </div>
         </ion-item>
         

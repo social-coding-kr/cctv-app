@@ -40,10 +40,10 @@ function($q, soc) {
     
     // 세부정보 이미지 부분을 'info-image'로 감싸서 사용
     return {
+        widthImages : 0, 
         refreshInfoImage: function() {
                 var divs = document.getElementsByClassName('info-image');
-                var WidthImages = 0;
-                
+                this.widthImages = 0;
                 for (var i = 0; i < divs.length; i++) {
                     var div = divs[i];
 
@@ -53,31 +53,46 @@ function($q, soc) {
                     if(imgAspect > 1) {
                         // Do nothing
                     } else {
-                        WidthImages += 1;
+                        this.widthImages += (i + 1);
                     }
                 }
-                soc.log('WidthImage :' + WidthImages);
+                soc.log('widthImages =' + this.widthImages);
                 
-                if (WidthImages === 0) {
-                    var img_height = (divs[0].querySelector('img').height/2).toString();
+                if (this.widthImages === 0) {
+                    soc.log('가로 이미지가 없는 경우');
+                    var img_height = (divs[0].querySelector('img').height / 2).toString();
                     for (var i = 0; i < divs.length; i++) {
                         var img = divs[i].querySelector('img');
                         img.style.cssText = 'width: 50%; height: ' + img_height + 'px; FLOAT: left;';
                         soc.log(img.style.cssText);
                     }
-                    soc.log('case WidthImage 0');
-                } else if (WidthImages === 1) {
-                    for (var i = 0; i < divs.length; i++) {
-                        var img = divs[i].querySelector('img');
-                        img.style.cssText = 'width: 75%; height: auto;';
-                    }
-                    soc.log('case WidthImage 1');
+                } else if (this.widthImages === 1) {
+                    soc.log('cctvImage만 가로이미지인 경우');
+                    var cctvImg = divs[0].querySelector('img');
+                    var infoImg = divs[1].querySelector('img');
+                    // var img_margin = divs[1].querySelector('img').height - divs[0].querySelector('img').height;
+                    // var top_margin = (img_margin / 4).toString();
+                    cctvImg.style.cssText = 'width: 100%; height: auto;';
+                    infoImg.style.cssText = 'width: 50%; height: auto;';
+                    // soc.log(cctvImg.style.cssText);
+                    // soc.log(infoImg.style.cssText);
+                } else if (this.widthImages === 2) {
+                    soc.log('안내판 이미지만 가로이미지인 경우');
+                    var cctvImg = divs[0].querySelector('img');
+                    var infoImg = divs[1].querySelector('img');
+                    // var img_margin = divs[0].querySelector('img').height - divs[1].querySelector('img').height;
+                    // var top_margin = (img_margin / 4).toString();
+                    cctvImg.style.cssText = 'width: 50%; height: auto;';
+                    infoImg.style.cssText = 'width: 100%; height: auto;';
+                    // soc.log(cctvImg.style.cssText);
+                    // soc.log(infoImg.style.cssText);
                 } else {
+                    soc.log('두 사진 모두 가로이미지인 경우');
                     for (var i = 0; i < divs.length; i++) {
                         var img = divs[i].querySelector('img');
                         img.style.cssText = 'width: 100%; height: auto;';
+                        // soc.log(img.style.cssText);
                     }
-                    soc.log('case WidthImage 2');
                 }
             },    
     };
