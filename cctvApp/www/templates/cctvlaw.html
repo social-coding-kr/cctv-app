@@ -2,10 +2,13 @@
     <ion-content padding="true" class="has-header" has-bouncing="true">
         <ul class="list">
             <li class="item item-divider item-text-wrap" ng-click="LAW_SWITCH_01 = !LAW_SWITCH_01">
-                <span ><strong>•개인정보 보호법 제25조(영상정보처리기기의 설치·운영 제한) </strong></span><br />
+                <i class="icon ion-ios-book" ng-hide="LAW_SWITCH_01"></i><i class="icon ion-ios-book-outline" ng-show="LAW_SWITCH_01"></i><span ><strong> 개인정보 보호법 제25조(영상정보처리기기의 설치·운영 제한) </strong></span><br />
 
             </li>
             <li class="item item-text-wrap" ng-show="LAW_SWITCH_01 === true">
+                <div class="cctv-text-right">
+                    <span style="font-size: 0.8em; margin-top: 3px; margin-bottom: 10px;"><a href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000" target="_blank">원문 링크</a></span>
+                </div>
                 장소에 영상정보처리기기를 설치·운영하여서는 아니 된다. <br />
                 <div style="padding-left: 10px;">
                 1. 법령에서 구체적으로 허용하고 있는 경우<br />
@@ -14,31 +17,36 @@
                 4. 교통단속을 위하여 필요한 경우<br />
                 5. 교통정보의 수집·분석 및 제공을 위하여 필요한 경우<br />
                     <div style="padding-left: 10px;">
-                        ① 누구든지 불특정 다수가 이용하는 목욕실, 화장실, 발한실<span style="font-family: Roboto, Arial, sans-serif">(發汗室)</span>, 탈의실 등 개인의 사생활을 현저히 침해할 우려가 있는 장소의 내부를 볼 수 있도록 영상정보처리기기를 설치·운영하여서는 아니 된다. 다만, 교도소, 정신보건 시설 등 법령에 근거하여 사람을 구금하거나 보호하는 시설로서 <a target="_blank"  href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000">대통령령으로</a> 정하는 시설에 대하여는 그러하지 아니하다.<br />
-                        ② 제1항 각 호에 따라 영상정보처리기기를 설치·운영하려는 공공기관의 장과 제2항 단서에 따라 영상정보처리기기를 설치·운영하려는 자는 공청회·설명회의 개최 등 <a target="_blank"  href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000">대통령령으로</a> 정하는 절차를 거쳐 관계 전문가 및 이해관계인의 의견을 수렴하여야 한다.<br />
-                        ③ 제1항 각 호에 따라 영상정보처리기기를 설치·운영하는 자(이하 "영상정보처리기기운영자"라 한다)는 정보주체가 쉽게 인식할 수 있도록 <a target="_blank"  href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000">대통령령으로</a> 정하는바에 따라 안내판 설치 등 필요한 조치를 하여야 한다. 다만, <a target="_blank"  href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000">대통령령으로</a> 정하는 시설에 대하여는 그러하지 아니하다.<br />
+                        ① 누구든지 불특정 다수가 이용하는 목욕실, 화장실, 발한실<span style="font-family: Roboto, Arial, sans-serif">(發汗室)</span>, 탈의실 등 개인의 사생활을 현저히 침해할 우려가 있는 장소의 내부를 볼 수 있도록 영상정보처리기기를 설치·운영하여서는 아니 된다. 다만, 교도소, 정신보건 시설 등 법령에 근거하여 사람을 구금하거나 보호하는 시설로서 대통령령으로 정하는 시설에 대하여는 그러하지 아니하다.<br />
+                        ② 제1항 각 호에 따라 영상정보처리기기를 설치·운영하려는 공공기관의 장과 제2항 단서에 따라 영상정보처리기기를 설치·운영하려는 자는 공청회·설명회의 개최 등 대통령령으로 정하는 절차를 거쳐 관계 전문가 및 이해관계인의 의견을 수렴하여야 한다.<br />
+                        ③ 제1항 각 호에 따라 영상정보처리기기를 설치·운영하는 자(이하 "영상정보처리기기운영자"라 한다)는 정보주체가 쉽게 인식할 수 있도록 대통령령으로 정하는바에 따라 안내판 설치 등 필요한 조치를 하여야 한다. 다만, 대통령령으로 정하는 시설에 대하여는 그러하지 아니하다.<br />
                         ④ 영상정보처리기기운영자는 영상정보처리기기의 설치 목적과 다른 목적으로 영상정보처리기기를 임의로 조작하거나 다른 곳을 비춰서는 아니 되며, 녹음기능은 사용할 수 없다.<br />
                         ⑤ 영상정보처리기기운영자는 개인정보가 분실·도난·유출·위조·변조 또는 훼손되지 아니하도록 제29조에 따라 안전성 확보에 필요한 조치를 하여야 한다.  &lt;개정 2015.7.24.&gt;<br />
-                        ⑥ 영상정보처리기기운영자는 <a target="_blank"  href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000">대통령령으로</a> 정하는 바에 따라 영상정보처리기기 운영·관리 방침을 마련하여야 한다. 이 경우 제30조에 따른 개인정보 처리방침을 정하지 아니할 수 있다.<br />
-                        ⑦ 영상정보처리기기운영자는 영상정보처리기기의 설치·운영에 관한 사무를 위탁할 수 있다. 다만, 공공기관이 영상정보처리기기 설치·운영에 관한 사무를 위탁하는 경우에는 <a target="_blank"  href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000">대통령령으로</a> 정하는 절차 및 요건에 따라야 한다.<br />
+                        ⑥ 영상정보처리기기운영자는 대통령령으로 정하는 바에 따라 영상정보처리기기 운영·관리 방침을 마련하여야 한다. 이 경우 제30조에 따른 개인정보 처리방침을 정하지 아니할 수 있다.<br />
+                        ⑦ 영상정보처리기기운영자는 영상정보처리기기의 설치·운영에 관한 사무를 위탁할 수 있다. 다만, 공공기관이 영상정보처리기기 설치·운영에 관한 사무를 위탁하는 경우에는 대통령령으로 정하는 절차 및 요건에 따라야 한다.<br />
                     </div>
                 </div>
             </li>
             <li class="item item-divider item-text-wrap" ng-click="LAW_SWITCH_02 = !LAW_SWITCH_02">
-                <span ><strong>•개인정보 보호법 제72조(벌칙) </strong></span><br />
+                <i class="icon ion-ios-book" ng-hide="LAW_SWITCH_02"></i><i class="icon ion-ios-book-outline" ng-show="LAW_SWITCH_02"></i><span ><strong> 개인정보 보호법 제72조(벌칙) </strong></span><br />
 
             </li>
             <li class="item item-text-wrap" ng-show="LAW_SWITCH_02 === true">
+                <div class="cctv-text-right">
+                    <span style="font-size: 0.8em;"><a href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000" target="_blank">원문 링크</a>
+                </div>
                 다음 각 호의 어느 하나에 해당하는 자는 3년 이하의 징역 또는 3천만원 이하의 벌금에 처한다.<br />
                 1. 제25조제5항을 위반하여 영상정보처리기기의 설치 목적과 다른 목적으로 영상정보처리기기를 임의로 조작하거나 다른 곳을 비추는 자 또는 녹음기능을 사용한 자<br />
                 2. 제59조제1호를 위반하여 거짓이나 그 밖의 부정한 수단이나 방법으로 개인정보를 취득하거나 개인정보 처리에 관한 동의를 받는 행위를 한 자 및 그 사정을 알면서도 영리 또는 부정한 목적으로 개인정보를 제공받은 자<br />
                 3. 제60조를 위반하여 직무상 알게 된 비밀을 누설하거나 직무상 목적 외에 이용한 자 <br />
             </li>
             <li class="item item-divider item-text-wrap" ng-click="LAW_SWITCH_03 = !LAW_SWITCH_03">
-                <span ><strong>•개인정보 보호법 시행령 제25조(영상정보처리기기 운영ㆍ관리 방침)</strong></span><br />
-
+                <i class="icon ion-ios-book" ng-hide="LAW_SWITCH_03"></i><i class="icon ion-ios-book-outline" ng-show="LAW_SWITCH_03"></i><span ><strong> 개인정보 보호법 시행령 제25조(영상정보처리기기 운영ㆍ관리 방침)</strong></span><br />
             </li>
             <li class="item item-text-wrap" ng-show="LAW_SWITCH_03 === true">
+                <div class="cctv-text-right">
+                    <span style="font-size: 0.8em;"><a href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000" target="_blank">원문 링크</a>
+                </div>
                 ① 영상정보처리기기운영자는 법 제25조제7항에 따라 다음 각 호의 사항이 포함된 영상정보처리기기 운영ㆍ관리 방침을 마련하여야 한다.<br />
                 <div style="padding-left: 10px;">
                 1. 영상정보처리기기의 설치 근거 및 설치 목적<br />
@@ -54,10 +62,13 @@
 
             </li>
             <li class="item item-divider item-text-wrap" ng-click="LAW_SWITCH_04 = !LAW_SWITCH_04">
-                <span ><strong>•개인정보 보호법 시행령 제26조(공공기관의 영상정보처리기기 설치ㆍ운영 사무의 위탁)</strong></span><br />
+                <i class="icon ion-ios-book" ng-hide="LAW_SWITCH_04"></i><i class="icon ion-ios-book-outline" ng-show="LAW_SWITCH_04"></i><span ><strong> 개인정보 보호법 시행령 제26조(공공기관의 영상정보처리기기 설치ㆍ운영 사무의 위탁)</strong></span><br />
 
             </li>
             <li class="item item-text-wrap" ng-show="LAW_SWITCH_04 === true">
+                <div class="cctv-text-right">
+                    <span style="font-size: 0.8em;"><a href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000" target="_blank">원문 링크</a>
+                </div>
                 ① 법 제25조제8항 단서에 따라 공공기관이 영상정보처리기기의 설치ㆍ운영에 관한 사무를 위탁하는 경우에는 다음 각 호의 내용이 포함된 문서로 하여야 한다.<br />
                 <div style="padding-left: 10px;">
                 1. 위탁하는 사무의 목적 및 범위<br />
@@ -69,13 +80,16 @@
                 ② 제1항에 따라 사무를 위탁한 경우에는 제24조제1항부터 제3항까지의 규정에 따른 안내판 등에 위탁받는 자의 명칭 및 연락처를 포함시켜야 한다.<br />
             </li>
             <li class="item item-divider item-text-wrap" ng-click="LAW_SWITCH_05 = !LAW_SWITCH_05">
-                <span ><strong>•개인정보 보호법 시행령 제27조(영상정보처리기기 설치ㆍ운영 지침)</strong></span><br />
+                <i class="icon ion-ios-book" ng-hide="LAW_SWITCH_05"></i><i class="icon ion-ios-book-outline" ng-show="LAW_SWITCH_05"></i><span ><strong> 개인정보 보호법 시행령 제27조(영상정보처리기기 설치ㆍ운영 지침)</strong></span><br />
 
             </li>
             <li class="item item-text-wrap" ng-show="LAW_SWITCH_05 === true">
+                <div class="cctv-text-right">
+                    <span style="font-size: 0.8em;"><a href="http://www.law.go.kr/lsInfoP.do?lsiSeq=173223&chrClsCd=010202&urlMode=lsInfoP&efYd=20150724#0000" target="_blank">원문 링크</a></span>
+                </div>
                 행정자치부장관은 법 및 이 영에서 규정한 사항 외에 영상정보처리기기의 설치ㆍ운영에 관한 기준, 설치ㆍ운영 사무의 위탁 등에 관하여 법 제12조제1항에 따른 표준 개인정보 보호지침을 정하여 영상정보처리기기운영자에게 그 준수를 권장할 수 있다.  &lt;개정 2013.3.23, 2014.11.19&gt;
             </li>
-            <li class="item item-text-wrap" style="height: 500px;">
+            <li class="item item-text-wrap" style="height: 500px; border-bottom:0px; border-left:0px;border-right:0px;">
                 &nbsp;
             </li>
         </ul>

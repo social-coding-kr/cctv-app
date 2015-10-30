@@ -102,7 +102,7 @@ angular.module('starter.controllers')
     }
     
     // 좌표 주소 변환
-    obj.getAdressFromPoint = function(coord) {
+    obj.getAdressFromPoint = function(coord, selectedCctv) {
       var apiUrl = ionic.Platform.isWebView()
         ? "http://openapi.map.naver.com/api/reversegeocode" : "/api/reversegeocode";
       var apiKey = "c3cdd592f9b2a05e8430c939808ba40b";
@@ -117,7 +117,13 @@ angular.module('starter.controllers')
           var result = response.data.result;
           // obj.log("좌표주소 변환 결과 :" + JSON.stringify(response));
           // obj.log("주소 :" + JSON.stringify(response.data.result.items[0].address));
-          $rootScope.currentAddress = response.data.result.items[0].address;
+          
+          // selectedCctv 여부에 따라 변수 분리, 다음에 처리구조를 반드시 수정
+          if(selectedCctv) {
+            selectedCctv.cctv.address = response.data.result.items[0].address;
+          } else {
+            $rootScope.currentAddress = response.data.result.items[0].address;
+          }
         }, function(response) { // on fail
           // obj.log("response :" + JSON.stringify(response));
         }

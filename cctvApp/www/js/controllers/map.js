@@ -80,9 +80,13 @@ angular.module('starter.controllers')
 
         $scope.showCctvInfo = function(cctv, detail) {
             //cctv.detail = detail;
+            $scope.cctvSelected = null;
+            
+            var currentCoord = cctv.longitude + "," + cctv.latitude;
             soc.log("[[cctv]] : " + JSON.stringify(cctv.cctvId) + ", " + JSON.stringify(cctv.source));
             soc.log("[[detail]]" + JSON.stringify(detail));
             $scope.cctvSelected = detail;
+            soc.getAdressFromPoint(currentCoord, $scope.cctvSelected);
             //$scope.cctvMap.refreshMap();
         }
 

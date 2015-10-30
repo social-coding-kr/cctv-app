@@ -51,19 +51,14 @@
                 <span><i class="icon ion-pinpoint" style="font-size : 23px;"></i></span>
             </div>
 
-            <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
-            <!--<div class="custom_zoomcontrol radius_border"> 
-            <span ng-click="zoomIn()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>
-            <span ng-click="zoomOut()"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
-        </div>-->
             <!-- 확대/축소 컨트롤은 우선 구글지도 기본 버튼을 사용 -->
 
             <!-- 공공, 민간 필터링 div 입니다 -->
-            <div class="filterControl publicFilterPositionFix" ng-class="{true : '' , false : 'filterPublicInActive'}[cctvMap.filterHide.PUBLIC]" ng-click="cctvMap.toggleFilter('PUBLIC')">
-                공공
+            <div class="filterControl publicFilterPositionFix button-left-radius" ng-class="{true : '' , false : 'filterPublicInActive'}[cctvMap.filterHide.PUBLIC]" ng-click="cctvMap.toggleFilter('PUBLIC')">
+                <span>공공</span>
             </div>
-            <div class="filterControl privateFilterPositionFix" ng-class="{true : '' , false : 'filterPrivateInActive'}[cctvMap.filterHide.PRIVATE]" ng-click="cctvMap.toggleFilter('PRIVATE')">
-                민간
+            <div class="filterControl privateFilterPositionFix button-right-radius" ng-class="{true : '' , false : 'filterPrivateInActive'}[cctvMap.filterHide.PRIVATE]" ng-click="cctvMap.toggleFilter('PRIVATE')">
+                <span>민간</span>
             </div>
 
 
@@ -73,7 +68,17 @@
             </div>
 
 
-        </div>
+            <div class="cctv-info-footer" ng-if="cctvSelected !== null && report.getStatus() === report.statusNone">
+                <a ng-click="showCctvDetail()" class="cctv-public"  ng-if="cctvSelected.cctv.source === 'PUBLIC'"> <strong>공공CCTV &nbsp; &nbsp; {{cctvSelected.cctv.purpose}}</strong></a>
+                <a ng-click="showCctvDetail()" class="cctv-private" ng-if="cctvSelected.cctv.source === 'PRIVATE'"><strong>민간CCTV</strong></a>
+                    <div class="desc">
+                        <img src="" alt="">
+                        <span class="address">{{cctvSelected.cctv.address}}</span>
+                        
+                    </div>
+                </div>
+            </div>
+            
         <!-- 등록/foundPosition -->
         <div class="bar bar-subfooter" style="margin: 0px;" ng-show="report.getStatus() == report.statusFoundPosition">
             <div class="row" style="padding: 0px;">
@@ -100,42 +105,5 @@
             </div>
         </div>
 
-
-
     </ion-content>
-    <!-- cctvDetail -->
-    <ion-footer-bar align-title="left" class="bar-light" style="height: 100px;" ng-if="cctvSelected !== null && report.getStatus() === report.statusNone" >
-        <div class="row" style="padding: 0px;">
-            <div class="col col-25 cctv-text-right">
-                <span class="badge badge-assertive">
-                        &nbsp;
-                        <i class="icon ion-ios-videocam" style="font-size: larger;"></i>
-                        <span>{{cctvSelected.cctv.source === 'PUBLIC'? '공공' : '사설'}}</span> &nbsp;
-                </span>
-            </div>
-            <div class="col col-75">
-                <div class="row" style="padding: 0px;">
-                    
-                    <div class="col col-75 cctv-text-center" style="padding-top: 3px;">
-                        <span>[{{cctvSelected.cctv.cctvId}}] {{cctvSelected.cctv.address}}</span>
-                    </div>
-                    
-                    <!-- 일단 주석처리
-                    <div class="col col-75 cctv-text-center" style="padding-top: 3px;">
-                        <span>{{cctvSelected.cctv.purpose}}</span>
-                    </div>
-                    -->
-                    <div class="col col-25" style="padding:0px;" ng-click="showCctvDetail()">
-                        <i class="icon ion-more" style="font-size: 31px; color: gray;"></i>
-                    </div>
-                </div>
-            </div>
-            <!--
-                    <button class="button button-clear button-stable" ng-click="showCctvDetail()" style="padding-top: 0px;">
-                        <i class="icon ion-more" style="font-size: larger; margin-top:0px;"></i>
-                    </button>
-                    -->
-        </div>
-    </ion-footer-bar>
-
 </ion-view>

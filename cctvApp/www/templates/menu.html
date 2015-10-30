@@ -21,18 +21,18 @@
   <ion-side-menu side="left" style="background-color: #F5F5F5">
     <ion-content>
       <!-- login area -->
-      <img style="width: 100%;" src="img/cctv_menu_logo.png" />
+      <img style="width: 100%; margin-bottom: 0px;" src="img/cctv_menu_logo.png" />
       <!-- misc area -->
-      <ion-list>
-        <ion-item menu-close class="item item-icon-left" href="#/app/map" style="border-top: 0px;" ng-click="report.endReport()">
-          <i class="icon ion-ios-videocam"></i>
+      <ion-list style="margin-top: 0px;">
+        <ion-item menu-close class="item item-icon-left" href="#/app/map" style="border-top: 0px; border-left-width: 10px;" ng-click="report.endReport()">
+          <i class="icon ion-map"></i>
           <span>CCTV 위치 확인</span>
         </ion-item>
-        <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
-          <i class="icon ion-ios-location"></i>
+        <ion-item menu-close class="item item-icon-left" href="#/app/map" style="border-left-width: 10px;" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
+          <i class="icon ion-ios-videocam"></i>
           <span>CCTV 위치 등록</span>
         </ion-item>
-        <ion-item menu-close class="item item-icon-left" href="#/app/cctvlaw">
+        <ion-item menu-close class="item item-icon-left" href="#/app/cctvlaw" style="border-left-width: 10px;">
           <i class="icon ion-ios-book"></i>
           <span>CCTV 관련법 보기</span>
         </ion-item>
@@ -43,10 +43,8 @@
           <span>로그인</span>
         </ion-item>
         -->
-        <div class="item item-divider" style="height: 5px;">
-          <span style="font-size: 2px;">&nbsp;</span>
-        </div>
-        <ion-item menu-close class="item item-icon-left" href="#/app/config" ng-click="nowReportUnclicked()">
+
+        <ion-item menu-close class="item item-icon-left" href="#/app/config" style="border-left-width: 10px;" ng-click="nowReportUnclicked()">
           <i class="icon ion-gear-b"></i>
           <span>설정</span>
         </ion-item>
@@ -91,60 +89,7 @@
       </ion-list>
 
     </ion-content>
-    <!--
-    <ion-content>
-      <ion-list>
-        <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="nowReportUnclicked()">
-          <i class="icon ion-map"></i>
-          Home
-        </ion-item>
-        <ion-item menu-close ng-click="login()">
-          Login
-        </ion-item>
-        <ion-item menu-close href="#/app/search" ng-show="soc.config.isDevelModeVisible">
-          Search
-        </ion-item>
-        <ion-item menu-close href="#/app/playlists" ng-show="soc.config.isDevelModeVisible">
-          Playlists
-        </ion-item>
-        <ion-item menu-close href="#/app/devel">
-          개발자용
-        </ion-item>
-        <ion-item menu-close href="#/app/devel2" ng-show="soc.config.isDevelModeVisible">
-          개발자용2
-        </ion-item>
-        <ion-item menu-close href="#/app/devlog" ng-show="soc.config.isDevelModeVisible">
-          Log
-        </ion-item>
-        <ion-item menu-close href="#/app/bonhunTest" ng-show="false">
-          Bonhun Test
-        </ion-item>
-        <ion-item menu-close href="#/app/cctvApiTest" ng-show="soc.config.isDevelModeVisible">
-          CCTV API Test
-        </ion-item>
-        <ion-item menu-close href="#/app/oauthApiTest" ng-show="soc.config.isDevelModeVisible">
-          Oauth API Test
-        </ion-item>
-        <ion-item menu-close href="#/app/map" ng-click="locationInfoConfirm()">
-          신고용
-        </ion-item>
-        <ion-item menu-close class="item item-icon-left" href="#/app/mapTest">
-          <i class="icon ion-map"></i>
-          지도Test
-        </ion-item>
-        <ion-item menu-close class="item item-icon-left" href="#/app/config">
-          <i class="icon ion-gear-a"></i>
-          설정
-        </ion-item>
 
-        <div class="button-bar">
-            <button class="button button-stable button-block button-small">방범용</button>
-            <button class="button button-stable button-block button-small">교통용</button>
-            <button class="button button-calm button-block button-small">몰라용</button>
-        </div>
-      </ion-list>
-    </ion-content>
-    -->
   </ion-side-menu>
   <!-- Side Menu Contents start -->
 </ion-side-menus>

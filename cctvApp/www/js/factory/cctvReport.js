@@ -233,7 +233,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             cctvMapFactory.endWatchPosition();
             $ionicPopup.show({
                       title :'<strong><span class="cctv-app-font cctv-text-center">위치 정보 사용</span></strong>',
-                      template : '등록할 <strong><span style="color: blue">CCTV 위치 파악</span></strong>을 위해 사용자의 현 위치 정보를 필요로합니다.<br /> 위치 정보 사용에 <strong><span style="color: blue;">동의</span></strong>하시겠습니까?',
+                      template : '등록할 <strong><span style="color: #387ef5">CCTV 위치 파악</span></strong>을 위해 사용자의 현 위치 정보를 필요로합니다.<br /> 위치 정보 사용에 <strong><span style="color: #387ef5;">동의</span></strong>하시겠습니까?',
                       buttons: [{ 
                         text: '동의',
                         type: 'button-positive',

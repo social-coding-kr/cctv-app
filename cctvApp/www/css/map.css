@@ -14,10 +14,10 @@
     line-height:30px;
 }
 
-/* DAUM MAP API BEGIN */
+/*
 #cctvMaps .radius_border{border:1px solid #919191;border-radius:5px;}     
 
-/* type Control */
+/* type Control *-/
 #cctvMaps .custom_typecontrol {position:absolute;top:10px;right:10px;overflow:hidden;width:130px;height:30px;margin:0;padding:0;z-index:1;font-size:12px;font-family:'Malgun Gothic', '맑은 고딕', sans-serif;}
 #cctvMaps .custom_typecontrol span {display:block;width:65px;height:30px;float:left;text-align:center;line-height:30px;cursor:pointer;}
 #cctvMaps .custom_typecontrol .btn {background:#fff;background:linear-gradient(#fff,  #e6e6e6);}       
@@ -26,17 +26,19 @@
 #cctvMaps .custom_typecontrol .selected_btn {color:#fff;background:#425470;background:linear-gradient(#425470, #5b6d8a);}
 #cctvMaps .custom_typecontrol .selected_btn:hover {color:#fff;}   
 
-/* zoom Control */
+/* zoom Control *-/
 #cctvMaps .custom_zoomcontrol {position:absolute;top:58px;right:10px;width:36px;height:80px;overflow:hidden;z-index:1;background-color:#f5f5f5;}
 #cctvMaps .custom_zoomcontrol span {display:block;width:36px;height:40px;text-align:center;cursor:pointer;}     
 #cctvMaps .custom_zoomcontrol span img {width:15px;height:15px;padding:12px 0;border:none;}             
 #cctvMaps .custom_zoomcontrol span:first-child{border-bottom:1px solid #bfbfbf;}
-
-#cctvMaps .filterControl { direction: ltr; overflow: hidden; text-align: center; color: rgb(0, 0, 0); font-family: Roboto,Arial,sans-serif; -moz-user-select: none; font-size: 11px; background-color: rgb(255, 255, 255); padding: 8px; border-bottom-left-radius: 2px; border-top-left-radius: 2px; background-clip: padding-box; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3); min-width: 22px; font-weight: 500;}
-#cctvMaps .publicFilterPositionFix {top:10px; left:112px; width:40px; height: 40px; position: absolute;}
-#cctvMaps .filterPublicInActive {background-color : #5b94ff; color: white;}
-#cctvMaps .privateFilterPositionFix {top:10px; left:150px; width:40px; height: 40px; position: absolute;}
-#cctvMaps .filterPrivateInActive {background-color : #ab94ff; color: white;}
+*/
+#cctvMaps .filterControl { direction: ltr; overflow: hidden; text-align: center; color: rgb(0, 0, 0); font-family: Roboto,Arial,sans-serif; -moz-user-select: none; font-size: 11px; background-color: rgb(255, 255, 255); padding: 8px; background-clip: padding-box; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3); min-width: 22px; font-weight: 500;}
+#cctvMaps .publicFilterPositionFix {top:10px; left:112px; width:40px; height: 40px; position: absolute; padding-top:10px;}
+#cctvMaps .filterPublicInActive {background-color : #e25e46; color: white;}
+#cctvMaps .privateFilterPositionFix {top:10px; left:150px; width:40px; height: 40px; position: absolute; padding-top:10px;}
+#cctvMaps .filterPrivateInActive {background-color : #6759fc; color: white;}
+#cctvMaps .button-left-radius {border-bottom-left-radius: 2px; border-top-left-radius: 2px; }
+#cctvMaps .button-right-radius {border-bottom-right-radius: 2px; border-top-right-radius: 2px; }
 
 
 /* zoom Control */
@@ -66,17 +68,15 @@
     line-height: 120%;
 }
 
-
-/* DAUM MAP API END */
-
 .cctv-map-searchbar {
-    border: 3px solid white !important;
+    border: 2px solid white !important;
     padding-left: 10px !important;
     padding-right: 10px !important;
     background: #B5EFEF  !important;
-    border-radius: 50px  !important;
-    height: 20px !important;
+    border-radius: 6px  !important;
+    height: 25px !important;
     width: 100% !important;
+    margin-top: -1px !important;
 }
 
 .cctv-map-searchbar-inactive {
@@ -168,5 +168,101 @@
 }
 
 .cctv-detail-photo {
-    height: 300px;
+    max-height: 300px;
 }
+
+
+
+.cctv-info-footer {
+    border-radius: 3px; 
+    /*margin-bottom: 12px;*/
+    position:absolute; 
+    bottom:25px; 
+    left:10px; 
+    width: 80%;
+    max-width: 500px;
+    border: 1px solid #ccc; 
+    border-bottom: 2px solid #ddd;
+    background-color:#fff;
+}
+
+.cctv-info-footer:nth-of-type(n) {
+    border:0; box-shadow: 0px 1px 2px #888;
+}
+
+.cctv-info-footer .cctv-public {
+    display: block; 
+    background: #e25e46; 
+    background: #e25e46 url(../img/arrow_right_small.png) no-repeat right 10px center; 
+    
+    text-decoration: none; 
+    color: #fff; 
+    padding: 8px 12px;
+    font-size: 14px; 
+    border-radius: 3px 3px 0 0;
+}
+
+.cctv-info-footer .cctv-private {
+    display: block; 
+    background: #6759fc; 
+    background: #6759fc url(../img/arrow_right_small.png) no-repeat right 10px center; 
+    
+    text-decoration: none; 
+    color: #fff; 
+    padding: 8px 12px;
+    font-size: 14px; 
+    border-radius: 3px 3px 0 0;
+}
+
+.cctv-info-footer i {
+    display: inline; 
+    right: 20px;
+    background-color: yellow;
+}
+
+.cctv-info-footer .desc {
+    padding:14px;
+    position: relative; 
+    min-width: 190px; 
+    height: 56px
+}
+
+
+
+.cctv-info-footer img {
+    vertical-align: top;
+}
+
+.cctv-info-footer .address {
+    font-size: 14px; 
+    color: #333; 
+    position: absolute; 
+    left: 60px; 
+    right: 14px; 
+    top: 8px; 
+    white-space: normal
+}
+
+
+.cctv-report-yes {
+    background-color: #e6e6e6;
+}
+.notice-report-yes {
+    background-color: #e6e6e6;
+}
+
+.notice-report-no {
+    background-color: #e6e6e6;
+}
+
+/*
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #4a87ee !default;
+$calm:                            #43cee6 !default;
+$balanced:                        #66cc33 !default;
+$energized:                       #f0b840 !default;
+$assertive:                       #ef4e3a !default;
+$royal:                           #8a6de9 !default;
+$dark:                            #444 !default;
+*/
