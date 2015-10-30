@@ -76,8 +76,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         createMap: function(container, position) {
             maps = google.maps;
             
-            soc.log(position);
-            soc.log(JSON.stringify(position));
+            //soc.log(position);
+            //soc.log(JSON.stringify(position));
             if(position) {
                 if(position.lng && position.lat)
                 this.mapOptions.center = new maps.LatLng(position.lat, position.lng);
@@ -155,9 +155,11 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         },
         
         requestCctvs: function() {
+            if(!this.mapLoaded) return;
+            
             var This = this;
             soc.log("request In");
-            if (this.map.getZoom() <= this.cctvHideHighZoom) return;
+            if (This.map.getZoom() <= this.cctvHideHighZoom) return;
             
             soc.log("request Start");
             var params = this.calculateRequestBounds();
@@ -277,6 +279,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             soc.log(cctvList.size());
         },
         refreshMarkers: function() {
+            if(!this.mapLoaded) return;
             var cctvIds = this.cctvList.keys();
             // 설정값에 따른 마커 표시여부
             for(var i in cctvIds) {
@@ -284,6 +287,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             }
         },
         refreshMarker: function(cctvId) {
+            if(!this.mapLoaded) return;
             var marker = this.cctvList.get(cctvId);
             var isHide = (this.filterHide[marker.cctv.source] == true);
             var onMap = marker.getMap();
@@ -301,12 +305,14 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             }
         },
         hideMarkers: function() {
+            if(!this.mapLoaded) return;
             var markers = this.cctvList.values();
             for(var i in markers) {
                 markers[i].setMap(null);
             }
         }, 
         showMarkers: function() {
+            if(!this.mapLoaded) return;
             var markers = this.cctvList.values();
             for(var i in markers) {
                 markers[i].setMap(this.map);
