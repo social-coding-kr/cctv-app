@@ -257,15 +257,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
   
-  .state('app.bonhunTest', {
-    url: '/bonhunTest',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/bonhunTest.html',
-        controller: 'BonhunTestCtrl'
-      }
-    }
-  })
 
   .state('app.config', {
     url: '/config',
