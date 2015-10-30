@@ -101,8 +101,8 @@ angular.module('starter.controllers')
 
         $scope.showCctvInfo = function(cctv, detail) {
             //cctv.detail = detail;
-            //soc.log("[[cctv]] : " + JSON.stringify(cctv.cctvId) + ", " + JSON.stringify(cctv.source));
-            //soc.log("[[detail]]" + JSON.stringify(detail));
+            soc.log("[[cctv]] : " + JSON.stringify(cctv.cctvId) + ", " + JSON.stringify(cctv.source));
+            soc.log("[[detail]]" + JSON.stringify(detail));
             $scope.cctvSelected = detail;
             $scope.cctvMap.refreshMap();
         }
@@ -258,35 +258,7 @@ angular.module('starter.controllers')
         $scope.$on('modal.shown', function() {
             console.log('Modal is shown!');
             if ($scope.cctvDetailModal.isShown()) {
-                cctvImageFactory.refreshThumbImage();
-            /*
-                var divs = document.getElementsByClassName('cctv-image-thumb');
-                //var divs = document.querySelectorAll('image-thumb');
-
-                //soc.log(JSON.stringify(divs));
-
-
-                for (var i = 0; i < divs.length; i++) {
-                    soc.log("Z0: " + i);
-                    var div = divs[i];
-                    var divAspect = div.offsetHeight / div.offsetWidth;
-                    div.style.overflow = 'hidden';
-
-                    var img = div.querySelector('img');
-                    var imgAspect = img.height / img.width;
-
-                    if (imgAspect <= divAspect) {
-                        var imgWidthActual = div.offsetHeight / imgAspect;
-                        var imgWidthToBe = div.offsetHeight / divAspect;
-                        var marginLeft = -Math.round((imgWidthActual - imgWidthToBe) / 2)
-                        img.style.cssText = 'width: auto; height: 100%; margin-left: ' + marginLeft + 'px;'
-                    } else {
-                        var imgHeightActual = div.offsetWidth * imgAspect;
-                        var imgHeightToBe = div.offsetWidth * divAspect;
-                        var marginTop = -Math.round((imgHeightActual - imgHeightToBe) / 2)
-                        img.style.cssText = 'width: 100%; height: auto; margin-top: ' + marginTop + 'px;';
-                    }
-                }*/
+                //cctvImageFactory.refreshThumbImage();
             }
         });
         
