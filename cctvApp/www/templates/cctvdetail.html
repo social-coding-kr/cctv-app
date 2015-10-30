@@ -48,12 +48,6 @@
           <p>관리부서</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.department ? cctvSelected.cctv.department : detail.noDataText }}</h2>
         </ion-item>
-        <div style="text-align :right">
-        <ion-item class="item-text-wrap cctv-detail-item">
-          <br>
-          <p>* 위 CCTV 정보는 구청제공 데이터입니다.</p>
-        </ion-item>
-        </div>
         
       </ion-list>
     </div>
@@ -64,7 +58,7 @@
         
         <ion-item class="item-text-wrap cctv-detail-item">
           <p>출처</p>
-          <h2 class="cctv-app-font">{{cctvSelected.cctv.source == 'PUBLIC' ? "공공기관 CCTV" : "사설 CCTV"}}</h2>
+          <h2 class="cctv-app-font">{{cctvSelected.cctv.source == 'PUBLIC' ? "공공기관 CCTV" : "민간 CCTV"}}</h2>
         </ion-item>
 
 
@@ -72,46 +66,10 @@
           <p>주소</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.address}}</h2>
         </ion-item>
-        <!--
-        <ion-item class="item-thumbnail-left">
-            <img ng-src="{{cctvSelected.cctv.cctvImage}}" ng-click="">
-            <p>출처</p>
-            <h2>사용자 등록</h2>
-        </ion-item>
 
-        <ion-item class="item-thumbnail-left">
-            <img ng-src="{{cctvSelected.cctv.noticeImage}}">
-            <p>CCTV 안내판</p>
-            <h2></h2>
-        </ion-item>
-
-        <ion-item class="item-thumbnail-center">
-          <img ng-src="{{cctvSelected.cctv.cctvImage}}">
-        </ion-item>
-
-        <ion-item class="item-thumbnail-center">
-          <img ng-src="{{cctvSelected.cctv.noticeImage}}">
-        </ion-item>
-        
-        <ion-item class="item-divider">CCTV</ion-item>
-        <ion-item class="item-thumbnail-center">
-          <div class="cctv-image-thumb">
-            <img ng-src="{{cctvSelected.cctv.cctvImage}}">
-          </div>
-        </ion-item>
-
-        <ion-item class="item-divider">안내판</ion-item>
-        <ion-item class="item-thumbnail-center">
-          <div class="cctv-image-thumb">
-            <img ng-src="{{cctvSelected.cctv.noticeImage}}">
-          </div>
-        </ion-item>
-        
-        <ion-item class="item-divider">CCTV/안내판</ion-item>
-        -->
         <ion-item class="item item-image">
           <div class="list card">
-            <div class="item item-divider" ng-show="cctvImageFactory.widthImages == 0  && cctvImageFactory.realDivsLength == 2">
+            <div class="item item-divider" ng-show="cctvImageFactory.widthImages == 0">
               <h2>CCTV/안내판</h2>
             </div>
             <div class="item item-divider" ng-show="cctvImageFactory.widthImages != 0">
@@ -120,7 +78,7 @@
             <div class="info-image">
               <img ng-src="{{cctvSelected.cctv.cctvImage}}">
             </div>
-            <div class="item item-divider" ng-show="cctvImageFactory.widthImages != 0 && cctvImageFactory.realDivsLength == 2">
+            <div class="item item-divider" ng-show="cctvImageFactory.widthImages != 0">
               <h2>안내판</h2>
             </div>
             <div class="info-image">

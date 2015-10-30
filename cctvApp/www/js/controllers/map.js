@@ -1,9 +1,5 @@
 'use strict';
 
-//나의 위치정보를 담을 전역변수
-var myLat;
-var myLng;
-
 angular.module('starter.controllers')
 
 .controller('MapCtrl', function($rootScope, $scope, $ionicLoading, $window, $http, soc,
@@ -216,13 +212,13 @@ angular.module('starter.controllers')
             }
         };
 
-        $scope.cctvMap.onMapCenterChanged = $scope.onMapCenterChanged;
-        $scope.cctvMap.onMapZoomChanged = $scope.onMapZoomChanged;
-        $scope.cctvMap.onMapLoaded = $scope.onMapLoaded;
-        $scope.cctvMap.onMapClick = $scope.onMapClick;
-        $scope.cctvMap.onWatchStart = $scope.watch.onWatchStart;
-        $scope.cctvMap.onWatchEnd = $scope.watch.onWatchEnd;
-        $scope.cctvMap.onMarkerClick = $scope.onMarkerClick;
+        $scope.cctvMap.onMapCenterChanged   = $scope.onMapCenterChanged;
+        $scope.cctvMap.onMapZoomChanged     = $scope.onMapZoomChanged;
+        $scope.cctvMap.onMapLoaded          = $scope.onMapLoaded;
+        $scope.cctvMap.onMapClick           = $scope.onMapClick;
+        $scope.cctvMap.onWatchStart         = $scope.watch.onWatchStart;
+        $scope.cctvMap.onWatchEnd           = $scope.watch.onWatchEnd;
+        $scope.cctvMap.onMarkerClick        = $scope.onMarkerClick;
 
     });
 });
