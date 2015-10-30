@@ -4,8 +4,6 @@ angular.module('starter.controllers')
 .factory('soc', function($rootScope, $http, $localStorage) {
     
     // initialize    
-    //$rootScope.soc = {};
-    //var obj = $rootScope.soc;
     
     var obj = {};
     
@@ -130,7 +128,7 @@ angular.module('starter.controllers')
       );
     };
     
-    // 추후에 자체 서버 관련 내용은 별도의 JS 파일로 빼는게 좋을듯
+    // 추후에 자체 서버 관련 내용은 별도파일로 빼는게 좋을듯
     obj.getCctvs = function(params) {
       return $http.get(obj.server.mainUrl + "map/cctvs", {params: params});
     };
@@ -139,42 +137,6 @@ angular.module('starter.controllers')
       return $http.get(obj.server.mainUrl + "cctv/" + cctvId);
     };
 
-    obj.mapProvider = google;        
-    obj.mapProviderText = "google";
-
-    obj.changeMap = function() {
-      obj.log("changeMap");
-      if(obj.mapProvider === google) {
-        obj.mapProvider = daum;
-        obj.mapProviderText = "daum";
-      } else {
-        obj.mapProvider = google;
-        obj.mapProviderText = "google";
-      }       
-      
-    }
-    
-
-    
-
-/*   
-    // Map 공통
-    var markerImageSrc = 'img/map-pin_17x30.png'; // 마커이미지의 주소입니다  
-    var markerImageSize = new daum.maps.Size(15, 26); // 마커이미지의 크기입니다
-    var markerImageOption = {offset: new daum.maps.Point(7, 26)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다			
-      
-    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-    var daumMarkerImage = new daum.maps.MarkerImage(markerImageSrc, markerImageSize, markerImageOption);
-    
-    obj.getMarkerImage = function(options) {
-      // 추후 options에 따라 다른 마커 이미지를 반환
-      if(obj.mapProvider == google) {
-        return markerImageSrc; 
-      } else {
-        return daumMarkerImage;
-      }
-    }
-*/    
     var dataUrl = "http://147.46.215.152:9000/data/";
     obj.data = {
       image: {
@@ -235,12 +197,6 @@ angular.module('starter.controllers')
 
     
     // config
-    
-    obj.MapTestOnSelect = function(args) {
-    }
-    
-    obj.MapTestOnDeselect = function(args) {
-    }
     
     
     // TODO: 아래는 대충 만들어 둔것이고 나중에 정리
