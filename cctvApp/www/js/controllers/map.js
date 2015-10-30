@@ -195,6 +195,7 @@ angular.module('starter.controllers')
         
         $scope.showCctvDetail = function() {
             $scope.cctvDetailModal.show();
+            cctvImageFactory.refreshInfoImage();
         };
 
         $scope.closeCctvDetail = function() {

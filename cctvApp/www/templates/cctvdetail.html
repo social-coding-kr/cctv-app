@@ -66,7 +66,7 @@
           <p>주소</p>
           <h2 class="cctv-app-font">{{cctvSelected.cctv.address}}</h2>
         </ion-item>
-
+        <!--
         <ion-item class="item-thumbnail-left">
             <img ng-src="{{cctvSelected.cctv.cctvImage}}" ng-click="">
             <p>출처</p>
@@ -97,6 +97,22 @@
         <ion-item class="item-divider">안내판</ion-item>
         <ion-item class="item-thumbnail-center">
           <div class="cctv-image-thumb">
+            <img ng-src="{{cctvSelected.cctv.noticeImage}}">
+          </div>
+        </ion-item>
+        -->
+        <ion-item class="item-divider">CCTV/안내판</ion-item>
+        <ion-item class="item item-image">
+          <div class="info-image">
+            <img ng-src="{{cctvSelected.cctv.cctvImage}}">
+          </div>
+          <div class="info-image">
+            <img ng-src="{{cctvSelected.cctv.noticeImage}}">
+          </div>
+        </ion-item>
+        
+        <ion-item class="item item-image">
+          <div class="info-image">
             <img ng-src="{{cctvSelected.cctv.noticeImage}}">
           </div>
         </ion-item>
