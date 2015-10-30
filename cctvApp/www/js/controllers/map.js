@@ -12,11 +12,6 @@ angular.module('starter.controllers')
     cctvMapFactory, cctvReportFactory, cctvImageFactory) {
 
     $ionicPlatform.ready(function() {
-        $rootScope.AnotherPageToMap = function() {
-            $ionicHistory.nextViewOptions({
-                disableBack: true
-            });
-        };
 
         $scope.cctvMap = cctvMapFactory;
         var mapContainer = document.getElementById('map');
@@ -35,12 +30,11 @@ angular.module('starter.controllers')
             $scope.cctvMap.refreshMap();
         });
 
-        var lastRequestCenter = null;
-
+    
         $scope.onMapLoaded = function() {
             soc.log("map Loaded");
             // cctv 목록 요청한다
-            requestCctvs();
+            $scope.cctvMap.requestCctvs();
         }
         
         var zoomHideHigh = $scope.cctvMap.cctvHideHighZoom;
@@ -66,30 +60,14 @@ angular.module('starter.controllers')
                 $scope.cctvMap.refreshMarkers();
             } else {
                 //$scope.cctvMap.showMarkers();
-                requestCctvs();                            
+                $scope.cctvMap.requestCctvs();                            
             }
             $scope.cctvMap.refreshMap();
         };
 
         $scope.onMapCenterChanged = function(center, prevCenter) {
             //soc.log("center: " + center + ", prevCenter: " + prevCenter);
-            // cctv 목록 요청한다
-            var needRequest = false;
-
-            if (lastRequestCenter == null) {
-                needRequest = true;
-            }
-            else {
-                if ($scope.cctvMap.map.getBounds().contains(lastRequestCenter) == false) {
-                    needRequest = true;
-                }
-            }
-
-            if (needRequest == true) {
-                lastRequestCenter = center;
-                requestCctvs();
-            }
-            
+         
             //soc.log("lastPosition: " +  JSON.stringify(center.lng()) + ", " + JSON.stringify(prevCenter));
             soc.stored.set("lastPosition", { lng: center.lng(), lat: center.lat() } );
         };
@@ -112,53 +90,6 @@ angular.module('starter.controllers')
             $scope.cctvMap.refreshMap();
         }
 
-
-        function requestCctvs() {
-            soc.log("request In");
-            if ($scope.cctvMap.map.getZoom() <= zoomHideHigh) return;
-            
-            soc.log("request Start");
-            var params = calculateRequestBounds();
-
-            soc.getCctvs(params).then(
-                function(response) {
-                    $scope.cctvMap.setCctvs(response);
-                },
-                function(response) {
-                    lastRequestCenter = null;
-                    soc.log(response);
-                    if (ionic.Platform.isWebView()) {
-                        $cordovaToast.show("CCTV 정보를 불러오는데 실패했습니다", 'long', 'bottom');
-                    }
-                }
-            );
-        };
-
-        function calculateRequestBounds() {
-            var center = $scope.cctvMap.map.getCenter();
-            var bounds = $scope.cctvMap.map.getBounds();
-
-            var northEast = bounds.getNorthEast();
-            var southWest = bounds.getSouthWest();
-
-            var centerLng = center.lng();
-            var centerLat = center.lat();
-
-            var east = northEast.lng();
-            var north = northEast.lat();
-            var west = southWest.lng();
-            var south = southWest.lat();
-
-            var width = east - west;
-            var height = north - south;
-
-            return {
-                east: (centerLng + width + 0.000005).toFixed(6),
-                west: (centerLng - width - 0.000005).toFixed(6),
-                north: (centerLat + height + 0.000005).toFixed(6),
-                south: (centerLat - height - 0.000005).toFixed(6)
-            };
-        };
 
         // 위치 추적 취소는 드래그이벤트 or 다른 메뉴 버튼 서치버튼 터치시
         $scope.watch = {

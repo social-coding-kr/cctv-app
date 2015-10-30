@@ -54,6 +54,13 @@ angular.module('starter.controllers', [])
   
   $rootScope.report = cctvReportFactory;
 
+
+  $rootScope.AnotherPageToMap = function() {
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
+  };
+
   // 안드로이드 뒤로가기 버튼동작
   $rootScope.secondBackButton = false; // 두 번째 back button 클릭을 알려주는 변수
   $ionicPlatform.registerBackButtonAction(function() {

@@ -157,6 +157,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         startReport: function() {
             this.status = this.statusStartReport;
             $location.path(this.path);
+            $rootScope.AnotherPageToMap();
             var currentCoord = this.lng + "," + this.lat;
             //alert(this.lat + ", " + this.lng);            
             soc.getAdressFromPoint(currentCoord);
@@ -172,7 +173,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                     disableBack: true
                 });
                 
-            cctvMapFactory.refreshMap();
+            cctvMapFactory.requestCctvs();
             //$rootScope.deleteCurrentPosition();
         },
         

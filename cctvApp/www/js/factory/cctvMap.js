@@ -11,6 +11,8 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         latitude: 37.5665,
         longitude: 126.97864
     };
+    
+    var lastRequestCenter = null;
 
     return {
         map: null,
@@ -48,6 +50,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             zoom: null,  
             center: null,
             bounds: null,
+            requestCenter: null,
         },
         
         mapOptions: {
@@ -104,6 +107,23 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             
             maps.event.addListener(this.map, 'center_changed', function() { 
                 var center = This.map.getCenter();
+                
+                var needRequest = false;
+
+                if (lastRequestCenter == null) {
+                    needRequest = true;
+                }
+                else {
+                    if (This.map.getBounds().contains(lastRequestCenter) == false) {
+                        needRequest = true;
+                    }
+                }
+
+                if (needRequest == true) {
+                    lastRequestCenter = center;
+                    This.requestCctvs();
+                }          
+                
                 // 등록된 이벤트 핸들러를 호출
                 if(This.onMapCenterChanged) This.onMapCenterChanged(center, This.last.center);    
                 This.last.center = center;
@@ -133,6 +153,55 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         getDefaultLocation: function() {
             return defaultLocation;      
         },
+        
+        requestCctvs: function() {
+            var This = this;
+            soc.log("request In");
+            if (this.map.getZoom() <= this.cctvHideHighZoom) return;
+            
+            soc.log("request Start");
+            var params = this.calculateRequestBounds();
+
+            soc.getCctvs(params).then(
+                function(response) {
+                    This.setCctvs(response);
+                },
+                function(response) {
+                    lastRequestCenter = null;
+                    soc.log(response);
+                    if (ionic.Platform.isWebView()) {
+                        $cordovaToast.show("CCTV 정보를 불러오는데 실패했습니다", 'long', 'bottom');
+                    }
+                }
+            );
+        },
+
+        calculateRequestBounds: function() {
+            var center = this.map.getCenter();
+            var bounds = this.map.getBounds();
+
+            var northEast = bounds.getNorthEast();
+            var southWest = bounds.getSouthWest();
+
+            var centerLng = center.lng();
+            var centerLat = center.lat();
+
+            var east = northEast.lng();
+            var north = northEast.lat();
+            var west = southWest.lng();
+            var south = southWest.lat();
+
+            var width = east - west;
+            var height = north - south;
+
+            return {
+                east: (centerLng + width + 0.000005).toFixed(6),
+                west: (centerLng - width - 0.000005).toFixed(6),
+                north: (centerLat + height + 0.000005).toFixed(6),
+                south: (centerLat - height - 0.000005).toFixed(6)
+            };
+        },
+        
         setCctvs: function(response) {
             var This = this;
             // 동일한 cctvId의 위치는 바뀌지 않는다고 가정한다
