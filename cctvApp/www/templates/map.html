@@ -1,5 +1,5 @@
 <head>
-        <link href="css/override-ionic.css" rel="stylesheet">
+    <link href="css/override-ionic.css" rel="stylesheet">
 </head>
 
 <ion-view view-title="">
@@ -25,19 +25,6 @@
 
     <ion-content scroll="false" id="contentArea" ng-click="search.blur(); initCctvSelect();">
 
-        <!--<ion-content scroll="false" id="contentArea" ng-click="search.blur(); initCctvSelect();">-->
-        <!--<div class="row">
-            <div class="col col-70 col-offset-10">
-                <div class="bar bar-header item-input-inset">
-                    <label class="item-input-wrapper">
-                        <i class="icon ion-ios-search placeholder-icon"></i>
-                        <input type="search" placeholder="Search">
-                    </label>
-                    <button class="button button-clear">
-                        Cancel
-                    </button>
-                </div>
-            </div>-->
 
         <!-- 이 화면에서 독립적인 CSS 적용을 위해 id="cctvMaps" 를 적용함 -->
         <!-- 다른 화면에서 지도를 사용할 필요가 있다면 별도 id를 사용할 것 -->
@@ -61,16 +48,8 @@
                 <span>민간</span>
             </div>
 
+        </div>
 
-
-            <div ng-if="soc.config.isDevelModeVisible">
-                <button style="position:absolute;top:100px;right:10px" ng-click="testButtonClick()">"Test"</button>
-            </div>
-
-            
-            
-        </div>    
-            
         <!-- 등록/foundPosition -->
         <div class="bar bar-subfooter" style="margin: 0px;" ng-show="report.getStatus() == report.statusFoundPosition">
             <div class="row" style="padding: 0px;">
@@ -98,43 +77,15 @@
         </div>
 
     </ion-content>
-    <!--
-    <ion-footer-bar align-title="left" class="bar-light" style="height: 100px;" ng-if="cctvSelected !== null && report.getStatus() === report.statusNone" >
-        <div class="row" style="padding: 0px;">
-        -->
-            <!--
-            <div class="col col-25 cctv-text-right">
-                <span class="badge badge-assertive">
-                        &nbsp;
-                        <i class="icon ion-ios-videocam" style="font-size: larger;"></i>
-                        <span>{{cctvSelected.cctv.source === 'PUBLIC'? '공공' : '사설'}}</span> &nbsp;
-                </span>
-            </div>
-            
-            <div class="col col-75">
-                <div class="row" style="padding: 0px;">
-                    
-                    <div class="col col-75 cctv-text-center" style="padding-top: 3px;">
-                        <span>[{{cctvSelected.cctv.cctvId}}] {{cctvSelected.cctv.address}}</span>
-                    </div>
-                    
-                    <div class="col col-25" style="padding:0px;" ng-click="showCctvDetail()">
-                        <i class="icon ion-more" style="font-size: 31px; color: gray;"></i>
-                    </div>
-                </div>
-            </div>
-            -->
-            <div class="cctv-info-footer" ng-if="cctvSelected !== null && report.getStatus() === report.statusNone">
-                
-                <a ng-click="showCctvDetail()" class="cctv-public"  ng-if="cctvSelected.cctv.source === 'PUBLIC'"> <strong>공공CCTV &nbsp; &nbsp; {{cctvSelected.cctv.purpose}}</strong></a>
-                <a ng-click="showCctvDetail()" class="cctv-private" ng-if="cctvSelected.cctv.source === 'PRIVATE'"><strong>민간CCTV</strong></a>
-                    <div class="desc">
-                        <img src="" alt="" />
-                        <span class="address">{{cctvSelected.cctv.address}}</span>
-                    </div>
-            </div>
-    <!--        
+
+    <div class="cctv-info-footer" ng-if="cctvSelected !== null && report.getStatus() === report.statusNone">
+
+        <a ng-click="showCctvDetail()" class="cctv-public" ng-if="cctvSelected.cctv.source === 'PUBLIC'"> <strong>공공CCTV</strong> &nbsp; &nbsp; {{cctvSelected.cctv.purpose}}</a>
+        <a ng-click="showCctvDetail()" class="cctv-private" ng-if="cctvSelected.cctv.source === 'PRIVATE'"><strong>민간CCTV</strong></a>
+        <div class="desc">
+            <img src="" alt="" />
+            <span class="address">{{cctvSelected.cctv.address}}</span>
         </div>
-    </ion-footer-bar>    
-    -->
+    </div>
+
 </ion-view>
