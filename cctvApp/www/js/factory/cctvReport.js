@@ -217,6 +217,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         },
         prepareReport: function() {
             var This = this;
+            if(this.status != this.statusNone) return; // 중복 등록 시도 방지
             /*
             if(window.WebKitBlobBuilder !== undefined) {
                 $cordovaDialogs.confirm('해당 기기에서는 제공되지 않는 기능입니다 ', 'CCTV 위치 등록', ['확인'])
