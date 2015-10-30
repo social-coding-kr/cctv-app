@@ -44,10 +44,7 @@
         </ion-item>
         -->
 
-        <ion-item menu-close class="item item-icon-left" href="#/app/config" style="border-left-width: 10px;" ng-click="nowReportUnclicked()">
-          <i class="icon ion-gear-b"></i>
-          <span>설정</span>
-        </ion-item>
+    
 
       </ion-list>
       <div class="item-divider cctv-text-center" >
@@ -59,6 +56,10 @@
         <div class="item item-divider">
           <span>개발자용</span>
         </div>
+            <ion-item menu-close class="item item-icon-left" href="#/app/config" style="border-left-width: 10px;" ng-click="nowReportUnclicked()">
+          <i class="icon ion-gear-b"></i>
+          <span>설정</span>
+        </ion-item>
         <ion-item menu-close ng-click="login()">
           Login
         </ion-item>
@@ -73,9 +74,6 @@
         </ion-item>
         <ion-item menu-close href="#/app/devlog" ng-show="soc.config.isDevelModeVisible">
           Log
-        </ion-item>
-        <ion-item menu-close href="#/app/bonhunTest" ng-show="false">
-          Bonhun Test
         </ion-item>
         <ion-item menu-close href="#/app/cctvApiTest" ng-show="soc.config.isDevelModeVisible">
           CCTV API Test

@@ -164,7 +164,7 @@ angular.module('starter.controllers')
 
     // config
     obj.config = {};
-    obj.config.isDevelOptionEnabled = true;
+    obj.config.isDevelOptionEnabled = false;
     
     // 스트링을 다시 비교해야 하는게 마음에 안든다
     obj.config.isDevelModeVisible = $localStorage.get('develModeVisible', 'true') == 'true';
@@ -195,7 +195,7 @@ angular.module('starter.controllers')
       $localStorage.set('geoOptions.enableHighAccuracy', obj.config.geoOptions.enableHighAccuracy);
     }
 
-    
+    obj.config.isDevelModeVisible = false;
     // config
     
     
