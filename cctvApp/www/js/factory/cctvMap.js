@@ -50,7 +50,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             zoom: null,  
             center: null,
             bounds: null,
-            requestCenter: null,
+            //requestCenter: null,
         },
         
         mapOptions: {
@@ -219,6 +219,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
                 return;
             }
             
+            soc.log("rcv cnt: " + response.data.cctvs.length);
             var cctvs = response.data.cctvs;
             var cctvList = new hashMap();
             
@@ -259,7 +260,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
                 
                 cctvList.put(cctv.cctvId, marker);
                 
-                This.refreshMap();
+                //This.refreshMap();
             }
             
             var markers = this.cctvList.values();

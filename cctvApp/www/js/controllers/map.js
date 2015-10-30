@@ -57,12 +57,12 @@ angular.module('starter.controllers')
                         }
                     }
                 }
-                $scope.cctvMap.refreshMarkers();
+                //$scope.cctvMap.refreshMarkers();
             } else {
                 //$scope.cctvMap.showMarkers();
                 $scope.cctvMap.requestCctvs();                            
             }
-            $scope.cctvMap.refreshMap();
+            //$scope.cctvMap.refreshMap();
         };
 
         $scope.onMapCenterChanged = function(center, prevCenter) {
@@ -82,12 +82,12 @@ angular.module('starter.controllers')
             soc.log("[[cctv]] : " + JSON.stringify(cctv.cctvId) + ", " + JSON.stringify(cctv.source));
             soc.log("[[detail]]" + JSON.stringify(detail));
             $scope.cctvSelected = detail;
-            $scope.cctvMap.refreshMap();
+            //$scope.cctvMap.refreshMap();
         }
 
         $scope.hideCctvInfo = function() {
             $scope.cctvSelected = null;
-            $scope.cctvMap.refreshMap();
+            //$scope.cctvMap.refreshMap();
         }
 
 
