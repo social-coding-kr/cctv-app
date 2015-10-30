@@ -3,9 +3,9 @@ angular.module('starter.controllers')
 
 .factory('cctvReportFactory', ['$q', 'soc', '$rootScope', 'locationFactory', '$ionicPopup', '$http',
     '$location', '$cordovaCamera', '$cordovaToast', '$cordovaFile', '$ionicHistory', 'cctvMapFactory',
-    'cctvImageFactory', '$cordovaDialogs',
+    'cctvImageFactory', '$cordovaDialogs', '$state',
 function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $cordovaCamera,
-    $cordovaToast, $cordovaFile, $ionicHistory, cctvMapFactory, cctvImageFactory, $cordovaDialogs) {
+    $cordovaToast, $cordovaFile, $ionicHistory, cctvMapFactory, cctvImageFactory, $cordovaDialogs, $state) {
 
     function onError(error) {
         if(ionic.Platform.isWebView()) {
@@ -217,6 +217,11 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
         },
         prepareReport: function() {
             var This = this;
+            
+            if(this.status == this.statusFindPosition
+            || this.status == this.statusFoundPosition
+            || this.status == this.statusStartPosition) return; //여러번 누르는 문제 방지
+            
             /*
             if(window.WebKitBlobBuilder !== undefined) {
                 $cordovaDialogs.confirm('해당 기기에서는 제공되지 않는 기능입니다 ', 'CCTV 위치 등록', ['확인'])
@@ -227,7 +232,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                 return;
             }
             */
-            this.clear();
+            this.endReport();
             
             
             cctvMapFactory.endWatchPosition();
