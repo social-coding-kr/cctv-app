@@ -73,11 +73,12 @@
             </div>
 
 
-            <div class="cctv-info-footer">
-                <a href="" target="_blank"><strong>공공CCTV</strong></a>
+            <div class="cctv-info-footer" ng-if="cctvSelected !== null && report.getStatus() === report.statusNone">
+                <a ng-click="showCctvDetail()"><strong>{{cctvSelected.cctv.source === 'PUBLIC'? '공공' : '민간'}}CCTV &nbsp; &nbsp; {{cctvSelected.cctv.purpose}}</strong></a>
                     <div class="desc">
                         <img src="" alt="">
-                        <span class="address">서울특별시 관악구 낙성대로 3길 37 관악구민종합체육센터</span>
+                        <span class="address">{{cctvSelected.cctv.address}}</span>
+                        
                     </div>
                 </div>
             </div>
@@ -112,6 +113,7 @@
 
     </ion-content>
     <!-- cctvDetail -->
+    <!--
     <ion-footer-bar align-title="left" class="bar-light" style="height: 100px;" ng-if="cctvSelected !== null && report.getStatus() === report.statusNone" >
         <div class="row" style="padding: 0px;">
             <div class="col col-25 cctv-text-right">
@@ -128,22 +130,14 @@
                         <span>[{{cctvSelected.cctv.cctvId}}] {{cctvSelected.cctv.address}}</span>
                     </div>
                     
-                    <!-- 일단 주석처리
-                    <div class="col col-75 cctv-text-center" style="padding-top: 3px;">
-                        <span>{{cctvSelected.cctv.purpose}}</span>
-                    </div>
-                    -->
+
                     <div class="col col-25" style="padding:0px;" ng-click="showCctvDetail()">
                         <i class="icon ion-more" style="font-size: 31px; color: gray;"></i>
                     </div>
                 </div>
             </div>
-            <!--
-                    <button class="button button-clear button-stable" ng-click="showCctvDetail()" style="padding-top: 0px;">
-                        <i class="icon ion-more" style="font-size: larger; margin-top:0px;"></i>
-                    </button>
-                    -->
+
         </div>
     </ion-footer-bar>
-
+-->
 </ion-view>

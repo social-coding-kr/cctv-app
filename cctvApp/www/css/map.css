@@ -195,14 +195,21 @@
 .cctv-info-footer a {
     display: block; 
     background: #d95050; 
-    background: #d95050 url(http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) 
-    no-repeat right 14px center; 
+    background: #d95050 url(../img/arrow_right_small.png) no-repeat right 10px center; 
+    
     text-decoration: none; 
     color: #fff; 
     padding: 8px 12px;
     font-size: 14px; 
     border-radius: 3px 3px 0 0;
 }
+
+.cctv-info-footer i {
+    display: inline; 
+    right: 20px;
+    background-color: yellow;
+}
+
 /*
 .cctv-info-footer a strong {
     background:url(http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/place_icon.png) no-repeat; 
@@ -216,6 +223,8 @@
     height: 56px
 }
 
+
+
 .cctv-info-footer img {
     vertical-align: top;
 }
@@ -226,7 +235,7 @@
     position: absolute; 
     left: 60px; 
     right: 14px; 
-    top: 7px; 
+    top: 8px; 
     white-space: normal
 }
 
