@@ -333,7 +333,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             var This = this;
             if(This.onWatchStart) This.onWatchStart();
             
-            locationFactory.watchPfositionSmart(locationFactory.defaultOptions).then(
+            locationFactory.watchPositionSmart(locationFactory.defaultOptions).then(
                 null, 
                 function(error) { 
                     This.endWatchPosition();
