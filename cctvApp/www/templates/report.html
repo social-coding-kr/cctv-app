@@ -22,10 +22,12 @@
         -->
         <div class="list card">
           <div class="item item-image cctv-image-thumb">
-            <img ng-show="report.cctvImage" src="{{report.cctvImage}}">
-            <div ng-show="report.cctvImage==null" class="item-text-wrap cctv-text-center">
+            <img ng-show="report.cctvImage" class="cctv-image-thumb-main" ng-src="{{report.cctvImage}}">
+            <img ng-show="report.cctvImage==null" src="img/cctvExample.jpg" class="cctv-image-thumb-back">
+            <div ng-show="report.cctvImage==null" class="cctv-image-thumb-front item-text-wrap cctv-text-center">
               CCTV 사진을<br>촬영해주세요
             </div>
+            
           </div>
           <a class="item cctv-text-center positive" ng-click="report.takeCctvPhoto()">
             <i class="icon button-icon ion-camera"></i>
@@ -48,8 +50,9 @@
 
         <div class="list card">
           <div class="item item-image cctv-image-thumb">
-            <img ng-show="report.noticeImage" src="{{report.noticeImage}}">
-            <div ng-show="report.noticeImage==null" class="item-text-wrap cctv-text-center" ng-class="report.noticePhotoProcess&&!report.noticeImage?'button-outline':''">
+            <img ng-show="report.noticeImage" class="cctv-image-thumb-main" ng-src="{{report.noticeImage}}">
+            <div><img ng-show="report.noticeImage==null" src="img/noticeExample.jpg" class="cctv-image-thumb-back"></div>
+            <div ng-show="report.noticeImage==null" class="cctv-image-thumb-front item-text-wrap cctv-text-center" ng-class="report.noticePhotoProcess&&!report.noticeImage?'button-outline':''">
               CCTV 근처<br>안내판을<br>촬영해주세요
             </div>
           </div>
@@ -75,7 +78,7 @@
       </div>        
       <div class="col">
         <div class="list card">
-          <div class="item-text-wrap cctv-text-center cctv-image-thumb" ng-class="report.noticeImage?'button-outline':''">
+          <div class="cctv-image-thumb-front item-text-wrap cctv-text-center cctv-image-thumb" ng-class="report.noticeImage?'button-outline':''">
             CCTV 근처에<br>안내판이<br>없습니다
           </div>
           <a class="item cctv-text-center" ng-click="report.noticeNoExist()" ng-class="report.noticeImage?'assertive':'assertive'">
