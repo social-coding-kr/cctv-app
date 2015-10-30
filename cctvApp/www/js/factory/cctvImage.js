@@ -41,27 +41,38 @@ function($q, soc, $location) {
     // 세부정보 이미지 부분을 'info-image'로 감싸서 사용
     return {
         widthImages : 0, 
+        realDivsLength : 0,
         refreshInfoImage: function() {
                 soc.log('refreshInfoImage started');
-                var location = $location.url();
-                soc.log(location);
                 var divs = document.getElementsByClassName('info-image');
+                this.realDivsLength = divs.length;
                 this.widthImages = 0;
                 for (var i = 0; i < divs.length; i++) {
                     var div = divs[i];
-
                     var img = div.querySelector('img');
-                    var imgAspect = img.height / img.width;
-                    
-                    if(imgAspect > 1) {
-                        // Do nothing
+                    if(img.height != 0) {
+                        var imgAspect = img.height / img.width;
+                        
+                        if(imgAspect > 1) {
+                            // Do nothing
+                        } else {
+                            this.widthImages += (i + 1);
+                        }
                     } else {
-                        this.widthImages += (i + 1);
+                        this.realDivsLength = 1;
                     }
                 }
                 soc.log('widthImages =' + this.widthImages);
-                
-                if (this.widthImages === 0) {
+                soc.log('realDivsLength = ' + this.realDivsLength);
+                if(this.realDivsLength == 1 && this.widthImages === 0) {
+                    var cctvImg = divs[0].querySelector('img');
+                    cctvImg.style.cssText = 'width: 75%; height: auto;';
+                    this.widthImages = 10;
+                } else if(this.realDivsLength == 1 && this.widthImages === 1) {
+                    var cctvImg = divs[0].querySelector('img');
+                    cctvImg.style.cssText = 'width: 100%; height: auto;';
+                    this.widthImages = 10;
+                }else if (this.widthImages === 0) {
                     soc.log('가로 이미지가 없는 경우');
                     if(divs.length != 0) {
                         var img_height = (divs[0].querySelector('img').height / 2).toString();
