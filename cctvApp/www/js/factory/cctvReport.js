@@ -261,7 +261,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                         soc.log(error);
                     });
             } else {
-                this.cctvImage = 'img/cctvExample.jpg';
+                this.cctvImage = 'img/cctvFake.jpg';
                 this.cctvPhotoProcess = true;
                 //cctvImageFactory.refreshThumbImage();
             }
@@ -287,7 +287,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                         soc.log(error);
                     });
             } else {
-                this.noticeImage = 'img/noticeExample.jpg';
+                this.noticeImage = 'img/noticeFake.jpg';
                 this.cctvNoticeProcess = true;
                 //cctvImageFactory.refreshThumbImage();
             }
