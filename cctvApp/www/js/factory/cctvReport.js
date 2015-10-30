@@ -68,7 +68,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                         blobImage = new Blob([result], {type: "image/jpeg"});
                         soc.log("1. Blob.size:" + blobImage.size + ", Blob.type: " + blobImage.type);
                     } catch(e) {
-                        // 아래는 웹뷰가 다른 경우를 위한 코드이나 현재 정상작동 확인은 안됨
+                        // 아래는 Blob 생성자를 사용할수 없는 웹뷰(젤리빈 등)을 위한 코드
                         window.BlobBuilder = window.BlobBuilder ||
                             window.WebKitBlobBuilder ||
                             window.MozBlobBuilder ||
@@ -81,7 +81,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                             bb.append(result);
                             blobImage = bb.getBlob("image/jpeg");
                             soc.log("case 2");
-                            soc.log("2. Blob.size:" + blobImage.size + ", Blob.type: " + blobImage.type);
+                            //soc.log("2. Blob.size:" + blobImage.size + ", Blob.type: " + blobImage.type);
                         }
                         else if (e.name == "InvalidStateError") {
                             // InvalidStateError (tested on FF13 WinXP)
@@ -90,7 +90,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                         }
                         else {
                             // We're screwed, blob constructor unsupported entirely   
-                            soc.log("Errore");
+                            soc.log("Error");
                         }
                     }
                     soc.log("3. Blob.size:" + blobImage.size + ", Blob.type: " + blobImage.type);
@@ -211,13 +211,12 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                     
                 }, function(error) {
                     This.status = This.statusFailed;
-                    //alert("실패");
+                    This.endReport();
                 }
             );
         },
         prepareReport: function() {
             var This = this;
-            if(this.status != this.statusNone) return; // 중복 등록 시도 방지
             /*
             if(window.WebKitBlobBuilder !== undefined) {
                 $cordovaDialogs.confirm('해당 기기에서는 제공되지 않는 기능입니다 ', 'CCTV 위치 등록', ['확인'])
@@ -234,7 +233,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
             cctvMapFactory.endWatchPosition();
             $ionicPopup.show({
                       title :'<strong><span class="cctv-app-font cctv-text-center">위치 정보 사용</span></strong>',
-                      template : '등록할 <strong><span style="color: #387ef5">CCTV 위치 파악</span></strong>을 위해 사용자의 현 위치 정보를 필요로합니다.<br /> 위치 정보 사용에 <strong><span style="color: #387ef5;">동의</span></strong>하시겠습니까?',
+                      template : '등록할 <strong><span style="color: blue">CCTV 위치 파악</span></strong>을 위해 사용자의 현 위치 정보를 필요로합니다.<br /> 위치 정보 사용에 <strong><span style="color: blue;">동의</span></strong>하시겠습니까?',
                       buttons: [{ 
                         text: '동의',
                         type: 'button-positive',
@@ -447,22 +446,20 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location, $c
                     This.endReport();
 
                     soc.log("등록 성공 :" + formData);
-                    soc.log("response :" + JSON.stringify(response));
+                    //soc.log("response :" + JSON.stringify(response));
                 }).error(function(response) {
-                        if (ionic.Platform.isWebView()) {
-
-                            // TODO: 응답 에러 값에 따라 다른 처리를 해야한다
-                            $cordovaToast.show('등록 실패: ' + response, 'long', 'bottom')
-                                .then(function(success) {
-                                        // success
-                                    },
-                                    function(error) {     // error
-                        });                    
+                    if (ionic.Platform.isWebView()) {
+                        $cordovaToast.show('등록 실패: ' + response, 'long', 'bottom')
+                            .then(function(success) {
+                                // success
+                            },function(error) {     
+                                // error
+                            });                    
                 }
                 
-                soc.log("등록 실패 :" + formData);
-                soc.log("response :" + JSON.stringify(response));
-                alert("response :" + JSON.stringify(response));
+                //soc.log("등록 실패 :" + formData);
+                //soc.log("response :" + JSON.stringify(response));
+                //alert("response :" + JSON.stringify(response));
             });
         },
     };
