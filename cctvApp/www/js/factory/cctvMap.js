@@ -257,7 +257,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
                 
                 cctvList.put(cctv.cctvId, marker);
                 
-
+                This.refreshMap();
             }
             
             var markers = this.cctvList.values();
@@ -317,7 +317,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             if(this.mapLoaded == false) return;
             $timeout(function() {
                 maps.event.trigger(This.map, 'resize'); // 맵타일을 못불러오는 오류를 방지한다
-            }, 50);
+            }, 100);
         },
         
         startWatchPosition: function() {
