@@ -25,19 +25,6 @@
 
     <ion-content scroll="false" id="contentArea" ng-click="search.blur(); initCctvSelect();">
 
-        <!--<ion-content scroll="false" id="contentArea" ng-click="search.blur(); initCctvSelect();">-->
-        <!--<div class="row">
-            <div class="col col-70 col-offset-10">
-                <div class="bar bar-header item-input-inset">
-                    <label class="item-input-wrapper">
-                        <i class="icon ion-ios-search placeholder-icon"></i>
-                        <input type="search" placeholder="Search">
-                    </label>
-                    <button class="button button-clear">
-                        Cancel
-                    </button>
-                </div>
-            </div>-->
 
         <!-- 이 화면에서 독립적인 CSS 적용을 위해 id="cctvMaps" 를 적용함 -->
         <!-- 다른 화면에서 지도를 사용할 필요가 있다면 별도 id를 사용할 것 -->
@@ -60,14 +47,6 @@
             <div class="filterControl privateFilterPositionFix button-right-radius" ng-class="{true : '' , false : 'filterPrivateInActive'}[cctvMap.filterHide.PRIVATE]" ng-click="cctvMap.toggleFilter('PRIVATE')">
                 <span>민간</span>
             </div>
-
-
-
-            <div ng-if="soc.config.isDevelModeVisible">
-                <button style="position:absolute;top:100px;right:10px" ng-click="testButtonClick()">"Test"</button>
-            </div>
-
-
 
         </div>
 
@@ -101,7 +80,7 @@
 
     <div class="cctv-info-footer" ng-if="cctvSelected !== null && report.getStatus() === report.statusNone">
 
-        <a ng-click="showCctvDetail()" class="cctv-public" ng-if="cctvSelected.cctv.source === 'PUBLIC'"> <strong>공공CCTV &nbsp; &nbsp; {{cctvSelected.cctv.purpose}}</strong></a>
+        <a ng-click="showCctvDetail()" class="cctv-public" ng-if="cctvSelected.cctv.source === 'PUBLIC'"> <strong>공공CCTV</strong> &nbsp; &nbsp; {{cctvSelected.cctv.purpose}}</a>
         <a ng-click="showCctvDetail()" class="cctv-private" ng-if="cctvSelected.cctv.source === 'PRIVATE'"><strong>민간CCTV</strong></a>
         <div class="desc">
             <img src="" alt="" />
