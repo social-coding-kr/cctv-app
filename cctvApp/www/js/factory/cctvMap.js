@@ -280,6 +280,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         },
         refreshMarkers: function() {
             if(!this.mapLoaded) return;
+            soc.log("run refreshMarkers");
             var cctvIds = this.cctvList.keys();
             // 설정값에 따른 마커 표시여부
             for(var i in cctvIds) {
@@ -320,6 +321,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
         },
         refreshMap: function() {
             var This = this;
+            soc.log("run refreshMap");
             if(this.mapLoaded == false) return;
             $timeout(function() {
                 maps.event.trigger(This.map, 'resize'); // 맵타일을 못불러오는 오류를 방지한다
@@ -330,7 +332,7 @@ function($q, soc, $rootScope, locationFactory, $ionicPopup, $http, $location,
             var This = this;
             if(This.onWatchStart) This.onWatchStart();
             
-            locationFactory.watchPositionSmart(locationFactory.defaultOptions).then(
+            locationFactory.watchPfositionSmart(locationFactory.defaultOptions).then(
                 null, 
                 function(error) { 
                     This.endWatchPosition();
