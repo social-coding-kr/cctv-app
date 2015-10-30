@@ -106,4 +106,28 @@
         </div>
 
     </ion-content>
+    
+    <ion-footer-bar align-title="left" class="bar-light" style="height: 100px;" ng-if="cctvSelected !== null && report.getStatus() === report.statusNone" >
+        <div class="row" style="padding: 0px;">
+            <div class="col col-25 cctv-text-right">
+                <span class="badge badge-assertive">
+                        &nbsp;
+                        <i class="icon ion-ios-videocam" style="font-size: larger;"></i>
+                        <span>{{cctvSelected.cctv.source === 'PUBLIC'? '공공' : '사설'}}</span> &nbsp;
+                </span>
+            </div>
+            <div class="col col-75">
+                <div class="row" style="padding: 0px;">
+                    
+                    <div class="col col-75 cctv-text-center" style="padding-top: 3px;">
+                        <span>[{{cctvSelected.cctv.cctvId}}] {{cctvSelected.cctv.address}}</span>
+                    </div>
+                    
+                    <div class="col col-25" style="padding:0px;" ng-click="showCctvDetail()">
+                        <i class="icon ion-more" style="font-size: 31px; color: gray;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-footer-bar>    
 </ion-view>

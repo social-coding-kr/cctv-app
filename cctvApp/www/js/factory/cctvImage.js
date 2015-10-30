@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers')
 
-.factory('cctvImageFactory', ['$q', 'soc',
+.factory('cctvImageFactory', ['$q', 'soc', '$location',
 function($q, soc, $location) {
     // 썸네일로 보여줄 이미지를 div class="cctv-image-thumb"으로 감싸야 사용가능
     /*
