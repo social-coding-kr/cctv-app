@@ -168,5 +168,76 @@
 }
 
 .cctv-detail-photo {
-    height: 300px;
+    max-height: 300px;
 }
+
+
+
+.cctv-info-footer {
+    border-radius: 3px; 
+    /*margin-bottom: 12px;*/
+    position:absolute; 
+    bottom:25px; 
+    left:10px; 
+    width: 80%;
+    max-width: 500px;
+    border: 1px solid #ccc; 
+    border-bottom: 2px solid #ddd;
+    background-color:#fff;
+}
+
+.cctv-info-footer:nth-of-type(n) {
+    border:0; box-shadow: 0px 1px 2px #888;
+}
+
+.cctv-info-footer a {
+    display: block; 
+    background: #d95050; 
+    background: #d95050 url(http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) 
+    no-repeat right 14px center; 
+    text-decoration: none; 
+    color: #fff; 
+    padding: 8px 12px;
+    font-size: 14px; 
+    border-radius: 3px 3px 0 0;
+}
+/*
+.cctv-info-footer a strong {
+    background:url(http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/place_icon.png) no-repeat; 
+    padding-left: 27px;
+}
+*/
+.cctv-info-footer .desc {
+    padding:14px;
+    position: relative; 
+    min-width: 190px; 
+    height: 56px
+}
+
+.cctv-info-footer img {
+    vertical-align: top;
+}
+
+.cctv-info-footer .address {
+    font-size: 14px; 
+    color: #333; 
+    position: absolute; 
+    left: 60px; 
+    right: 14px; 
+    top: 7px; 
+    white-space: normal
+}
+
+
+
+/*
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #4a87ee !default;
+$calm:                            #43cee6 !default;
+$balanced:                        #66cc33 !default;
+$energized:                       #f0b840 !default;
+$assertive:                       #ef4e3a !default;
+$royal:                           #8a6de9 !default;
+$dark:                            #444 !default;
+*/
