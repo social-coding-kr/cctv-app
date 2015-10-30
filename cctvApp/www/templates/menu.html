@@ -21,81 +21,69 @@
   <ion-side-menu side="left">
     <ion-content>
       <!-- login area -->
-      <div class="row">
-        <div class="col col-100">
-          <img style="width: 100%;" src="img/cctv_menu_logo.png"/><br />
-        </div>
-      </div>
+      <img style="width: 100%;" src="img/cctv_menu_logo.png" />
       <!-- misc area -->
-
-      <div class="row">
-        <div class="col">
-          <ion-list>
-            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="report.endReport()">
-              <i class="icon ion-university"></i>
-              <span>CCTV 위치 확인</span>
-            </ion-item>
-            <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
-              <i class="icon ion-speakerphone"></i>
-              <span>CCTV 위치 등록</span>
-            </ion-item>
-            <ion-item menu-close class="item item-icon-left" href="#/app/cctvlaw">
-              <i class="icon ion-university"></i>
-              <span>CCTV 관련법 보기</span>
-            </ion-item>
-            <ion-item menu-close class="item item-icon-left" href="#">
-              <i class="icon ion-android-wifi"></i>
-              <span>로그인</span>
-            </ion-item>
-            <div class="item item-divider">
-              <span>&nbsp;</span>
-            </div>
-            <ion-item menu-close class="item item-icon-left" href="#/app/config" ng-click="nowReportUnclicked()">
-              <i class="icon ion-gear-b"></i>
-              <span>설정</span>
-            </ion-item>
-
-          </ion-list>
+      <ion-list>
+        <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="report.endReport()">
+          <i class="icon ion-university"></i>
+          <span>CCTV 위치 확인</span>
+        </ion-item>
+        <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
+          <i class="icon ion-speakerphone"></i>
+          <span>CCTV 위치 등록</span>
+        </ion-item>
+        <ion-item menu-close class="item item-icon-left" href="#/app/cctvlaw">
+          <i class="icon ion-university"></i>
+          <span>CCTV 관련법 보기</span>
+        </ion-item>
+        <ion-item menu-close class="item item-icon-left" href="#">
+          <i class="icon ion-android-wifi"></i>
+          <span>로그인</span>
+        </ion-item>
+        <div class="item item-divider">
+          <span>&nbsp;</span>
         </div>
-      </div>
+        <ion-item menu-close class="item item-icon-left" href="#/app/config" ng-click="nowReportUnclicked()">
+          <i class="icon ion-gear-b"></i>
+          <span>설정</span>
+        </ion-item>
+
+      </ion-list>
+
       <!-- debug menu -->
-      <div class="row" ng-if="soc.config.isDevelModeVisible">
-        <div class="col">
-          <ion-list>
-            <ion-list>
-              <div class="item item-divider">
-                <span>개발자용</span>
-              </div>
-              <ion-item menu-close ng-click="login()">
-                Login
-              </ion-item>
-              <ion-item menu-close href="#/app/search" ng-show="soc.config.isDevelModeVisible">
-                Search
-              </ion-item>
-              <ion-item menu-close href="#/app/devel">
-                개발자용
-              </ion-item>
-              <ion-item menu-close href="#/app/devel2" ng-show="soc.config.isDevelModeVisible">
-                개발자용2
-              </ion-item>
-              <ion-item menu-close href="#/app/devlog" ng-show="soc.config.isDevelModeVisible">
-                Log
-              </ion-item>
-              <ion-item menu-close href="#/app/bonhunTest" ng-show="false">
-                Bonhun Test
-              </ion-item>
-              <ion-item menu-close href="#/app/cctvApiTest" ng-show="soc.config.isDevelModeVisible">
-                CCTV API Test
-              </ion-item>
-              <ion-item menu-close href="#/app/oauthApiTest" ng-show="soc.config.isDevelModeVisible">
-                Oauth API Test
-              </ion-item>
-              <ion-item menu-close href="#/app/backButtonTest" ng-show="soc.config.isDevelModeVisible">
-                backButtonTest
-              </ion-item>
-            </ion-list>
+      <ion-list ng-if="soc.config.isDevelModeVisible">
+        <div class="item item-divider">
+          <span>개발자용</span>
         </div>
-      </div>
+        <ion-item menu-close ng-click="login()">
+          Login
+        </ion-item>
+        <ion-item menu-close href="#/app/search" ng-show="soc.config.isDevelModeVisible">
+          Search
+        </ion-item>
+        <ion-item menu-close href="#/app/devel">
+          개발자용
+        </ion-item>
+        <ion-item menu-close href="#/app/devel2" ng-show="soc.config.isDevelModeVisible">
+          개발자용2
+        </ion-item>
+        <ion-item menu-close href="#/app/devlog" ng-show="soc.config.isDevelModeVisible">
+          Log
+        </ion-item>
+        <ion-item menu-close href="#/app/bonhunTest" ng-show="false">
+          Bonhun Test
+        </ion-item>
+        <ion-item menu-close href="#/app/cctvApiTest" ng-show="soc.config.isDevelModeVisible">
+          CCTV API Test
+        </ion-item>
+        <ion-item menu-close href="#/app/oauthApiTest" ng-show="soc.config.isDevelModeVisible">
+          Oauth API Test
+        </ion-item>
+        <ion-item menu-close href="#/app/backButtonTest" ng-show="soc.config.isDevelModeVisible">
+          backButtonTest
+        </ion-item>
+      </ion-list>
+
     </ion-content>
     <!--
     <ion-content>
