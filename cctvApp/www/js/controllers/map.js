@@ -200,7 +200,7 @@ angular.module('starter.controllers')
         var imageResizedCctvId = null;
         $scope.showCctvDetail = function() {
             $scope.cctvDetailModal.show();
-            if (imageResizedCctvId != $scope.cctvSelected.cctv.cctvId) {
+            if (imageResizedCctvId != $scope.cctvSelected.cctv.cctvId && $scope.cctvSelected.cctv.source == 'PRIVATE') {
                 cctvImageFactory.refreshInfoImage();
                 imageResizedCctvId = $scope.cctvSelected.cctv.cctvId;
             }
