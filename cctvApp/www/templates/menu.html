@@ -21,18 +21,18 @@
   <ion-side-menu side="left" style="background-color: #F5F5F5">
     <ion-content>
       <!-- login area -->
-      <img style="width: 100%;" src="img/cctv_menu_logo.png" />
+      <img style="width: 100%; margin-bottom: 0px;" src="img/cctv_menu_logo.png" />
       <!-- misc area -->
-      <ion-list>
-        <ion-item menu-close class="item item-icon-left" href="#/app/map" style="border-top: 0px;" ng-click="report.endReport()">
+      <ion-list style="margin-top: 0px;">
+        <ion-item menu-close class="item item-icon-left" href="#/app/map" style="border-top: 0px; border-left-width: 10px; border-left-color: red;" ng-click="report.endReport()">
           <i class="icon ion-ios-videocam"></i>
           <span>CCTV 위치 확인</span>
         </ion-item>
-        <ion-item menu-close class="item item-icon-left" href="#/app/map" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
+        <ion-item menu-close class="item item-icon-left" href="#/app/map" style="border-left-width: 10px; border-left-color: #ffe136;" ng-click="report.prepareReport($rootScope.showCurrentPosition)">
           <i class="icon ion-ios-location"></i>
           <span>CCTV 위치 등록</span>
         </ion-item>
-        <ion-item menu-close class="item item-icon-left" href="#/app/cctvlaw">
+        <ion-item menu-close class="item item-icon-left" href="#/app/cctvlaw" style="border-left-width: 10px; border-left-color: #00d500;">
           <i class="icon ion-ios-book"></i>
           <span>CCTV 관련법 보기</span>
         </ion-item>
@@ -44,7 +44,7 @@
         </ion-item>
         -->
 
-        <ion-item menu-close class="item item-icon-left" href="#/app/config" ng-click="nowReportUnclicked()">
+        <ion-item menu-close class="item item-icon-left" href="#/app/config" style="border-left-width: 10px; border-left-color: #c000c0;" ng-click="nowReportUnclicked()">
           <i class="icon ion-gear-b"></i>
           <span>설정</span>
         </ion-item>
